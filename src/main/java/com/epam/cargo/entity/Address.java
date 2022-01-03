@@ -2,6 +2,7 @@ package com.epam.cargo.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 
@@ -17,6 +18,9 @@ public class Address {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="city_id")
     private City city;
+
+    @Column(name = "street")
+    private String street;
 
     @Column(name="house_number")
     private String houseNumber;

@@ -30,10 +30,14 @@ public class User implements UserDetails {
     @Setter
     private String surname;
 
-    @Column(name="login", length = 16)
+    @Column(name="login", unique = true, nullable = false, length = 16)
     @Getter
     @Setter
     private String login;
+
+    @Column(name="password", nullable = false, length = 32)
+    @Setter
+    private String password;
 
     @Column(name="phone", length = 13)
     @Getter
@@ -70,12 +74,12 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return login;
     }
 
     @Override

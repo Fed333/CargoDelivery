@@ -17,6 +17,15 @@ public class City {
     @Column(name="name")
     private String name;
 
-    @Column(name="zipcode")
+    @Column(name="zipcode", unique = true)
     private String zipcode;
+
+    public City() {
+    }
+
+    public City(String name, String zipcode) {
+        this.name = name;
+        this.zipcode = zipcode;
+    }
+
 }
