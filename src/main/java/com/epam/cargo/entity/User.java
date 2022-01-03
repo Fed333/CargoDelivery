@@ -20,7 +20,6 @@ public class User implements UserDetails {
     @Setter
     private Long id;
 
-
     @Column(name="name", length = 32)
     @Getter
     @Setter
@@ -30,6 +29,11 @@ public class User implements UserDetails {
     @Getter
     @Setter
     private String surname;
+
+    @Column(name="login", length = 16)
+    @Getter
+    @Setter
+    private String login;
 
     @Column(name="phone", length = 13)
     @Getter
@@ -45,6 +49,12 @@ public class User implements UserDetails {
     @Getter
     @Setter
     private BigDecimal cash;
+
+    @OneToOne
+    @JoinColumn(name="addressId")
+    @Getter
+    @Setter
+    private Address address;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name="user_id"))
