@@ -15,6 +15,14 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public Address() { }
+
+    public Address(City city, String street, String houseNumber) {
+        this.city = city;
+        this.street = street;
+        this.houseNumber = houseNumber;
+    }
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="city_id")
     private City city;

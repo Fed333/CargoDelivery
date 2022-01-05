@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -17,11 +18,15 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private AddressService addressService;
+
     public boolean addUser(User user){
         if (userRepo.findByLogin(user.getLogin()) != null){
             return false;
         }
         user.setRoles(Collections.singleton(Role.USER));
+        Optional.ofNullable(user.getAddress()).ifPresent(addressService::addAddress);
         userRepo.save(user);
 
         return true;
@@ -34,5 +39,14 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return userRepo.findByLogin(s);
+    }
+
+
+    public User findUserByLogin(String login) {
+        return userRepo.findByLogin(login);
+    }
+
+    public void deleteUser(User user){
+        userRepo.delete(user);
     }
 }
