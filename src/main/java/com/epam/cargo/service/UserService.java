@@ -22,7 +22,9 @@ public class UserService implements UserDetailsService {
     private AddressService addressService;
 
     public boolean addUser(User user){
-        if (userRepo.findByLogin(user.getLogin()) != null){
+        User foundUser;
+        if ((foundUser = userRepo.findByLogin(user.getLogin())) != null){
+            user.setId(foundUser.getId());
             return false;
         }
         user.setRoles(Collections.singleton(Role.USER));
@@ -48,5 +50,6 @@ public class UserService implements UserDetailsService {
 
     public void deleteUser(User user){
         userRepo.delete(user);
+        Optional.ofNullable(user.getAddress()).ifPresent(addressService::deleteAddress);
     }
 }

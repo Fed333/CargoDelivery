@@ -13,4 +13,6 @@ public interface AddressRepo extends JpaRepository<Address, Long> {
 
     @Override
     List<Address> findAll();               //untested
+
+    Address findByHouseNumberAndCityAndStreet(String houseNumber, City city, String street);
 }

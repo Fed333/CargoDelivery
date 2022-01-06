@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,6 +23,9 @@ class UserServiceTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AddressService addressService;
 
     @Autowired
     private CityService cityService;
@@ -89,5 +93,31 @@ class UserServiceTest {
         Assert.assertEquals(user.getId(), userService.findUserByLogin(login).getId());
 
         Assert.assertFalse(Objects.isNull(userService.findUserByLogin(login).getAddress()));
+    }
+
+    @Test
+    void addUserWithAddressAndDeleteThan(){
+        String zipcodeOfVinnitsia = "21012";
+        Address address = new Address(cityService.findCityByZipCode(zipcodeOfVinnitsia), "Soborna", "96");
+
+        String name = "Ivan";
+        String login = "divan1_1";
+        String password = "123";
+
+        User user = new User(name, login, password);
+        user.setAddress(address);
+
+        userService.addUser(user);
+
+        Assert.assertEquals(password, userService.loadUserByUsername(login).getPassword());
+        Assert.assertEquals(user.getId(), userService.findUserByLogin(login).getId());
+
+        Assert.assertFalse(Objects.isNull(userService.findUserByLogin(login).getAddress()));
+
+        userService.deleteUser(user);
+
+        Assert.assertTrue(Objects.isNull(userService.findUserByLogin(login)));
+
+        Assert.assertThrows(NoSuchElementException.class, ()->addressService.findAddressById(address.getId()));
     }
 }
