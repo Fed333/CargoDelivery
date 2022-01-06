@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name="cities")
@@ -28,4 +29,27 @@ public class City {
         this.zipcode = zipcode;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof City)) return false;
+        City city = (City) o;
+        return id.equals(city.id) &&
+                name.equals(city.name) &&
+                zipcode.equals(city.zipcode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, zipcode);
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                '}';
+    }
 }

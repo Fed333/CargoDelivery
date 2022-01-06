@@ -9,9 +9,10 @@ import java.util.Optional;
 
 public interface DirectionDeliveryRepo extends JpaRepository<DirectionDelivery, Long> {
     @Override
-    Optional<DirectionDelivery> findById(Long id);   //untested
+    Optional<DirectionDelivery> findById(Long id);
 
     @Override
-    List<DirectionDelivery> findAll();               //untested
+    List<DirectionDelivery> findAll();
 
+    DirectionDelivery findBySenderCityAndReceiverCity(City senderCity, City receiverCity);
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface CityRepo extends JpaRepository<City, Long> {
     @Override
-    Optional<City> findById(Long id);   //untested
+    Optional<City> findById(Long id);
 
     Optional<City> findByZipcode(String zipcode);
 
