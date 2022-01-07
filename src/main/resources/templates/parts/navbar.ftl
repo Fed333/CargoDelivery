@@ -1,4 +1,8 @@
 <#include "references.ftl">
+<#include "security.ftl">
+
+<#import "authorization.ftl" as auth>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-green-ireland">
     <div class="container-fluid">
         <a class="navbar-brand" href="${refMain}">CargoDelivery</a>
@@ -19,8 +23,11 @@
                     <a class="nav-link" href="${refProfile}">Profile</a>
                 </li>
             </ul>
-
-            <a class="btn btn-light me-2" href="${refLogin}">Sign In</a>
+            <#if authorized>
+                <@auth.logout />
+            <#else>
+                <a class="btn btn-light me-2" href="${refLogin}">Sign In</a>
+            </#if>
         </div>
     </div>
 </nav>
