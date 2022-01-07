@@ -19,6 +19,8 @@
                     <a class="nav-link" href="${refProfile}">Profile</a>
                 </li>
             </ul>
+
+            <a class="btn btn-light me-2" href="${refLogin}">Sign In</a>
         </div>
     </div>
 </nav>
