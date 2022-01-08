@@ -1,4 +1,4 @@
-
+<#import "/spring.ftl" as spring/>
 <#macro page title>
 
 <!DOCTYPE>
@@ -21,6 +21,7 @@
 
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/style_login.css">
+    <link rel="stylesheet" href="/static/css/style_navbar.css">
 
 </head>
 <body>
