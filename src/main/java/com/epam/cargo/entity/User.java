@@ -109,4 +109,8 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public boolean isManager(){
+        return getRoles().contains(Role.MANAGER);
+    }
 }
