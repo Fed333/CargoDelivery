@@ -1,5 +1,6 @@
-<#import "parts/common.ftl" as c>
+<#import "parts/common.ftl" as c/>
 <#import "/spring.ftl" as spring/>
+<#import "parts/pager.ftl" as p/>
 
 <@c.page "Information Page">
     <div class="row">
@@ -21,7 +22,7 @@
                 </tr>
                 </thead>
                 <tbody class="table-light">
-                <#list directions as direction>
+                <#list directionsPage.content as direction>
                 <tr>
                     <td><@spring.message "city.${direction.senderCity.name}"/> - <@spring.message "city.${direction.receiverCity.name}"/></td>
                     <td>${direction.distance}</td>
@@ -29,6 +30,7 @@
                 </#list>
                 </tbody>
             </table>
+            <@p.pager url directionsPage/>
         </div>
     </div>
 
