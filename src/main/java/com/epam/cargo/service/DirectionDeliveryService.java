@@ -4,6 +4,8 @@ import com.epam.cargo.entity.City;
 import com.epam.cargo.entity.DirectionDelivery;
 import com.epam.cargo.repos.DirectionDeliveryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,6 +50,9 @@ public class DirectionDeliveryService {
 
     public List<DirectionDelivery> findAll() {
         return directionDeliveryRepo.findAll();
+    }
+    public Page<DirectionDelivery> findAll(Pageable pageable) {
+        return directionDeliveryRepo.findAll(pageable);
     }
 
     public void deleteDirection(DirectionDelivery direction) {
