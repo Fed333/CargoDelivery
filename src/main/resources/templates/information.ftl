@@ -24,7 +24,7 @@
                 <tbody class="table-light">
                 <#list directionsPage.content as direction>
                 <tr>
-                    <td><@spring.message "city.${direction.senderCity.name}"/> - <@spring.message "city.${direction.receiverCity.name}"/></td>
+                    <td>${direction.senderCity.name} - ${direction.receiverCity.name}</td>
                     <td>${direction.distance}</td>
                 </tr>
                 </#list>
