@@ -4,13 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.Collator;
+import java.util.Comparator;
 import java.util.Objects;
 
 @Entity
 @Table(name="directions")
 @Getter
 @Setter
-public class DirectionDelivery {
+public class DirectionDelivery implements Cloneable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,5 +62,48 @@ public class DirectionDelivery {
                 ", receiverCity=" + receiverCity +
                 ", distance=" + distance +
                 '}';
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        DirectionDelivery clone = (DirectionDelivery) super.clone();
+        clone.senderCity = (City) this.senderCity.clone();
+        clone.receiverCity = (City) this.receiverCity.clone();
+        return clone;
+    }
+
+    public static class SenderCityNameComparator implements Comparator<DirectionDelivery> {
+
+        private Collator collator;
+
+        public SenderCityNameComparator(Collator collator) {
+            this.collator = collator;
+        }
+
+        @Override
+        public int compare(DirectionDelivery o1, DirectionDelivery o2) {
+            return new City.NameComparator(collator).compare(o1.getSenderCity(), o2.getSenderCity());
+        }
+    }
+
+    public static class ReceiverCityNameComparator implements Comparator<DirectionDelivery> {
+
+        private final Collator collator;
+
+        public ReceiverCityNameComparator(Collator collator) {
+            this.collator = collator;
+        }
+
+        @Override
+        public int compare(DirectionDelivery o1, DirectionDelivery o2) {
+            return new City.NameComparator(collator).compare(o1.getReceiverCity(), o2.getReceiverCity());
+        }
+    }
+
+    public static class DistanceComparator implements Comparator<DirectionDelivery> {
+        @Override
+        public int compare(DirectionDelivery o1, DirectionDelivery o2) {
+            return o1.getDistance().compareTo(o2.getDistance());
+        }
     }
 }
