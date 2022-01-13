@@ -2,6 +2,8 @@ package com.epam.cargo.repos;
 
 import com.epam.cargo.entity.City;
 import com.epam.cargo.entity.DirectionDelivery;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -13,6 +15,8 @@ public interface DirectionDeliveryRepo extends JpaRepository<DirectionDelivery, 
 
     @Override
     List<DirectionDelivery> findAll();
+
+    Page<DirectionDelivery> findAll(Pageable pageable);
 
     DirectionDelivery findBySenderCityAndReceiverCity(City senderCity, City receiverCity);
 }
