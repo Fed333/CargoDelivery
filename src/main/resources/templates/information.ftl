@@ -15,7 +15,8 @@
             <!--<label>here could be your ads</label>-->
         </div>
         <div class="col-5">
-            <form method="get" action="${url}" id="filterForm">
+            <form method="get" action="${url}" id="filterForm" onsubmit="">
+                <button class="btn btn-primary" type="submit" id="submitButton" hidden>Submit</button>
                 <#assign
                 options = [
                 ["senderCity.name", "senderCityOption", "Sender City"],
@@ -23,7 +24,9 @@
                 ["distance", "distanceOption", "Distance"]
                 ]
                 >
-                <div class="mb-3"><@f.sorting "filterForm" options order /></div>
+                <div class="mb-3">
+                    <@f.sorting "filterForm" "submitButton" options order />
+                </div>
 
                 <table class="table table-bordered">
                     <thead class="table-primary">
@@ -41,8 +44,22 @@
                     </#list>
                     </tbody>
                 </table>
-                <@p.pager url directionsPage 'filterForm'/>
+                <@p.pager url directionsPage 'submitButton'/>
 
+                <input name="lang" value="${lang}" id="langInput" hidden>
+                <script>
+
+                    function clickSubmitButtonHandler(){
+                       clickSubmitButton('submitButton')
+                    }
+
+                    langEnglish.addEventListener('click', ()=>{langInput.setAttribute('value', 'en')})
+                    langUkrainian.addEventListener('click', ()=>{langInput.setAttribute('value', 'uk')})
+
+                    langEnglish.addEventListener('click', clickSubmitButtonHandler)
+                    langUkrainian.addEventListener('click', clickSubmitButtonHandler)
+
+                </script>
             </form>
         </div>
     </div>

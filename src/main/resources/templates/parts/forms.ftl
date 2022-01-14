@@ -1,5 +1,5 @@
 
-<#macro sorting formId options order>
+<#macro sorting formId submitButtonId options order>
 <#assign
 orderProperty = order.getProperty()
 orderDirection = order.getDirection().toString()
@@ -35,11 +35,15 @@ orderDirection = order.getDirection().toString()
         formSubmit('${formId}')
     }
 
-    sortCriterionSelect.addEventListener("change", setSortOptionOrderHandler, false)
-    sortCriterionSelect.addEventListener("change", submitFormHandler, false)
+    function clickSubmitButtonHandler(){
+        clickSubmitButton('${submitButtonId}')
+    }
 
-    sortOrderSelect.addEventListener("change", setSortOptionOrderHandler, false)
-    sortOrderSelect.addEventListener("change", submitFormHandler, false)
+    form = document.getElementById('${formId}')
+    form.addEventListener("submit", setSortOptionOrderHandler, false)
+
+    sortCriterionSelect.addEventListener("change", clickSubmitButtonHandler, false)
+    sortOrderSelect.addEventListener("change", clickSubmitButtonHandler, false)
 
 </script>
 </#macro>

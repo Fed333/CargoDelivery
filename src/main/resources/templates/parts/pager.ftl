@@ -1,6 +1,6 @@
 <#import "/spring.ftl" as spring/>
 
-<#macro pager url page formId>
+<#macro pager url page submitButtonId>
     <#if page.getTotalPages() gt 4>
         <#assign
             totalPages = page.getTotalPages()
@@ -43,7 +43,7 @@
                     page = document.getElementById('page${p}')
                     page.addEventListener('click', ()=>{setPageNumber('${p-1}')})
                     page.addEventListener('click', ()=>{setPageSize('${page.getSize()}')})
-                    page.addEventListener('click', ()=>{formSubmit('${formId}')})
+                    page.addEventListener('click', ()=>{clickSubmitButton('${submitButtonId}')})
                 </script>
             </li>
             </#if>
