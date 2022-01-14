@@ -4,13 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.Collator;
+import java.util.Comparator;
 import java.util.Objects;
 
 @Entity
 @Table(name="cities")
 @Getter
 @Setter
-public class City {
+public class City implements Cloneable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,5 +53,24 @@ public class City {
                 ", name='" + name + '\'' +
                 ", zipcode='" + zipcode + '\'' +
                 '}';
+    }
+
+    public static class NameComparator implements Comparator<City> {
+
+        private final Collator collator;
+
+        public NameComparator(Collator collator) {
+            this.collator = collator;
+        }
+
+        @Override
+        public int compare(City o1, City o2) {
+            return collator.compare(o1.getName(), o2.getName());
+        }
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
