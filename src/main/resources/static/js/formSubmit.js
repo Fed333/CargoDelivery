@@ -4,14 +4,18 @@ function formSubmit(formId){
     document.getElementById(formId).submit()
 }
 
+function clickSubmitButton(submitButtonId){
+    document.getElementById(submitButtonId).click()
+}
+
 function setSortOptionSelected(optionId, expectedValue){
-//    console.log('setSortOptionSelected has been called')
+    console.log('setSortOptionSelected has been called')
     option = document.getElementById(optionId)
-//    console.log("option.value: " + option.value + ", expectedValue: " + expectedValue)
+    console.log("option.value: " + option.value + ", expectedValue: " + expectedValue)
 
     if (option.value.toLowerCase() === expectedValue.toLowerCase()){
         option.setAttribute('selected', 'selected')
-//        console.log("added selected attribute to " + optionId)
+        console.log("added selected attribute to " + optionId)
     }
 }
 
