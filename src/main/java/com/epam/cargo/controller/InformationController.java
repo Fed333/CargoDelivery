@@ -36,6 +36,9 @@ public class InformationController {
         Sort.Order order = pageable.getSort().get().collect(Collectors.toList()).get(0);
         model.addAttribute("order", order);
 
+        String lang = locale.getLanguage();
+        model.addAttribute("lang", lang);
+
         return "information";
     }
 }
