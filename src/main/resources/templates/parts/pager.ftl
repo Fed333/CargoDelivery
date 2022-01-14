@@ -1,6 +1,6 @@
 <#import "/spring.ftl" as spring/>
 
-<#macro pager url page>
+<#macro pager url page formId>
     <#if page.getTotalPages() gt 4>
         <#assign
             totalPages = page.getTotalPages()
@@ -17,11 +17,16 @@
     <#else>
         <#assign body = 1..page.getTotalPages()>
     </#if>
+
+    <script src="/static/js/formSubmit.js"></script>
     <div class="mt-2">
         <ul class="pagination">
             <li class="page-item disabled">
                 <a class="page-link" href="#"><@spring.message "pagination.pages"/></a>
             </li>
+            <#assign
+                pageNumber = page.getNumber()
+            >
             <#list body as p>
             <#if (p - 1) == page.getNumber()>
             <li class="page-item active">
@@ -33,10 +38,18 @@
             </li>
             <#else>
             <li class="page-item">
-                <a class="page-link" href="${url}?page=${p-1}&size=${page.getSize()}" tabindex="-1">${p}</a>
+                <a class="page-link" href="#" role="button" tabindex="-1" id="page${p}">${p}</a>
+                <script>
+                    page = document.getElementById('page${p}')
+                    page.addEventListener('click', ()=>{setPageNumber('${p-1}')})
+                    page.addEventListener('click', ()=>{setPageSize('${page.getSize()}')})
+                    page.addEventListener('click', ()=>{formSubmit('${formId}')})
+                </script>
             </li>
             </#if>
             </#list>
         </ul>
+        <input name="page" id="pageNumber" value="${pageNumber}" hidden>
+        <input name="size" id="pageSize" value="${page.getSize()}" hidden>
     </div>
 </#macro>
