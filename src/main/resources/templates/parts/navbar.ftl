@@ -32,13 +32,13 @@
                 </a>
                 <ul class="dropdown-menu me-auto" aria-labelledby="selectLanguageDropdown">
                     <li>
-                        <a class="dropdown-item" href="?lang=en">
+                        <a class="dropdown-item" href="#" role="button" id="langEnglish">
                             <img src="/static/images/i18n/flags/english_flag.png" width="48" height="24" class="d-inline-block me-4">
                             <@spring.message "menu.language_en"/>
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="?lang=uk">
+                        <a class="dropdown-item" href="#" role="button" id="langUkrainian">
                             <img src="/static/images/i18n/flags/ukraine_flag.png" width="48" height="24" class="d-inline-block me-4">
                             <@spring.message "menu.language_uk"/>
                         </a>

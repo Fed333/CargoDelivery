@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Locale;
+import java.util.stream.Collectors;
+
 @Controller
 public class InformationController {
 
@@ -20,14 +23,21 @@ public class InformationController {
     @GetMapping("/")
     public String information(
             Model model,
-            @PageableDefault(sort = {"senderCity.name"}, direction = Sort.Direction.ASC) Pageable pageable
+            @PageableDefault(sort = {"senderCity.name"}, direction = Sort.Direction.ASC) Pageable pageable,
+            Locale locale
     ){
         Page<DirectionDelivery> directionsPage;
 
-        directionsPage = directionDeliveryService.findAll(pageable);
+        directionsPage = directionDeliveryService.findAll(pageable, locale);
 
         model.addAttribute("directionsPage", directionsPage);
         model.addAttribute("url", "/");
+
+        Sort.Order order = pageable.getSort().get().collect(Collectors.toList()).get(0);
+        model.addAttribute("order", order);
+
+        String lang = locale.getLanguage();
+        model.addAttribute("lang", lang);
 
         return "information";
     }
