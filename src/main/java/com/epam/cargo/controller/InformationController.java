@@ -24,11 +24,12 @@ public class InformationController {
     public String information(
             Model model,
             @PageableDefault(sort = {"senderCity.name"}, direction = Sort.Direction.ASC) Pageable pageable,
-            Locale locale
+            Locale locale,
+            DirectionDeliveryService.DirectionDeliveryFilter filter
     ){
         Page<DirectionDelivery> directionsPage;
 
-        directionsPage = directionDeliveryService.findAll(pageable, locale);
+        directionsPage = directionDeliveryService.getPage(pageable, locale, filter);
 
         model.addAttribute("directionsPage", directionsPage);
         model.addAttribute("url", "/");
