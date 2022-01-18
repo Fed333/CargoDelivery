@@ -95,11 +95,12 @@ public class DirectionDeliveryService {
 
     @NotNull
     private List<DirectionDelivery> filterDirections(DirectionDeliveryFilter filter, List<DirectionDelivery> directions) {
-        return directions.stream().filter(
-                getDirectionDeliveryPredicate(
-                        filter::getSenderCityName, DirectionDelivery::getSenderCity)
-                        .and(getDirectionDeliveryPredicate(filter::getReceiverCityName, DirectionDelivery::getReceiverCity))
-        ).collect(Collectors.toList());
+        return directions.stream()
+                .filter(
+                        getDirectionDeliveryPredicate(
+                                filter::getSenderCityName, DirectionDelivery::getSenderCity)
+                                .and(getDirectionDeliveryPredicate(filter::getReceiverCityName, DirectionDelivery::getReceiverCity))
+                ).collect(Collectors.toList());
     }
 
     @NotNull
@@ -114,6 +115,9 @@ public class DirectionDeliveryService {
     }
 
     private Page<DirectionDelivery> toPage(List<DirectionDelivery> directions, Pageable pageable, Locale locale) {
+        if(pageable.getPageNumber()*pageable.getPageSize() > directions.size()){
+            pageable = pageable.withPage(0);
+        }
         Sort sort = pageable.getSort();
         sortList(directions, sort, Collator.getInstance(locale));
 
