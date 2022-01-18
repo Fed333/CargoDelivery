@@ -48,3 +48,26 @@ orderDirection = order.getDirection().toString()
 
 </script>
 </#macro>
+
+<#macro directionFilter senderCity receiverCity>
+<script src="/static/js/formSubmit.js"></script>
+<div class="form-group row">
+
+    <div class="col-2">
+        <label class="col-form-label">Direction</label>
+    </div>
+
+    <div class="col-4">
+        <input type="text" class="form-control" name="senderCityName" id="senderCityNameId" value="${senderCity}" placeholder="From">
+    </div>
+
+    <div class="col-4">
+        <input type="text" class="form-control" name="receiverCityName" id="receiverCityNameId" value="${receiverCity}" placeholder="To">
+    </div>
+
+    <div class="col-2">
+        <button class="btn btn-primary" type="submit">Filter</button>
+    </div>
+
+</div>
+</#macro>
