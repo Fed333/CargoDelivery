@@ -40,6 +40,9 @@ public class InformationController {
         String lang = locale.getLanguage();
         model.addAttribute("lang", lang);
 
+        model.addAttribute("senderCity", filter.getSenderCityName());
+        model.addAttribute("receiverCity", filter.getReceiverCityName());
+
         return "information";
     }
 }
