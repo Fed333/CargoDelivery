@@ -28,6 +28,10 @@
                     <@f.sorting "filterForm" "submitButton" options order />
                 </div>
 
+                <div class="mb-3">
+                    <@f.directionFilter senderCity!"" receiverCity!"" />
+                </div>
+
                 <table class="table table-bordered">
                     <thead class="table-primary">
                     <tr>
