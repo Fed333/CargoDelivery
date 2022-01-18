@@ -54,19 +54,19 @@ orderDirection = order.getDirection().toString()
 <div class="form-group row">
 
     <div class="col-2">
-        <label class="col-form-label">Direction</label>
+        <label class="col-form-label"><@spring.message "lang.direction"/></label>
     </div>
 
     <div class="col-4">
-        <input type="text" class="form-control" name="senderCityName" id="senderCityNameId" value="${senderCity}" placeholder="From">
+        <input type="text" class="form-control" name="senderCityName" id="senderCityNameId" value="${senderCity}" placeholder="<@spring.message "lang.from-city"/>">
     </div>
 
     <div class="col-4">
-        <input type="text" class="form-control" name="receiverCityName" id="receiverCityNameId" value="${receiverCity}" placeholder="To">
+        <input type="text" class="form-control" name="receiverCityName" id="receiverCityNameId" value="${receiverCity}" placeholder="<@spring.message "lang.to-city"/>">
     </div>
 
     <div class="col-2">
-        <button class="btn btn-primary" type="submit">Filter</button>
+        <button class="btn btn-primary" type="submit"><@spring.message "lang.filter"/></button>
     </div>
 
 </div>
