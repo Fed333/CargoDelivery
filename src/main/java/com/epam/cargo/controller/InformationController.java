@@ -23,7 +23,7 @@ public class InformationController {
     @GetMapping("/")
     public String information(
             Model model,
-            @PageableDefault(sort = {"senderCity.name"}, direction = Sort.Direction.ASC) Pageable pageable,
+            @PageableDefault(size = 9, sort = {"senderCity.name"}, direction = Sort.Direction.ASC) Pageable pageable,
             Locale locale,
             DirectionDeliveryService.DirectionDeliveryFilter filter
     ){
