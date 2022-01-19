@@ -8,6 +8,9 @@ orderDirection = order.getDirection().toString()
 >
 <script src="/static/js/formSubmit.js"></script>
 <div class="form-group row">
+    <div class="col-2">
+        <label class="col-form-label"><@spring.message "lang.sorting"/></label>
+    </div>
     <div class="col-5">
         <select class="form-select" name="sort" id="sortCriterionSelect">
             <#list options as optionArr>
