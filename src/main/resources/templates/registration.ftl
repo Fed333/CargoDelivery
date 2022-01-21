@@ -5,8 +5,21 @@
 <#import "parts/authorization.ftl" as auth>
 
 <@c.page "Registration">
-    <h1>Registration</h1>
-    <form action="/registration" name="registerForm" id="registerForm" method="post">
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <script src="/static/js/formSubmit.js"></script>
+    <script src="/static/js/localization.js"></script>
+    <@auth.registration />
+
+    <form action="/registration" method="get">
+
+        <input name="lang" value="${lang!"en"}" id="langInput" hidden>
+        <button type="submit" id="submitButton" hidden></button>
     </form>
+
+    <script>
+        function clickSubmitButtonHandler(){
+            clickSubmitButton('submitButton')
+        }
+        addEventListeners(clickSubmitButtonHandler)
+    </script>
+
 </@c.page>
