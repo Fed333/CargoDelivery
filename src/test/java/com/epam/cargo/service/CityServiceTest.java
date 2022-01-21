@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Objects;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -20,9 +20,11 @@ class CityServiceTest {
     @Test
     void addCity() {
         City city = new City("Vinytsia", "21012");
-        boolean isAdded = cityService.addCity(city);
-        Assert.assertTrue(isAdded);
+        cityService.addCity(city);
+        boolean isPresent = !Objects.isNull(cityService.findCityByZipCode(city.getZipcode()));
+        Assert.assertTrue(isPresent);
     }
+
     @Test
     void addCityFailed(){
         City city = new City("Vinytsia", "21012");
@@ -40,6 +42,5 @@ class CityServiceTest {
 
         Assert.assertEquals(city1.getName(), city2.getName());
     }
-
 
 }
