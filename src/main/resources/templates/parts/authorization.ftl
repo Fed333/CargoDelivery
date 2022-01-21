@@ -67,7 +67,7 @@
                         </div>
                         <div class="col-4">
                             <input class="form-control mt-2" type="email" name="email" id="emailInput" placeholder="<@spring.message "lang.email"/>">
-                            <input class="form-control mt-2" type="text" name="email" id="phoneInput" placeholder="<@spring.message "lang.phone"/>">
+                            <input class="form-control mt-2" type="text" maxlength="13" name="phone" id="phoneInput" placeholder="<@spring.message "lang.phone"/>">
                         </div>
                     </div>
                 </div>
