@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Service
@@ -31,10 +32,13 @@ public class AddressService {
      * @throws NoExistingCityException if present city of address is absent in database
      * */
     public boolean addAddress(Address address) throws NoExistingCityException {
-        Objects.requireNonNull(address.getCity());
+        if (Objects.isNull(address)){
+            return false;
+        }
 
-        if(Objects.isNull(cityService.findCityById(address.getCity().getId()))){
-            throw new NoExistingCityException(address.getCity(), ResourceBundle.getBundle(messages));
+
+        if(Objects.isNull(address.getCity()) || Objects.isNull(cityService.findCityById(address.getCity().getId()))){
+            throw new NoExistingCityException(Optional.ofNullable(address.getCity()).orElse(new City()), ResourceBundle.getBundle(messages));
         }
 
         Address foundAddress;
