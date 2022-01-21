@@ -23,12 +23,13 @@ public class InformationController {
     @GetMapping("/")
     public String information(
             Model model,
-            @PageableDefault(sort = {"senderCity.name"}, direction = Sort.Direction.ASC) Pageable pageable,
-            Locale locale
+            @PageableDefault(size = 9, sort = {"senderCity.name"}, direction = Sort.Direction.ASC) Pageable pageable,
+            Locale locale,
+            DirectionDeliveryService.DirectionDeliveryFilter filter
     ){
         Page<DirectionDelivery> directionsPage;
 
-        directionsPage = directionDeliveryService.findAll(pageable, locale);
+        directionsPage = directionDeliveryService.getPage(pageable, locale, filter);
 
         model.addAttribute("directionsPage", directionsPage);
         model.addAttribute("url", "/");
@@ -38,6 +39,9 @@ public class InformationController {
 
         String lang = locale.getLanguage();
         model.addAttribute("lang", lang);
+
+        model.addAttribute("senderCity", filter.getSenderCityName());
+        model.addAttribute("receiverCity", filter.getReceiverCityName());
 
         return "information";
     }

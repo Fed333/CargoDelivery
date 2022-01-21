@@ -6,12 +6,18 @@
             totalPages = page.getTotalPages()
             pageNumber = page.getNumber() + 1
 
-            head = (pageNumber > 4)?then([1, -1],[1, 2, 3])
-            tail = (pageNumber > totalPages - 4)?then([totalPages - 2, totalPages - 1, totalPages], [-1, totalPages])
-            bodyBefore = (pageNumber > 4 && pageNumber < totalPages - 1)?then([pageNumber - 2, pageNumber - 1], [])
-            bodyAfter = (pageNumber < totalPages - 3 && pageNumber > 2)?then([pageNumber + 1, pageNumber + 2], [])
+            head = []
+            head = (pageNumber == 2 || pageNumber == 4)?then([1], head)
+            head = (pageNumber  > 4)?then([1, -1], head)
 
-            body = head + bodyBefore + (pageNumber < 4 || pageNumber > totalPages - 3 )?then([], [pageNumber]) + bodyAfter + tail
+            tail = []
+            tail = (pageNumber == totalPages - 3 || pageNumber == totalPages - 1)?then([totalPages], tail)
+            tail = (pageNumber < totalPages - 3)?then([-1, totalPages], tail)
+
+            bodyBefore = (pageNumber >= 3 && pageNumber <= totalPages)?then([pageNumber - 2, pageNumber - 1], [])
+            bodyAfter = (pageNumber < totalPages - 1)?then([pageNumber + 1, pageNumber + 2], [])
+
+            body = head + bodyBefore + [pageNumber] + bodyAfter + tail
 
         >
     <#else>

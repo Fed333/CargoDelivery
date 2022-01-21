@@ -3,6 +3,9 @@ package com.epam.cargo.service;
 import com.epam.cargo.entity.City;
 import com.epam.cargo.entity.DirectionDelivery;
 import com.epam.cargo.repos.DirectionDeliveryRepo;
+import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +17,11 @@ import org.springframework.stereotype.Service;
 
 import java.text.Collator;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,6 +75,7 @@ public class DirectionDeliveryService {
 
         return list;
     }
+
     public Page<DirectionDelivery> findAll(Pageable pageable, Locale locale) {
 
         Page<DirectionDelivery> page;
@@ -75,7 +84,40 @@ public class DirectionDeliveryService {
         return page;
     }
 
+    public Page<DirectionDelivery> getPage(Pageable pageable, Locale locale, DirectionDeliveryFilter filter){
+        List<DirectionDelivery> directions = findAll(locale);
+        directions = filterDirections(filter, directions);
+
+        Page<DirectionDelivery> page;
+        page = toPage(directions, pageable, locale);
+        return page;
+    }
+
+    @NotNull
+    private List<DirectionDelivery> filterDirections(DirectionDeliveryFilter filter, List<DirectionDelivery> directions) {
+        return directions.stream()
+                .filter(
+                        getDirectionDeliveryPredicate(
+                                filter::getSenderCityName, DirectionDelivery::getSenderCity)
+                                .and(getDirectionDeliveryPredicate(filter::getReceiverCityName, DirectionDelivery::getReceiverCity))
+                ).collect(Collectors.toList());
+    }
+
+    @NotNull
+    private Predicate<DirectionDelivery> getDirectionDeliveryPredicate(Supplier<String> getFilteredName, Function<DirectionDelivery, City> getCity) {
+        return directionDelivery -> {
+            String filteredName = getFilteredName.get();
+            Pattern pattern = Pattern.compile("^" + Optional.ofNullable(filteredName).orElse(""), Pattern.CASE_INSENSITIVE);
+            String name = getCity.apply(directionDelivery).getName();
+            Matcher matcher = pattern.matcher(name);
+            return matcher.find();
+        };
+    }
+
     private Page<DirectionDelivery> toPage(List<DirectionDelivery> directions, Pageable pageable, Locale locale) {
+        if(pageable.getPageNumber()*pageable.getPageSize() > directions.size()){
+            pageable = pageable.withPage(0);
+        }
         Sort sort = pageable.getSort();
         sortList(directions, sort, Collator.getInstance(locale));
 
@@ -165,6 +207,14 @@ public class DirectionDeliveryService {
         if (city1.equals(city2)){
             throw new IllegalArgumentException();
         }
+    }
+
+    @Getter
+    @Setter
+    public static class DirectionDeliveryFilter {
+        private String senderCityName;
+        private String receiverCityName;
+
     }
 
 }
