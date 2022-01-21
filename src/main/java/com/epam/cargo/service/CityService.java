@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 @Service
 public class CityService {
@@ -72,5 +74,14 @@ public class CityService {
         City localizedCity = (City) city.clone();
         localizedCity.setName(bundle.getString("city."+city.getName()));
         return localizedCity;
+    }
+
+    public List<City> findAll(Locale locale) {
+        ResourceBundle bundle = ResourceBundle.getBundle(messages, locale);
+        return findAll().stream().map(o -> localize(o, bundle)).collect(Collectors.toList());
+    }
+
+    public List<City> findAll(){
+        return cityRepo.findAll();
     }
 }
