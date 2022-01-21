@@ -19,13 +19,17 @@
                 <button class="btn btn-primary" type="submit" id="submitButton" hidden>Submit</button>
                 <#assign
                 options = [
-                ["senderCity.name", "senderCityOption", "Sender City"],
-                ["receiverCity.name", "receiverCityOption", "Receiver City"],
-                ["distance", "distanceOption", "Distance"]
+                ["senderCity.name", "senderCityOption", "info.sort-direction-sender-city"],
+                ["receiverCity.name", "receiverCityOption", "info.sort-direction-receiver-city"],
+                ["distance", "distanceOption", "info.sort-direction-distance"]
                 ]
                 >
                 <div class="mb-3">
                     <@f.sorting "filterForm" "submitButton" options order />
+                </div>
+
+                <div class="mb-3">
+                    <@f.directionFilter senderCity!"" receiverCity!"" />
                 </div>
 
                 <table class="table table-bordered">

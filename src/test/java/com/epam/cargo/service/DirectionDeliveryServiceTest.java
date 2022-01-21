@@ -90,4 +90,5 @@ class DirectionDeliveryServiceTest {
         Assert.assertThrows(IllegalArgumentException.class, ()->directionDeliveryService.addDirection(direction2));
 
     }
+
 }

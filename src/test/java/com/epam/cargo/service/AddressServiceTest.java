@@ -1,6 +1,8 @@
 package com.epam.cargo.service;
 
 import com.epam.cargo.entity.Address;
+import com.epam.cargo.exception.NoExistingCityException;
+import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -21,10 +23,11 @@ class AddressServiceTest {
     private CityService cityService;
 
     @Test
-    void addAddress() {
+    @SneakyThrows
+    void addAddressAndDeleteThen() {
         Address address = new Address();
         String zipcode = "21012";
-        String street = "Kelezka";
+        String street = "Pyrogova";
         address.setCity(cityService.findCityByZipCode(zipcode));
         address.setStreet(street);
         address.setHouseNumber("98");
@@ -32,6 +35,10 @@ class AddressServiceTest {
         boolean isAdded = addressService.addAddress(address);
 
         Assert.assertTrue(isAdded);
+
+        addressService.deleteAddress(address);
+
+        Assert.assertThrows(NoSuchElementException.class, ()->addressService.findAddressById(address.getId()));
     }
 
     @Test
@@ -39,21 +46,18 @@ class AddressServiceTest {
         Address address = new Address();
         String InvalidZipcode = "invalidZipCode";
         String street = "Kelezka";
-        boolean isAdded = false;
-        try {
-            address.setCity(cityService.findCityByZipCode(InvalidZipcode));
-            address.setStreet(street);
-            address.setHouseNumber("98");
 
-            isAdded = addressService.addAddress(address);
-        }
-        catch (NoSuchElementException e){
-            isAdded = false;
-        }
-        Assert.assertFalse(isAdded);
+
+        address.setCity(cityService.findCityByZipCode(InvalidZipcode));
+        address.setStreet(street);
+        address.setHouseNumber("98");
+
+        Assert.assertThrows(NoExistingCityException.class, () -> addressService.addAddress(address));
+
     }
 
     @Test
+    @SneakyThrows
     void findAddressById(){
         Address address1 = new Address();
         String zipcode = "21012";
