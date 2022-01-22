@@ -9,17 +9,11 @@
     <script src="/static/js/localization.js"></script>
     <@auth.registration />
 
-    <form action="/registration" method="get">
-
-        <input name="lang" value="${lang!"en"}" id="langInput" hidden>
-        <button type="submit" id="submitButton" hidden></button>
-    </form>
-
     <script>
-        function clickSubmitButtonHandler(){
-            clickSubmitButton('submitButton')
-        }
-        addEventListeners(clickSubmitButtonHandler)
+        let inputs = ['nameInput', 'surnameInput', 'emailInput', 'phoneInput', 'streetInput', 'houseNumberInput', 'loginInput', 'cityInput']
+        let url = '${refRegister}'
+        addSwitchLanguageWithUrlClickListeners(url, inputs)
     </script>
+
 
 </@c.page>
