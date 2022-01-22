@@ -1,26 +1,28 @@
-
+//відправить форму
 function formSubmit(formId){
-//    console.log("formId: " + formId)
     document.getElementById(formId).submit()
 }
-
+//ініціює подію click для submitButton
 function clickSubmitButton(submitButtonId){
     document.getElementById(submitButtonId).click()
 }
 
-function setSortOptionSelected(optionId, expectedValue){
-    console.log('setSortOptionSelected has been called')
+function selectOption(optionId, setSelected){
     option = document.getElementById(optionId)
-    console.log("option.value: " + option.value + ", expectedValue: " + expectedValue)
+    if (setSelected === true){
+        option.setAttribute('selected', 'selected')
+    }
+}
+
+function setSortOptionSelected(optionId, expectedValue){
+    option = document.getElementById(optionId)
 
     if (option.value.toLowerCase() === expectedValue.toLowerCase()){
         option.setAttribute('selected', 'selected')
-        console.log("added selected attribute to " + optionId)
     }
 }
 
 function setSortOptionOrder(sortSelectOrderId, sortSelectCriterionId){
-//    console.log('setSortOptionOrder has been called')
 
     selectCriterion = document.getElementById(sortSelectCriterionId)
     optionCriterion = selectCriterion.options[selectCriterion.selectedIndex]
@@ -32,7 +34,6 @@ function setSortOptionOrder(sortSelectOrderId, sortSelectCriterionId){
     value = value.replace(/(,[a-zA-Z]*)/, '')
     value = value + "," + optionOrder.getAttribute('value')
 
-//    console.log("value: " + value)
 
     optionCriterion.setAttribute('value', value)
 }
