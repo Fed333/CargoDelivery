@@ -5,11 +5,11 @@ import com.epam.cargo.repos.CityRepo;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.text.Collator;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -83,5 +83,52 @@ public class CityService {
 
     public List<City> findAll(){
         return cityRepo.findAll();
+    }
+
+    public List<City> findAll(Locale locale, Sort sort){
+        List<City> cities = findAll(locale);
+        sortCities(cities, sort, locale);
+        return cities;
+    }
+
+    //TODO take out logic into parametrized method of some utility class
+    private void sortCities(List<City> cities, Sort sort, Locale locale){
+        Collator collator = Collator.getInstance(locale);
+
+        List<Sort.Order> orders = sort.get().collect(Collectors.toList());
+
+        Comparator<City> comparator = null;
+
+        ComparatorRecognizer recognizer = new CityService.ComparatorRecognizer(collator);
+        for (Sort.Order order:orders) {
+            if (Objects.isNull(comparator)){
+                comparator = recognizer.getComparator(order);
+            }
+            else{
+                comparator = comparator.thenComparing(recognizer.getComparator(order));
+            }
+        }
+
+        if (!Objects.isNull(comparator)) {
+            cities.sort(comparator);
+        }
+    }
+
+    //TODO take out class into some utility class, make ComparatorRecognizer interface
+    private static class ComparatorRecognizer {
+        private final Map<String, Comparator<City>> comparators;
+
+        ComparatorRecognizer(Collator collator){
+            comparators = new HashMap<>();
+            comparators.put("name", new City.NameComparator(collator));
+        }
+
+        private Comparator<City> getComparator(Sort.Order order){
+            Comparator<City> cmp = comparators.get(order.getProperty());
+            if (!Objects.isNull(cmp) && order.isDescending()){
+                cmp = cmp.reversed();
+            }
+            return cmp;
+        }
     }
 }
