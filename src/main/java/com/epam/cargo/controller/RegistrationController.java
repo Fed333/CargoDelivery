@@ -10,9 +10,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Locale;
@@ -29,9 +29,9 @@ public class RegistrationController {
 
     @GetMapping
     public String registrationPage(
-            @ModelAttribute(name="name") String name,
             UserRequest userRequest,
             Model model,
+
             Locale locale
     ){
         List<City> cities = cityService.findAll(locale, Sort.by(Sort.Order.by("name")));
@@ -43,13 +43,15 @@ public class RegistrationController {
     public String registration(
             UserRequest userRequest,
             Locale locale,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     ) {
         try {
             userService.registerUser(userRequest, locale);
         }
         catch (WrongDataException e) {
             model.addAttribute(e.getModelAttribute(), e.getMessage());
+            redirectAttributes.addFlashAttribute("userRequest", userRequest);
             return "redirect:/registration";
         }
 
