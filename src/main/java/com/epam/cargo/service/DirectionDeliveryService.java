@@ -1,11 +1,10 @@
 package com.epam.cargo.service;
 
+import com.epam.cargo.dto.DirectionDeliveryFilterRequest;
 import com.epam.cargo.entity.City;
 import com.epam.cargo.entity.DirectionDelivery;
 import com.epam.cargo.repos.DirectionDeliveryRepo;
 import com.sun.istack.NotNull;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -84,7 +83,7 @@ public class DirectionDeliveryService {
         return page;
     }
 
-    public Page<DirectionDelivery> getPage(Pageable pageable, Locale locale, DirectionDeliveryFilter filter){
+    public Page<DirectionDelivery> getPage(Pageable pageable, Locale locale, DirectionDeliveryFilterRequest filter){
         List<DirectionDelivery> directions = findAll(locale);
         directions = filterDirections(filter, directions);
 
@@ -94,7 +93,7 @@ public class DirectionDeliveryService {
     }
 
     @NotNull
-    private List<DirectionDelivery> filterDirections(DirectionDeliveryFilter filter, List<DirectionDelivery> directions) {
+    private List<DirectionDelivery> filterDirections(DirectionDeliveryFilterRequest filter, List<DirectionDelivery> directions) {
         return directions.stream()
                 .filter(
                         getDirectionDeliveryPredicate(
@@ -207,14 +206,6 @@ public class DirectionDeliveryService {
         if (city1.equals(city2)){
             throw new IllegalArgumentException();
         }
-    }
-
-    @Getter
-    @Setter
-    public static class DirectionDeliveryFilter {
-        private String senderCityName;
-        private String receiverCityName;
-
     }
 
 }
