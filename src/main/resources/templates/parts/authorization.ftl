@@ -100,11 +100,13 @@
                 <div class="form-group row">
                     <div class="col-4">
                         <select class="form-select" name="address.cityId" id="cityInput">
-                            <#list cities as city>
-                                <#assign cityId = city.id>
-                                <option value="${city.id}" id="city${cityId}">${city.name}</option>
-                                <script>selectOption('city${cityId}', '${cityId}'==='${selectedCityId!""}')</script>
-                            </#list>
+                            <#if cities??>
+                                <#list cities as city>
+                                    <#assign cityId = city.id>
+                                    <option value="${city.id}" id="city${cityId}">${city.name}</option>
+                                    <script>selectOption('city${cityId}', '${cityId}'==='${selectedCityId!""}')</script>
+                                </#list>
+                            </#if>
                         </select>
                     </div>
                     <div class="col-4">
