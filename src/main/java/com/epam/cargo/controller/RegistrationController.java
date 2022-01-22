@@ -6,9 +6,11 @@ import com.epam.cargo.exception.WrongDataException;
 import com.epam.cargo.service.CityService;
 import com.epam.cargo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,10 +29,12 @@ public class RegistrationController {
 
     @GetMapping
     public String registrationPage(
+            @ModelAttribute(name="name") String name,
+            UserRequest userRequest,
             Model model,
             Locale locale
     ){
-        List<City> cities = cityService.findAll(locale);
+        List<City> cities = cityService.findAll(locale, Sort.by(Sort.Order.by("name")));
         model.addAttribute("cities", cities);
         return "registration";
     }
@@ -48,6 +52,7 @@ public class RegistrationController {
             model.addAttribute(e.getModelAttribute(), e.getMessage());
             return "redirect:/registration";
         }
+
         return "redirect:/login";
     }
 }
