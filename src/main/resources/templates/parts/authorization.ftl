@@ -63,6 +63,7 @@
 
 </#if>
 <script src="/static/js/formSubmit.js"></script>
+<script src="/static/js/validationError.js"></script>
 <div class="row d-flex justify-content-center mt-4">
     <form action="/registration" method="post" style="max-width: 860px;">
         <input type="hidden" name="_csrf" value="${_csrf.token}">
@@ -123,16 +124,17 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-4">
+                    <div class="col-4 validation-container" <#if loginErrorMessage??>data-error="${loginErrorMessage}"</#if>>
                         <input class="form-control" type="text" name="login" value="${login!""}" id="loginInput" placeholder="<@spring.message "auth.credentials-login"/>">
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 validation-container" <#if noValidPasswordErrorMessage??>data-error="${noValidPasswordErrorMessage}"</#if>>
                         <input class="form-control" type="password" name="password" id="passwordInput" placeholder="<@spring.message "auth.credentials-password"/>">
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 validation-container" <#if duplicatePasswordErrorMessage??>data-error="${duplicatePasswordErrorMessage}"</#if>>
                         <input class="form-control" type="password" name="duplicatePassword" id="duplicatePasswordInput" placeholder="<@spring.message "auth.credentials-duplicate-password"/>">
                     </div>
                 </div>
+
                 <hr>
                 <div class="form-group row">
                     <div class="col d-flex justify-content-center">
@@ -142,5 +144,7 @@
             </div>
         </div>
     </form>
+
+    <script>addRemoveErrorAttributeListener()</script>
 </div>
 </#macro>
