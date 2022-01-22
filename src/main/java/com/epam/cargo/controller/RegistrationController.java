@@ -52,6 +52,7 @@ public class RegistrationController {
         catch (WrongDataException e) {
             model.addAttribute(e.getModelAttribute(), e.getMessage());
             redirectAttributes.addFlashAttribute("userRequest", userRequest);
+            redirectAttributes.addFlashAttribute(e.getModelAttribute(), e.getMessage());
             return "redirect:/registration";
         }
 
