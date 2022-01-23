@@ -4,17 +4,16 @@ import com.epam.cargo.entity.City;
 
 import java.util.ResourceBundle;
 
+import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_EXISTING_CITY_KEY_ERROR_MESSAGE;
+
 public class NoExistingCityException extends WrongDataException{
-
-
-    private static final String KEY_MESSAGE_FORMAT = "wrong-input-data.no-existing-city.format";
 
     public NoExistingCityException(City city, ResourceBundle bundle) {
         super(buildErrorMessage(city, bundle));
     }
 
     private static String buildErrorMessage(City city, ResourceBundle bundle) {
-        return String.format(bundle.getString(KEY_MESSAGE_FORMAT), city.getName());
+        return String.format(bundle.getString(NO_EXISTING_CITY_KEY_ERROR_MESSAGE), city.getName());
     }
 
     @Override

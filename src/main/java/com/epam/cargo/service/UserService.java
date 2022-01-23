@@ -65,9 +65,9 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(password));
     }
 
-    private void requirePasswordDuplicationMatch(UserRequest userRequest, String password, ResourceBundle bundle) throws DuplicatePasswordValidationException {
+    private void requirePasswordDuplicationMatch(UserRequest userRequest, String password, ResourceBundle bundle) throws PasswordConfirmationException {
         if (!password.equals(userRequest.getDuplicatePassword())){
-            throw new DuplicatePasswordValidationException(bundle);
+            throw new PasswordConfirmationException(bundle);
         }
     }
 

@@ -127,7 +127,7 @@
                     <div class="col-4 validation-container" <#if loginErrorMessage??>data-error="${loginErrorMessage}"</#if>>
                         <input class="form-control" type="text" name="login" value="${login!""}" id="loginInput" placeholder="<@spring.message "auth.credentials-login"/>">
                     </div>
-                    <div class="col-4 validation-container" <#if noValidPasswordErrorMessage??>data-error="${noValidPasswordErrorMessage}"</#if>>
+                    <div class="col-4 validation-container" <#if passwordErrorMessage??>data-error="${passwordErrorMessage}"</#if>>
                         <input class="form-control" type="password" name="password" id="passwordInput" placeholder="<@spring.message "auth.credentials-password"/>">
                     </div>
                     <div class="col-4 validation-container" <#if duplicatePasswordErrorMessage??>data-error="${duplicatePasswordErrorMessage}"</#if>>
