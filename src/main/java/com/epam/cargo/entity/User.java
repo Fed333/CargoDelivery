@@ -45,12 +45,6 @@ public class User implements UserDetails {
     @Setter
     private String password;
 
-    @Transient
-    @NotBlank(message = NO_FILLED_DUPLICATE_PASSWORD_KEY_ERROR_MESSAGE)
-    @Getter
-    @Setter
-    private String duplicatePassword;
-
     @Column(name="phone", length = 13)
     @Getter
     @Setter
