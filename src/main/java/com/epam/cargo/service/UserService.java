@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -38,6 +39,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     public User registerUser(UserRequest userRequest, Locale locale) throws WrongDataException {
@@ -59,7 +62,7 @@ public class UserService implements UserDetailsService {
         String password = userRequest.getPassword();
         requireValidPassword(password, bundle);
         requirePasswordDuplicationMatch(userRequest, password, bundle);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
     }
 
     private void requirePasswordDuplicationMatch(UserRequest userRequest, String password, ResourceBundle bundle) throws DuplicatePasswordValidationException {
