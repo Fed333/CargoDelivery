@@ -6,9 +6,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Set;
+
+import static com.epam.cargo.exception.WrongInputDataKeysConstants.*;
 
 @Entity
 @Table(name="users")
@@ -30,14 +33,23 @@ public class User implements UserDetails {
     @Setter
     private String surname;
 
+
+    @NotBlank(message = NO_FILLED_LOGIN_KEY_ERROR_MESSAGE)
     @Column(name="login", unique = true, nullable = false, length = 32)
     @Getter
     @Setter
     private String login;
 
+    @NotBlank(message = NO_FILLED_PASSWORD_KEY_ERROR_MESSAGE)
     @Column(name="password", nullable = false, length = 256)
     @Setter
     private String password;
+
+    @Transient
+    @NotBlank(message = NO_FILLED_DUPLICATE_PASSWORD_KEY_ERROR_MESSAGE)
+    @Getter
+    @Setter
+    private String duplicatePassword;
 
     @Column(name="phone", length = 13)
     @Getter
