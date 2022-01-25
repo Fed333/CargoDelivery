@@ -5,6 +5,7 @@ import com.epam.cargo.repos.DimensionsFareRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -12,6 +13,10 @@ public class DimensionsFareService {
 
     @Autowired
     private DimensionsFareRepo dimensionsFareRepo;
+
+    public List<DimensionsFare> findAllFares() {
+        return dimensionsFareRepo.findAll();
+    }
 
     public DimensionsFare findFareByVolume(Integer volume){
         requireOnlyPositive(volume);
@@ -44,4 +49,5 @@ public class DimensionsFareService {
             throw new IllegalArgumentException("volume cannot be negative");
         }
     }
+
 }

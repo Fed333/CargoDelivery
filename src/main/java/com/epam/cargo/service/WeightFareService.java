@@ -5,12 +5,17 @@ import com.epam.cargo.repos.WeightFareRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
 public class WeightFareService {
     @Autowired
     private WeightFareRepo weightFareRepo;
+
+    public List<WeightFare> findAllFares() {
+        return weightFareRepo.findAll();
+    }
 
     public WeightFare findFareByWeight(Integer weight){
         requireOnlyPositive(weight);
@@ -44,4 +49,5 @@ public class WeightFareService {
             throw new IllegalArgumentException("weight cannot be null");
         }
     }
+
 }

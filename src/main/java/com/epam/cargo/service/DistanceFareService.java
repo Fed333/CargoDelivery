@@ -5,6 +5,7 @@ import com.epam.cargo.repos.DistanceFareRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -12,6 +13,10 @@ public class DistanceFareService {
 
     @Autowired
     private DistanceFareRepo distanceFareRepo;
+
+    public List<DistanceFare> findAllFares(){
+        return distanceFareRepo.findAll();
+    }
 
     public DistanceFare findFareByDistance(Integer distance){
         requireOnlyPositive(distance);
