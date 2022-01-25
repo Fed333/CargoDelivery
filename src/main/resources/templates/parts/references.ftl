@@ -1,6 +1,7 @@
 <#assign
 refMain = "/main"
 refInfo = "/"
+refFares = "/fares"
 refCreateApp = "/create_app"
 refProfile = "/profile"
 refLogin = "/login"
