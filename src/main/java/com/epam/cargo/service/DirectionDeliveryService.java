@@ -92,6 +92,14 @@ public class DirectionDeliveryService {
         return page;
     }
 
+    /**
+     * finds the smallest distance between given cities, according to direction delivery routes in database
+     * @return City.Distance object with smallest distance and route as well
+     * */
+    public City.Distance getDistanceBetweenCities(City cityFrom, City cityTo, Locale locale){
+        return CityUtils.getDistance(cityFrom, cityTo, findAll(locale));
+    }
+
     @NotNull
     private List<DirectionDelivery> filterDirections(DirectionDeliveryFilterRequest filter, List<DirectionDelivery> directions) {
         return directions.stream()
