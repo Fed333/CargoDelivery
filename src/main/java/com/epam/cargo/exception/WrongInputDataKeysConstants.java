@@ -14,5 +14,9 @@ public interface WrongInputDataKeysConstants {
 
     String NO_EXISTING_CITY_KEY_ERROR_MESSAGE = "wrong-input-data.no-existing-city.format";
 
+    String NO_POSITIVE_NUMBER_KEY_ERROR_MESSAGE = "wrong-input-data.no-positive-number";
+
+    String REQUIRED_KEY_ERROR_MESSAGE = "lang.required";
+
     String UNKNOWN_ERROR_KEY_MESSAGE = "unknown-error";
 }
