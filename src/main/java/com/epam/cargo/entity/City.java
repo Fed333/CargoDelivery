@@ -90,5 +90,33 @@ public class City implements Cloneable{
             this.distance = distance;
             this.route = route;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Distance)) return false;
+            Distance distance1 = (Distance) o;
+            return Objects.equals(cityFrom, distance1.cityFrom) &&
+                    Objects.equals(cityTo, distance1.cityTo) &&
+                    Objects.equals(distance, distance1.distance) &&
+                    Objects.equals(route, distance1.route);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(cityFrom, cityTo, distance, route);
+        }
+    }
+
+    /**
+     * creates a new object from given parameters
+     * @return new created City object
+     * */
+    public static City of(Long id, String name, String zipcode){
+        City city = new City();
+        city.setId(id);
+        city.setName(name);
+        city.setZipcode(zipcode);
+        return city;
     }
 }
