@@ -11,7 +11,15 @@ import java.util.stream.Collectors;
 
 public class CityUtils {
 
-    public static City.Distance getDistance(City from, City to, List<DirectionDelivery> directions){
+    /**
+     * calculate smallest distance between cityFrom and cityTo
+     * @param cityFrom source city
+     * @param cityTo destination city
+     * @param directions list of all available directions between cities
+     * @return City.Distance object with source city, destination city, smallest distance (rounded number to 1 decimal place)
+     * and route if route doesn't exist return null
+     * */
+    public static City.Distance getDistance(City cityFrom, City cityTo, List<DirectionDelivery> directions){
 
         Set<City> cities = directions.stream().collect(getCityFromDirectionsCollector());
 
@@ -27,15 +35,15 @@ public class CityUtils {
 
         double[][] graph = createGraph(directions, cityIntegerMap);
 
-        Integer source = cityIntegerMap.get(from);
-        Integer dest = cityIntegerMap.get(to);
+        Integer source = cityIntegerMap.get(cityFrom);
+        Integer dest = cityIntegerMap.get(cityTo);
 
         Dijkstra dijkstra = new Dijkstra(graph, source);
-        double minDistance = dijkstra.calculateMinDistance(dest);
+        double minDistance = Math.round(dijkstra.calculateMinDistance(dest)*10.0)/10.0;
 
         if (minDistance != Double.POSITIVE_INFINITY){
             List<City> route = buildCitiesSmallestRout(dijkstra.buildShortestRoute(dest), integerCityMap);
-            return new City.Distance(from, to, minDistance, route);
+            return new City.Distance(cityFrom, cityTo, minDistance, route);
         }
 
         return null;
