@@ -8,6 +8,10 @@ import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_EXISTING_C
 
 public class NoExistingCityException extends WrongDataException{
 
+    public NoExistingCityException(){
+        super("Your city is absent in our data base!");
+    }
+
     public NoExistingCityException(City city, ResourceBundle bundle) {
         super(buildErrorMessage(city, bundle));
     }
