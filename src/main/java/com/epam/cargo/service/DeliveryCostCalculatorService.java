@@ -31,8 +31,12 @@ public class DeliveryCostCalculatorService {
     public DeliveryCostCalculatorResponse calculateCost(DeliveryCostCalculatorRequest calculatorRequest, Locale locale) throws WrongDataException {
         Objects.requireNonNull(calculatorRequest, "calculatorRequest cannot be null");
 
-        City cityFrom = requireExistingCity(calculatorRequest.getCityFromId());
-        City cityTo = requireExistingCity(calculatorRequest.getCityToId());
+        Long cityFromId = calculatorRequest.getCityFromId();
+        Long cityToId = calculatorRequest.getCityToId();
+        requireDifferentCities(cityFromId, cityToId);
+
+        City cityFrom = requireExistingCity(cityFromId);
+        City cityTo = requireExistingCity(cityToId);
 
         City.Distance distance = directionDeliveryService.getDistanceBetweenCities(cityFrom, cityTo, locale);
 
@@ -43,6 +47,12 @@ public class DeliveryCostCalculatorService {
         double totalCost = distanceCost + weightCost + dimensionsCost;
 
         return new DeliveryCostCalculatorResponse(totalCost, distance);
+    }
+
+    private void requireDifferentCities(Long cityFromId, Long cityToId) {
+        if (Objects.equals(cityFromId, cityToId)){
+            throw new IllegalArgumentException("Sender city and receiver city cannot be the same");
+        }
     }
 
     private City requireExistingCity(Long cityId) throws NoExistingCityException {
