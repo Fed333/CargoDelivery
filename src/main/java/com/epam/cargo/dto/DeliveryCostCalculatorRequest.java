@@ -10,7 +10,6 @@ import javax.validation.constraints.Positive;
 import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_POSITIVE_NUMBER_KEY_ERROR_MESSAGE;
 import static com.epam.cargo.exception.WrongInputDataKeysConstants.REQUIRED_KEY_ERROR_MESSAGE;
 
-//TODO replace all numbers types for String so that take control on number casting format
 @Getter
 @Setter
 public class DeliveryCostCalculatorRequest {
