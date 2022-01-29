@@ -4,12 +4,15 @@ import com.epam.cargo.dto.DeliveryCostCalculatorRequest;
 import com.epam.cargo.dto.DeliveryCostCalculatorResponse;
 import com.epam.cargo.entity.City;
 import com.epam.cargo.exception.NoExistingCityException;
+import com.epam.cargo.exception.SameCityDirectionException;
 import com.epam.cargo.exception.WrongDataException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 @Service
 public class DeliveryCostCalculatorService {
@@ -28,12 +31,17 @@ public class DeliveryCostCalculatorService {
     @Autowired
     private CityService cityService;
 
+    @Value("${spring.messages.basename}")
+    private String messages;
+
     public DeliveryCostCalculatorResponse calculateCost(DeliveryCostCalculatorRequest calculatorRequest, Locale locale) throws WrongDataException {
         Objects.requireNonNull(calculatorRequest, "calculatorRequest cannot be null");
 
+        ResourceBundle bundle = ResourceBundle.getBundle(messages, locale);
+
         Long cityFromId = calculatorRequest.getCityFromId();
         Long cityToId = calculatorRequest.getCityToId();
-        requireDifferentCities(cityFromId, cityToId);
+        requireDifferentCities(cityFromId, cityToId, bundle);
 
         City cityFrom = requireExistingCity(cityFromId);
         City cityTo = requireExistingCity(cityToId);
@@ -49,9 +57,9 @@ public class DeliveryCostCalculatorService {
         return new DeliveryCostCalculatorResponse(totalCost, distance);
     }
 
-    private void requireDifferentCities(Long cityFromId, Long cityToId) {
+    private void requireDifferentCities(Long cityFromId, Long cityToId, ResourceBundle bundle) throws SameCityDirectionException {
         if (Objects.equals(cityFromId, cityToId)){
-            throw new IllegalArgumentException("Sender city and receiver city cannot be the same");
+            throw new SameCityDirectionException(bundle);
         }
     }
 
