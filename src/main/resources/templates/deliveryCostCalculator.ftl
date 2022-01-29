@@ -4,6 +4,7 @@
 <#include "parts/references.ftl">
 
 <@c.page "Delivery Cost Calculator">
+    <#setting locale="en_US">
     <#if distance??>
     <#assign
         selectedCitySenderId = distance.cityFrom.id
