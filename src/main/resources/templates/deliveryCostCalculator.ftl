@@ -9,15 +9,24 @@
         selectedCitySenderId = distance.cityFrom.id
         selectedCityReceiverId = distance.cityTo.id
     >
+    <#elseif calculatorRequest??>
+    <#assign
+        selectedCitySenderId = calculatorRequest.cityFromId!""
+        selectedCityReceiverId = calculatorRequest.cityToId!""
+    >
     </#if>
 
     <#if calculatorRequest??>
     <#assign
-        length = calculatorRequest.dimensions.length!""
-        width = calculatorRequest.dimensions.width!""
-        height = calculatorRequest.dimensions.height!""
         weight = calculatorRequest.weight!""
     >
+        <#if calculatorRequest.dimensions??>
+        <#assign
+            length = calculatorRequest.dimensions.length!""
+            width = calculatorRequest.dimensions.width!""
+            height = calculatorRequest.dimensions.height!""
+        >
+        </#if>
     </#if>
 
     <#if .data_model["dimensions.lengthErrorMessage"]??>
@@ -44,9 +53,10 @@
     >
     </#if>
 
-<script src="/static/js/formSubmit.js"></script>
+    <script src="/static/js/formSubmit.js"></script>
     <script src="/static/js/localization.js"></script>
     <script src="/static/js/validationError.js"></script>
+    <script src="/static/js/deliveryCostCalculatorValidation.js"></script>
 
     <@n.infoPills "Calculator"/>
 
@@ -64,7 +74,7 @@
                 <label class="col-form-label">Route</label>
             </div>
 
-            <div class="col-4">
+            <div class="col-4 validation-container" id="routeSelectCol" <#if invalidCityDirectionErrorMessage??>data-error="${invalidCityDirectionErrorMessage}"</#if>>
                 <div class="form-group row">
                     <div class="col">
                         <select class="form-select" name="cityFromId" id="cityFromSelect">
@@ -102,15 +112,15 @@
             <div class="col-4">
                 <div class="form-group row">
                     <div class="col validation-container" <#if lengthErrorMessage??>data-error="${lengthErrorMessage}!"</#if>>
-                        <input class="form-control" type="text" name="dimensions.length" value="${length!""}" placeholder="length">
+                        <input class="form-control" type="text" id="lengthInput" name="dimensions.length" value="${length!""}" placeholder="length">
                     </div>
 
                     <div class="col validation-container" <#if widthErrorMessage??>data-error="${widthErrorMessage}!"</#if>>
-                        <input class="form-control" type="text" name="dimensions.width" value="${width!""}" placeholder="width">
+                        <input class="form-control" type="text" id="widthInput" name="dimensions.width" value="${width!""}" placeholder="width">
                     </div>
 
                     <div class="col validation-container" <#if heightErrorMessage??>data-error="${heightErrorMessage}!"</#if>>
-                        <input class="form-control" type="text" name="dimensions.height" value="${height!""}" placeholder="height">
+                        <input class="form-control" type="text" id="heightInput" name="dimensions.height" value="${height!""}" placeholder="height">
                     </div>
 
                     <div class="col">
@@ -127,8 +137,8 @@
 
             <div class="col-4">
                 <div class="form-group row">
-                    <div class="col validation-container" <#if widthErrorMessage??>data-error="${widthErrorMessage}!"</#if>>
-                        <input class="form-control" type="text" name="weight" value="${weight!""}" placeholder="weight">
+                    <div class="col validation-container" <#if weightErrorMessage??>data-error="${weightErrorMessage}!"</#if>>
+                        <input class="form-control" type="text" id="weightInput" name="weight" value="${weight!""}" placeholder="weight">
                     </div>
 
                     <div class="col">
@@ -178,11 +188,14 @@
     </div>
 
     <script>
-        let inputs = []
+        let inputs = ['lengthInput', 'widthInput', 'heightInput', 'weightInput', 'cityFromSelect', 'cityToSelect']
         let url = '${refDeliveryCostCalculator}'
         addSwitchLanguageWithUrlClickListeners(url, inputs)
     </script>
 
     <script>addRemoveErrorAttributeListener()</script>
+    <script>
 
+        addRemoveDataErrorTagSelectCityListeners('cityFromSelect', 'cityToSelect', ()=>removeDataErrorTag('routeSelectCol'))
+    </script>
 </@c.page>
