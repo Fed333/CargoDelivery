@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -35,10 +36,16 @@ public class DeliveryCostCalculatorController {
 
     @GetMapping
     public String calculatorPage(
+            @ModelAttribute(name = "calculatorRequest") @Valid  DeliveryCostCalculatorRequest calculatorRequest,
+            BindingResult bindingResult,
             Model model,
-            DeliveryCostCalculatorRequest calculatorRequest,
             Locale locale
     ){
+        if (bindingResult.hasErrors()){
+            ResourceBundle bundle = ResourceBundle.getBundle(messages, locale);
+            Map<String, String> errors = ControllerUtils.getErrors(bindingResult, bundle);
+            model.mergeAttributes(errors);
+        }
         model.addAttribute("cities", cityService.findAll(locale));
         return "deliveryCostCalculator";
     }
