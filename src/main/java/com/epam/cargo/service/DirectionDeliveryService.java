@@ -97,7 +97,11 @@ public class DirectionDeliveryService {
      * @return City.Distance object with smallest distance and route as well
      * */
     public City.Distance getDistanceBetweenCities(City cityFrom, City cityTo, Locale locale){
-        return CityUtils.getDistance(cityFrom, cityTo, findAll(locale));
+        return CityUtils.getDistance(
+                cityService.localize(cityFrom, locale),
+                cityService.localize(cityTo, locale),
+                findAll(locale)
+        );
     }
 
     @NotNull

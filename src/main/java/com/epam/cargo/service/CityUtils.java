@@ -13,8 +13,8 @@ public class CityUtils {
 
     /**
      * calculate smallest distance between cityFrom and cityTo
-     * @param cityFrom source city
-     * @param cityTo destination city
+     * @param cityFrom localized source city
+     * @param cityTo localized destination city
      * @param directions list of all available directions between cities
      * @return City.Distance object with source city, destination city, smallest distance (rounded number to 1 decimal place)
      * and route if route doesn't exist return null
