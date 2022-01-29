@@ -7,6 +7,7 @@ import com.epam.cargo.service.CityService;
 import com.epam.cargo.service.DeliveryCostCalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +37,7 @@ public class DeliveryCostCalculatorController {
 
     @GetMapping
     public String calculatorPage(
-            @ModelAttribute(name = "calculatorRequest") @Valid  DeliveryCostCalculatorRequest calculatorRequest,
+            @ModelAttribute(name = "calculatorRequest") DeliveryCostCalculatorRequest calculatorRequest,
             BindingResult bindingResult,
             Model model,
             Locale locale
@@ -46,7 +47,7 @@ public class DeliveryCostCalculatorController {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult, bundle);
             model.mergeAttributes(errors);
         }
-        model.addAttribute("cities", cityService.findAll(locale));
+        model.addAttribute("cities", cityService.findAll(locale, Sort.by(Sort.Order.by("name"))));
         return "deliveryCostCalculator";
     }
 
