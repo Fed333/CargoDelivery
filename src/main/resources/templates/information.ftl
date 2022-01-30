@@ -38,7 +38,7 @@
                     <thead class="table-primary">
                     <tr>
                         <th><@spring.message "lang.directions"/></th>
-                        <th><@spring.message "lang.distance"/></th>
+                        <th><@spring.message "lang.distance"/>, <@spring.message "lang.km"/></th>
                     </tr>
                     </thead>
                     <tbody class="table-light">

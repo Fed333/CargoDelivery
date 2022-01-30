@@ -25,7 +25,7 @@
                     <thead class="table-primary">
                     <tr>
                         <th><@spring.message "lang.distance"/> (<@spring.message "lang.not-inclusive"/>)</th>
-                        <th><@spring.message "lang.price"/></th>
+                        <th><@spring.message "lang.price"/>, <@spring.message "lang.UAH"/></th>
                     </tr>
                     </thead>
                     <tbody class="table-light">
@@ -53,7 +53,7 @@
                     <thead class="table-primary">
                     <tr>
                         <th><@spring.message "lang.weight"/> (<@spring.message "lang.not-inclusive"/>)</th>
-                        <th><@spring.message "lang.price"/></th>
+                        <th><@spring.message "lang.price"/>, <@spring.message "lang.UAH"/></th>
                     </tr>
                     </thead>
                     <tbody class="table-light">
@@ -81,7 +81,7 @@
                     <thead class="table-primary">
                     <tr>
                         <th><@spring.message "lang.volume"/>, <@spring.message "lang.cm"/><sup><small>3</small></sup> (<@spring.message "lang.not-inclusive"/>)</th>
-                        <th><@spring.message "lang.price"/></th>
+                        <th><@spring.message "lang.price"/>, <@spring.message "lang.UAH"/></th>
                     </tr>
                     </thead>
                     <tbody class="table-light">
