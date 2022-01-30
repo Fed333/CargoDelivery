@@ -63,7 +63,7 @@
 
     <div class="row mb-2">
         <div class="col d-flex justify-content-center">
-            <h2>Delivery Cost Calculator</h2>
+            <h1><@spring.message "delivery-cost-calculator.head"/></h1>
         </div>
     </div>
 
@@ -72,10 +72,10 @@
 
         <div class="form-group row d-flex justify-content-center mt-4">
             <div class="col-2">
-                <label class="col-form-label">Route</label>
+                <label class="col-form-label"><@spring.message "lang.route"/></label>
             </div>
 
-            <div class="col-4 validation-container" id="routeSelectCol" <#if invalidCityDirectionErrorMessage??>data-error="${invalidCityDirectionErrorMessage}"</#if>>
+            <div class="col-5 validation-container" id="routeSelectCol" <#if invalidCityDirectionErrorMessage??>data-error="${invalidCityDirectionErrorMessage}"</#if>>
                 <div class="form-group row">
                     <div class="col">
                         <select class="form-select" name="cityFromId" id="cityFromSelect">
@@ -107,25 +107,25 @@
 
         <div class="form-group row d-flex justify-content-center mt-4">
             <div class="col-2">
-                <label class="col-form-label">Dimensions</label>
+                <label class="col-form-label"><@spring.message "lang.dimensions"/></label>
             </div>
 
-            <div class="col-4">
+            <div class="col-5">
                 <div class="form-group row">
                     <div class="col validation-container" <#if lengthErrorMessage??>data-error="${lengthErrorMessage}!"</#if>>
-                        <input class="form-control" type="text" id="lengthInput" name="dimensions.length" value="${length!""}" placeholder="length">
+                        <input class="form-control" type="text" id="lengthInput" name="dimensions.length" value="${length!""}" placeholder="<@spring.message "placeholder.length"/>">
                     </div>
 
                     <div class="col validation-container" <#if widthErrorMessage??>data-error="${widthErrorMessage}!"</#if>>
-                        <input class="form-control" type="text" id="widthInput" name="dimensions.width" value="${width!""}" placeholder="width">
+                        <input class="form-control" type="text" id="widthInput" name="dimensions.width" value="${width!""}" placeholder="<@spring.message "placeholder.width"/>">
                     </div>
 
                     <div class="col validation-container" <#if heightErrorMessage??>data-error="${heightErrorMessage}!"</#if>>
-                        <input class="form-control" type="text" id="heightInput" name="dimensions.height" value="${height!""}" placeholder="height">
+                        <input class="form-control" type="text" id="heightInput" name="dimensions.height" value="${height!""}" placeholder="<@spring.message "placeholder.height"/>">
                     </div>
 
                     <div class="col">
-                        <label class="col-form-label">cm</label>
+                        <label class="col-form-label"><@spring.message "lang.cm"/></label>
                     </div>
                 </div>
             </div>
@@ -133,17 +133,17 @@
 
         <div class="form-group row d-flex justify-content-center mt-4">
             <div class="col-2">
-                <label class="col-form-label">Weight</label>
+                <label class="col-form-label"><@spring.message "lang.weight"/></label>
             </div>
 
-            <div class="col-4">
+            <div class="col-5">
                 <div class="form-group row">
-                    <div class="col validation-container" <#if weightErrorMessage??>data-error="${weightErrorMessage}!"</#if>>
-                        <input class="form-control" type="text" id="weightInput" name="weight" value="${weight!""}" placeholder="weight">
+                    <div class="col-3 validation-container" <#if weightErrorMessage??>data-error="${weightErrorMessage}!"</#if>>
+                        <input class="form-control" type="text" id="weightInput" name="weight" value="${weight!""}" placeholder="<@spring.message "placeholder.weight"/>">
                     </div>
 
                     <div class="col">
-                        <label class="col-form-label">kg</label>
+                        <label class="col-form-label"><@spring.message "lang.kg"/></label>
                     </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@
 
         <div class="form-group row mt-4">
             <div class="d-flex justify-content-center">
-                <button class="btn btn-primary" type="submit">Calculate</button>
+                <button class="btn btn-primary" type="submit"><@spring.message "delivery-cost-calculator.calculate-button"/></button>
             </div>
         </div>
     </form>
@@ -159,11 +159,11 @@
     <#if cost??>
     <div class="row" id="costDeliveryRow">
         <div class="alert alert-success col-auto" role="alert" id="costDeliveryContent">
-            Delivery cost ${cost} UAH
+            <@spring.message "lang.delivery-cost"/> ${cost} <@spring.message "lang.UAH"/>
         </div>
     </div>
     <a class="btn btn-primary" data-bs-toggle="collapse" href="#details" role="button" aria-expanded="false" aria-controls="details">
-        Show me more
+        <@spring.message "lang.show-me-more"/>
     </a>
     </#if>
 
@@ -172,7 +172,7 @@
         <#if distance??>
         <div class="row" id="routeRow">
             <div class="alert alert-primary col-auto" role="alert" id="routeAlert">
-                Route:
+                <@spring.message "lang.route"/>:
                 <#list distance.route as city>
                 ${city.name} <#sep> - </#sep>
                 </#list>
@@ -181,7 +181,7 @@
 
         <div class="row" id="distanceRow">
             <div class="alert alert-primary col-auto" role="alert" id="distanceAlert">
-                Distance ${distance.distance} km
+                <@spring.message "lang.distance"/> ${distance.distance} <@spring.message "lang.km"/>
             </div>
         </div>
         </#if>
