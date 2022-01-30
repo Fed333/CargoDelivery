@@ -2,8 +2,10 @@
 <#import "/spring.ftl" as spring/>
 <#import "parts/pager.ftl" as p/>
 <#import "parts/forms.ftl" as f/>
+<#import "parts/navtabs.ftl" as n/>
 
 <@c.page "Information Page">
+    <@n.infoPills "Directions"/>
     <div class="row">
         <div class="col d-flex justify-content-center">
             <h1><@spring.message "info.directions-head"/></h1>
@@ -36,7 +38,7 @@
                     <thead class="table-primary">
                     <tr>
                         <th><@spring.message "lang.directions"/></th>
-                        <th><@spring.message "lang.distance"/></th>
+                        <th><@spring.message "lang.distance"/>, <@spring.message "lang.km"/></th>
                     </tr>
                     </thead>
                     <tbody class="table-light">

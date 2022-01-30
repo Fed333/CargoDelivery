@@ -43,6 +43,27 @@
 </#macro>
 
 <#macro registration>
+<#if userRequest??>
+    <#assign
+        name = userRequest.name!""
+        surname = userRequest.surname!""
+        email = userRequest.email!""
+        phone = userRequest.phone!""
+        login = userRequest.login!""
+    >
+
+    <#if userRequest.address??>
+        <#assign
+        address = userRequest.address
+        selectedCityId = address.cityId!""
+        streetName = address.streetName!""
+        houseNumber = address.houseNumber!""
+        >
+    </#if>
+
+</#if>
+<script src="/static/js/formSubmit.js"></script>
+<script src="/static/js/validationError.js"></script>
 <div class="row d-flex justify-content-center mt-4">
     <form action="/registration" method="post" style="max-width: 860px;">
         <input type="hidden" name="_csrf" value="${_csrf.token}">
@@ -62,12 +83,12 @@
                 <div class="form-group row">
                     <div class="d-flex justify-content-center">
                         <div class="col-4 me-4">
-                            <input class="form-control mt-2" type="text" name="name" id="nameInput" placeholder="<@spring.message "lang.name"/>">
-                            <input class="form-control mt-2" type="text" name="surname" id="surnameInput" placeholder="<@spring.message "lang.surname"/>">
+                            <input class="form-control mt-2" type="text" name="name" id="nameInput" value="${name!""}" placeholder="<@spring.message "lang.name"/>">
+                            <input class="form-control mt-2" type="text" name="surname" id="surnameInput" value="${surname!""}" placeholder="<@spring.message "lang.surname"/>">
                         </div>
                         <div class="col-4">
-                            <input class="form-control mt-2" type="email" name="email" id="emailInput" placeholder="<@spring.message "lang.email"/>">
-                            <input class="form-control mt-2" type="text" maxlength="13" name="phone" id="phoneInput" placeholder="<@spring.message "lang.phone"/>">
+                            <input class="form-control mt-2" type="email" name="email" id="emailInput" value="${email!""}" placeholder="<@spring.message "lang.email"/>">
+                            <input class="form-control mt-2" type="text" maxlength="13" name="phone" value="${phone!""}" id="phoneInput" placeholder="<@spring.message "lang.phone"/>">
                         </div>
                     </div>
                 </div>
@@ -79,17 +100,21 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-4">
-                        <select class="form-select" name="address.cityId">
-                            <#list cities as city>
-                                <option value="${city.id}" id="city${city?index}">${city.name}</option>
-                            </#list>
+                        <select class="form-select" name="address.cityId" id="cityInput">
+                            <#if cities??>
+                                <#list cities as city>
+                                    <#assign cityId = city.id>
+                                    <option value="${city.id}" id="city${cityId}">${city.name}</option>
+                                    <script>selectOption('city${cityId}', '${cityId}'==='${selectedCityId!""}')</script>
+                                </#list>
+                            </#if>
                         </select>
                     </div>
                     <div class="col-4">
-                        <input class="form-control" type="text" name="address.streetName" id="streetInput" placeholder="<@spring.message "auth.registration.street-data"/>">
+                        <input class="form-control" type="text" name="address.streetName" value="${streetName!""}" id="streetInput" placeholder="<@spring.message "auth.registration.street-data"/>">
                     </div>
                     <div class="col-4">
-                        <input class="form-control" type="text" name="address.houseNumber" id="houseNumberInput" placeholder="<@spring.message "auth.registration.house-number-data"/>">
+                        <input class="form-control" type="text" name="address.houseNumber" value="${houseNumber!""}" id="houseNumberInput" placeholder="<@spring.message "auth.registration.house-number-data"/>">
                     </div>
                 </div>
                 <hr>
@@ -99,16 +124,17 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-4">
-                        <input class="form-control" type="text" name="login" id="loginInput" placeholder="<@spring.message "auth.credentials-login"/>">
+                    <div class="col-4 validation-container" <#if loginErrorMessage??>data-error="${loginErrorMessage}"</#if>>
+                        <input class="form-control" type="text" name="login" value="${login!""}" id="loginInput" placeholder="<@spring.message "auth.credentials-login"/>">
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 validation-container" <#if passwordErrorMessage??>data-error="${passwordErrorMessage}"</#if>>
                         <input class="form-control" type="password" name="password" id="passwordInput" placeholder="<@spring.message "auth.credentials-password"/>">
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 validation-container" <#if duplicatePasswordErrorMessage??>data-error="${duplicatePasswordErrorMessage}"</#if>>
                         <input class="form-control" type="password" name="duplicatePassword" id="duplicatePasswordInput" placeholder="<@spring.message "auth.credentials-duplicate-password"/>">
                     </div>
                 </div>
+
                 <hr>
                 <div class="form-group row">
                     <div class="col d-flex justify-content-center">
@@ -118,5 +144,7 @@
             </div>
         </div>
     </form>
+
+    <script>addRemoveErrorAttributeListener()</script>
 </div>
 </#macro>

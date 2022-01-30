@@ -1,11 +1,10 @@
 package com.epam.cargo.service;
 
+import com.epam.cargo.dto.DirectionDeliveryFilterRequest;
 import com.epam.cargo.entity.City;
 import com.epam.cargo.entity.DirectionDelivery;
 import com.epam.cargo.repos.DirectionDeliveryRepo;
 import com.sun.istack.NotNull;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -84,7 +83,7 @@ public class DirectionDeliveryService {
         return page;
     }
 
-    public Page<DirectionDelivery> getPage(Pageable pageable, Locale locale, DirectionDeliveryFilter filter){
+    public Page<DirectionDelivery> getPage(Pageable pageable, Locale locale, DirectionDeliveryFilterRequest filter){
         List<DirectionDelivery> directions = findAll(locale);
         directions = filterDirections(filter, directions);
 
@@ -93,8 +92,20 @@ public class DirectionDeliveryService {
         return page;
     }
 
+    /**
+     * finds the smallest distance between given cities, according to direction delivery routes in database
+     * @return City.Distance object with smallest distance and route as well
+     * */
+    public City.Distance getDistanceBetweenCities(City cityFrom, City cityTo, Locale locale){
+        return CityUtils.getDistance(
+                cityService.localize(cityFrom, locale),
+                cityService.localize(cityTo, locale),
+                findAll(locale)
+        );
+    }
+
     @NotNull
-    private List<DirectionDelivery> filterDirections(DirectionDeliveryFilter filter, List<DirectionDelivery> directions) {
+    private List<DirectionDelivery> filterDirections(DirectionDeliveryFilterRequest filter, List<DirectionDelivery> directions) {
         return directions.stream()
                 .filter(
                         getDirectionDeliveryPredicate(
@@ -207,14 +218,6 @@ public class DirectionDeliveryService {
         if (city1.equals(city2)){
             throw new IllegalArgumentException();
         }
-    }
-
-    @Getter
-    @Setter
-    public static class DirectionDeliveryFilter {
-        private String senderCityName;
-        private String receiverCityName;
-
     }
 
 }

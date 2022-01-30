@@ -106,4 +106,17 @@ public class DirectionDelivery implements Cloneable{
             return o1.getDistance().compareTo(o2.getDistance());
         }
     }
+
+    /**
+     * creates a new object from given parameters
+     * @return new created DirectionDelivery object
+     * */
+    public static DirectionDelivery of(Long id, City senderCity, City receiverCity, Double distance) {
+        DirectionDelivery direction = new DirectionDelivery();
+        direction.setId(id);
+        direction.setSenderCity(senderCity);
+        direction.setReceiverCity(receiverCity);
+        direction.setDistance(distance);
+        return direction;
+    }
 }

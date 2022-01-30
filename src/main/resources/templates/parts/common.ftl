@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/style_auth.css">
     <link rel="stylesheet" href="/static/css/style_navbar.css">
+    <link rel="stylesheet" href="/static/css/style_input_error.css">
 
 </head>
 <body>

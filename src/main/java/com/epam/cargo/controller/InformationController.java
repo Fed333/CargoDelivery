@@ -1,5 +1,6 @@
 package com.epam.cargo.controller;
 
+import com.epam.cargo.dto.DirectionDeliveryFilterRequest;
 import com.epam.cargo.entity.DirectionDelivery;
 import com.epam.cargo.service.DirectionDeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class InformationController {
             Model model,
             @PageableDefault(size = 9, sort = {"senderCity.name"}, direction = Sort.Direction.ASC) Pageable pageable,
             Locale locale,
-            DirectionDeliveryService.DirectionDeliveryFilter filter
+            DirectionDeliveryFilterRequest filter
     ){
         Page<DirectionDelivery> directionsPage;
 

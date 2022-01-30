@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,6 +23,9 @@ public class UserService implements UserDetailsService {
 
     @Value("${validation.password.regexp}")
     private String passwordValidRegex;
+
+    @Value("${validation.login.regexp}")
+    private String loginValidRegex;
 
     @Value("${spring.messages.basename}")
     private String messages;
@@ -34,6 +38,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     public User registerUser(UserRequest userRequest, Locale locale) throws WrongDataException {
@@ -48,30 +55,40 @@ public class UserService implements UserDetailsService {
 
     private void initializeCredentials(UserRequest userRequest, User user, ResourceBundle bundle) throws WrongDataException {
         String login = userRequest.getLogin();
+        requireValidLogin(login, bundle);
         requireUniqueLogin(login, bundle);
         user.setLogin(login);
 
         String password = userRequest.getPassword();
         requireValidPassword(password, bundle);
         requirePasswordDuplicationMatch(userRequest, password, bundle);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
     }
 
-    private void requirePasswordDuplicationMatch(UserRequest userRequest, String password, ResourceBundle bundle) throws DuplicatePasswordValidationException {
+    private void requirePasswordDuplicationMatch(UserRequest userRequest, String password, ResourceBundle bundle) throws PasswordConfirmationException {
         if (!password.equals(userRequest.getDuplicatePassword())){
-            throw new DuplicatePasswordValidationException(bundle);
+            throw new PasswordConfirmationException(bundle);
         }
     }
 
     private void requireValidPassword(String password, ResourceBundle bundle) throws NoValidPasswordException {
-        Objects.requireNonNull(password);
         if (!isValidPassword(password)){
-            throw new NoValidPasswordException(bundle);
+            throw new NoValidPasswordException(bundle, password);
         }
     }
 
     private boolean isValidPassword(String password) {
         return password.matches(passwordValidRegex);
+    }
+
+    private boolean isValidLogin(String login){
+        return login.matches(loginValidRegex);
+    }
+
+    private void requireValidLogin(String login, ResourceBundle bundle) throws WrongDataException{
+        if (!isValidLogin(login)){
+            throw new NoValidLoginException(bundle, login);
+        }
     }
 
     private void requireUniqueLogin(String login, ResourceBundle bundle) throws OccupiedLoginException {
