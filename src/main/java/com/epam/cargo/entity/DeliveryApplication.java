@@ -15,7 +15,11 @@ public class DeliveryApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User customer;
+
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="sender_address_id")
     private Address senderAddress;
 
