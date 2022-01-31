@@ -2,7 +2,7 @@
 refMain = "/main"
 refInfo = "/"
 refFares = "/fares"
-refCreateApp = "/create_app"
+refCreateApp = "/make_app"
 refProfile = "/profile"
 refLogin = "/login"
 refRegister = "/registration"
