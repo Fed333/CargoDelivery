@@ -79,7 +79,7 @@ orderDirection = order.getDirection().toString()
 
 <div class="row">
     <div class="col-5">
-        <label class="col-form-label">City</label>
+        <label class="col-form-label"><@spring.message "lang.city"/></label>
     </div>
     <div class="col">
         <select class="form-select" name="${selectCityName}">
@@ -93,7 +93,7 @@ orderDirection = order.getDirection().toString()
 </div>
 <div class="row mt-2">
     <div class="col-5">
-        <label class="col-form-label">Street</label>
+        <label class="col-form-label"><@spring.message "lang.street"/></label>
     </div>
     <div class="col">
         <input class="form-control" name="${inputStreetName}">
@@ -101,7 +101,7 @@ orderDirection = order.getDirection().toString()
 </div>
 <div class="row mt-2">
     <div class="col-5">
-        <label class="col-form-label">HouseNumber</label>
+        <label class="col-form-label"><@spring.message "lang.house-number"/></label>
     </div>
     <div class="col">
         <input class="form-control" name="${inputHouseNumberName}">
