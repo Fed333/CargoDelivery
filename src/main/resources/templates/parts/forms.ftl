@@ -74,3 +74,38 @@ orderDirection = order.getDirection().toString()
 
 </div>
 </#macro>
+
+<#macro address selectCityName inputStreetName inputHouseNumberName>
+
+<div class="row">
+    <div class="col">
+        <label class="col-form-label">City</label>
+    </div>
+    <div class="col">
+        <select class="form-select" name="${selectCityName}">
+            <#if cities??>
+            <#list cities as city>
+            <option value="${city.id}">${city.name}</option>
+        </#list>
+    </#if>
+    </select>
+</div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <label class="col-form-label">Street</label>
+    </div>
+    <div class="col">
+        <input class="form-control" name="${inputStreetName}">
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <label class="col-form-label">HouseNumber</label>
+    </div>
+    <div class="col">
+        <input class="form-control" name="${inputHouseNumberName}">
+    </div>
+</div>
+
+</#macro>
