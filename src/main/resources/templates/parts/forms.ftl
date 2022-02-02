@@ -78,7 +78,7 @@ orderDirection = order.getDirection().toString()
 <#macro address selectCityName inputStreetName inputHouseNumberName>
 
 <div class="row">
-    <div class="col">
+    <div class="col-5">
         <label class="col-form-label">City</label>
     </div>
     <div class="col">
@@ -92,7 +92,7 @@ orderDirection = order.getDirection().toString()
 </div>
 </div>
 <div class="row mt-2">
-    <div class="col">
+    <div class="col-5">
         <label class="col-form-label">Street</label>
     </div>
     <div class="col">
@@ -100,7 +100,7 @@ orderDirection = order.getDirection().toString()
     </div>
 </div>
 <div class="row mt-2">
-    <div class="col">
+    <div class="col-5">
         <label class="col-form-label">HouseNumber</label>
     </div>
     <div class="col">

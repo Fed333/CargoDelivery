@@ -16,7 +16,7 @@
     </div>
 
     <div class="row d-flex justify-content-center mt-4" >
-        <form action="${refCreateApp}" method="post">
+        <form action="${refCreateApp}" method="post" style="max-width: 920px;">
             <input type="hidden" name="_csrf" value="${_csrf.token}">
             <div class="card">
                 <div class="card-body">
@@ -26,29 +26,35 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-center mt-4 mb-2">
-                        <div class="col me-4">
+                        <div class="col-5 me-4">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-4">
                                     <label class="col-form-label">Volume</label>
                                 </div>
                                 <div class="col">
                                     <input class="form-control" name="deliveredBaggageRequest.volume" type="text">
                                 </div>
+                                <div class="col-2">
+                                    <label class="col-form-label">cm<sup><small>3</small></sup></label>
+                                </div>
                             </div>
                             <div class="row mt-2">
-                                <div class="col">
+                                <div class="col-4">
                                     <label class="col-form-label">Weight</label>
                                 </div>
                                 <div class="col">
                                     <input class="form-control" name="deliveredBaggageRequest.weight" type="text">
                                 </div>
+                                <div class="col-2">
+                                    <label class="col-form-label">kg</label>
+                                </div>
                             </div>
 
                         </div>
 
-                        <div class="col">
+                        <div class="col-5">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-4">
                                     <label class="col-form-label">Type</label>
                                 </div>
                                 <div class="col">
@@ -62,7 +68,7 @@
                                 </div>
                             </div>
                             <div class="row mt-2">
-                                <div class="col">
+                                <div class="col-4">
                                     <label class="col-form-label">Description</label>
                                 </div>
                                 <div class="col">
@@ -79,14 +85,14 @@
                     </div>
 
                     <div class="form-group row justify-content-center mt-2 mb-2">
-                        <div class="col">
+                        <div class="col me-4">
                             <div class="row mb-4">
                                 <h3 class="d-flex justify-content-center">Sending</h3>
                             </div>
                             <@f.address 'senderAddress.cityId', 'senderAddress.streetName', 'senderAddress.houseNumber'/>
                         </div>
 
-                        <div class="col">
+                        <div class="col ms-4">
                             <div class="row mb-4">
                                 <h3 class="d-flex justify-content-center">Receiving</h3>
                             </div>
