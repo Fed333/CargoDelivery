@@ -8,6 +8,7 @@ import com.epam.cargo.exception.WrongDataException;
 import com.epam.cargo.service.CityService;
 import com.epam.cargo.service.DeliveryApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,8 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 @Controller
 @RequestMapping("/make_app")
@@ -30,6 +34,9 @@ public class DeliveryApplicationController {
 
     @Autowired
     public CityService cityService;
+
+    @Value("${spring.messages.basename}")
+    private String messages;
 
     @GetMapping
     public String makeApplicationPage(
@@ -44,11 +51,11 @@ public class DeliveryApplicationController {
             List<DeliveryApplication> applications = applicationService.findAll();
             applications.forEach(System.out::println);
 
-
         }
         else{
-
-            //TODO errors handling
+            ResourceBundle  bundle = ResourceBundle.getBundle(messages, locale);
+            Map<String, String> errors = ControllerUtils.getErrors(bindingResult, bundle);
+            model.mergeAttributes(errors);
 
         }
 
@@ -61,25 +68,32 @@ public class DeliveryApplicationController {
     @PostMapping
     public String sendApplication(
             @AuthenticationPrincipal User customer,
-            DeliveryApplicationRequest applicationRequest,
+            @Valid  DeliveryApplicationRequest applicationRequest,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
-            Model model
+            Model model,
+            Locale locale
     ){
+        boolean successfullySent = false;
         if (!bindingResult.hasErrors()){
             try {
-                applicationService.sendApplication(customer, applicationRequest);
+                successfullySent = applicationService.sendApplication(customer, applicationRequest);
                 model.addAttribute("result", "application was successfully sent");
             }
             catch (WrongDataException e){
                 model.addAttribute(e.getModelAttribute(), e.getMessage());
+
             }
         }
         else{
-            //TODO errors handling
+            ResourceBundle bundle = ResourceBundle.getBundle(messages, locale);
+            Map<String, String> errors = ControllerUtils.getErrors(bindingResult, bundle);
+            model.mergeAttributes(errors);
         }
-        model.asMap().forEach(redirectAttributes::addFlashAttribute);
-        return "redirect:/make_app";
+        if (!successfullySent) {
+            model.asMap().forEach(redirectAttributes::addFlashAttribute);
+            return "redirect:/make_app";
+        }
+        return "redirect:/";
     }
-
 }
