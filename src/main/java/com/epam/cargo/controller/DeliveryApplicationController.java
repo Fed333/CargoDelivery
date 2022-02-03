@@ -2,7 +2,6 @@ package com.epam.cargo.controller;
 
 import com.epam.cargo.dto.DeliveryApplicationRequest;
 import com.epam.cargo.entity.BaggageType;
-import com.epam.cargo.entity.DeliveryApplication;
 import com.epam.cargo.entity.User;
 import com.epam.cargo.exception.WrongDataException;
 import com.epam.cargo.service.CityService;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -46,13 +44,8 @@ public class DeliveryApplicationController {
             Model model,
             Locale locale
     ){
-        if (!bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
 
-            List<DeliveryApplication> applications = applicationService.findAll();
-            applications.forEach(System.out::println);
-
-        }
-        else{
             ResourceBundle  bundle = ResourceBundle.getBundle(messages, locale);
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult, bundle);
             model.mergeAttributes(errors);
@@ -77,7 +70,8 @@ public class DeliveryApplicationController {
         boolean successfullySent = false;
         if (!bindingResult.hasErrors()){
             try {
-                successfullySent = applicationService.sendApplication(customer, applicationRequest);
+                ResourceBundle bundle = ResourceBundle.getBundle(messages, locale);
+                successfullySent = applicationService.sendApplication(customer, applicationRequest, bundle);
                 model.addAttribute("result", "application was successfully sent");
             }
             catch (WrongDataException e){
