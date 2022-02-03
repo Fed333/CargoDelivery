@@ -16,6 +16,34 @@ public class CityUtils {
      * @param cityFrom localized source city
      * @param cityTo localized destination city
      * @param directions list of all available directions between cities
+     * @return number which represents smallest distance between cityFrom and cityTo
+     * if no way exists return Double.POSITIVE_INFINITY
+     * */
+    public static Double getMinDistance(City cityFrom, City cityTo, List<DirectionDelivery> directions){
+
+        Set<City> cities = directions.stream().collect(getCityFromDirectionsCollector());
+        Map<City, Integer> cityIntegerMap = new HashMap<>();
+
+        int index = 0;
+        for (City city:cities) {
+            cityIntegerMap.put(city, index);
+            ++index;
+        }
+
+        double[][] graph = createGraph(directions, cityIntegerMap);
+
+        Integer source = cityIntegerMap.get(cityFrom);
+        Integer dest = cityIntegerMap.get(cityTo);
+
+        Dijkstra dijkstra = new Dijkstra(graph, source);
+        return calculateMinDistance(dest, dijkstra);
+    }
+
+    /**
+     * calculate smallest distance between cityFrom and cityTo
+     * @param cityFrom localized source city
+     * @param cityTo localized destination city
+     * @param directions list of all available directions between cities
      * @return City.Distance object with source city, destination city, smallest distance (rounded number to 1 decimal place)
      * and route if route doesn't exist return null
      * */
@@ -39,7 +67,7 @@ public class CityUtils {
         Integer dest = cityIntegerMap.get(cityTo);
 
         Dijkstra dijkstra = new Dijkstra(graph, source);
-        double minDistance = Math.round(dijkstra.calculateMinDistance(dest)*10.0)/10.0;
+        double minDistance = calculateMinDistance(dest, dijkstra);
 
         if (minDistance != Double.POSITIVE_INFINITY){
             List<City> route = buildCitiesSmallestRout(dijkstra.buildShortestRoute(dest), integerCityMap);
@@ -47,6 +75,10 @@ public class CityUtils {
         }
 
         return null;
+    }
+
+    private static double calculateMinDistance(Integer dest, Dijkstra dijkstra) {
+        return Math.round(dijkstra.calculateMinDistance(dest) * 10.0) / 10.0;
     }
 
     private static double[][] createGraph(List<DirectionDelivery> directions, Map<City, Integer> cityIntegerMap) {
