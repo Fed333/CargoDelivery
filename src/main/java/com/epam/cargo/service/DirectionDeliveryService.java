@@ -103,6 +103,18 @@ public class DirectionDeliveryService {
                 findAll(locale)
         );
     }
+    /**
+     * finds the smallest distance between given cities, according to direction delivery routes in database
+     * @return number with represents smaller distance between cities in km
+     * if no way exists return Double.POSITIVE_INFINITIVE
+     * */
+    public Double calculateMinDistance(City cityFrom, City cityTo){
+        Locale locale = Locale.UK;
+        return CityUtils.getMinDistance( cityService.localize(cityFrom, locale),
+                cityService.localize(cityTo, locale),
+                findAll(locale)
+        );
+    }
 
     @NotNull
     private List<DirectionDelivery> filterDirections(DirectionDeliveryFilterRequest filter, List<DirectionDelivery> directions) {
