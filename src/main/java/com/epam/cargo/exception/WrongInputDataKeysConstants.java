@@ -11,6 +11,7 @@ public interface WrongInputDataKeysConstants {
     String CONFIRMATION_PASSWORD_FAILED_KEY_ERROR_MESSAGE = "wrong-input-data.duplicate-password-confirmation-failed";
     String NO_FILLED_DUPLICATE_PASSWORD_KEY_ERROR_MESSAGE = "wrong-input-data.no-filled-duplicate-password";
     String NO_EXISTING_CITY_KEY_ERROR_MESSAGE = "wrong-input-data.no-existing-city.format";
+    String NO_EXISTING_DIRECTION_KEY_ERROR_MESSAGE = "wrong-input-data.no-existing-direction.format";
     String NO_POSITIVE_NUMBER_KEY_ERROR_MESSAGE = "wrong-input-data.no-positive-number";
     String REQUIRED_KEY_ERROR_MESSAGE = "lang.required";
     String INCORRECT_NUMBER_FORMAT_KEY_ERROR_MESSAGE = "wrong-input-data.incorrect-number-format";
