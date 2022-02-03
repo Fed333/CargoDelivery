@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 @Service
 public class DeliveryApplicationService {
@@ -35,11 +36,11 @@ public class DeliveryApplicationService {
     @Autowired
     private DeliveryCostCalculatorService costCalculatorService;
 
-    public boolean sendApplication(User customer, DeliveryApplicationRequest request) throws WrongDataException {
+    public boolean sendApplication(User customer, DeliveryApplicationRequest request, ResourceBundle bundle) throws WrongDataException {
         Objects.requireNonNull(customer, "Customer object cannot be null");
         Objects.requireNonNull(request, "DeliveryApplicationRequest object cannot be null");
 
-        DeliveryApplication application = ServiceUtils.createDeliveryApplication(customer, request, cityService);
+        DeliveryApplication application = ServiceUtils.createDeliveryApplication(customer, request, cityService, bundle);
         application.setPrice(calculatePrice(application));
         return sendApplication(application);
 

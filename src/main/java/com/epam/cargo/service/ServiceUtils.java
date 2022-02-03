@@ -4,9 +4,12 @@ import com.epam.cargo.dto.AddressRequest;
 import com.epam.cargo.dto.DeliveredBaggageRequest;
 import com.epam.cargo.dto.DeliveryApplicationRequest;
 import com.epam.cargo.entity.*;
+import com.epam.cargo.exception.InvalidReceivingDateException;
 import com.epam.cargo.exception.NoExistingCityException;
+import com.epam.cargo.exception.WrongDataException;
 
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class ServiceUtils {
 
@@ -32,7 +35,7 @@ public class ServiceUtils {
      * @throws NoExistingCityException if any given city isn't present in the database
      * @throws NullPointerException if any argument is null
      * */
-    static DeliveryApplication createDeliveryApplication(User customer, DeliveryApplicationRequest request, CityService cityService) throws NoExistingCityException {
+    static DeliveryApplication createDeliveryApplication(User customer, DeliveryApplicationRequest request, CityService cityService, ResourceBundle bundle) throws WrongDataException {
         Objects.requireNonNull(request);
         Objects.requireNonNull(cityService);
 
@@ -51,10 +54,18 @@ public class ServiceUtils {
         object.setReceiverAddress(receiverAddress);
 
         object.setSendingDate(Objects.requireNonNull(request.getSendingDate()));
-        object.setReceivingDate(request.getReceivingDate());
+        object.setReceivingDate(Objects.requireNonNull(request.getReceivingDate()));
+
+        requireValidDates(object, bundle);
 
         object.setState(DeliveryApplication.State.SUBMITTED);
         return object;
+    }
+
+    private static void requireValidDates(DeliveryApplication object, ResourceBundle bundle) throws InvalidReceivingDateException {
+        if (object.getSendingDate().isAfter(object.getReceivingDate())){
+            throw new InvalidReceivingDateException(bundle);
+        }
     }
 
     private static void requireDifferentAddresses(Address senderAddress, Address receiverAddress) {
