@@ -19,6 +19,9 @@ public class DeliveryApplication {
     @JoinColumn(name = "user_id")
     private User customer;
 
+    @Column(name="user_id", insertable = false, updatable = false)
+    private Long userId;
+    
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="sender_address_id")
     private Address senderAddress;
