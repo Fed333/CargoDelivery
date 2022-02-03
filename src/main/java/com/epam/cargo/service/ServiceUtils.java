@@ -37,6 +37,7 @@ public class ServiceUtils {
         Objects.requireNonNull(cityService);
 
         DeliveryApplication object = new DeliveryApplication();
+
         object.setCustomer(Objects.requireNonNull(customer));
 
         object.setDeliveredBaggage(createDeliveredBaggage(request.getDeliveredBaggageRequest()));
@@ -52,6 +53,7 @@ public class ServiceUtils {
         object.setSendingDate(Objects.requireNonNull(request.getSendingDate()));
         object.setReceivingDate(request.getReceivingDate());
 
+        object.setState(DeliveryApplication.State.SUBMITTED);
         return object;
     }
 
