@@ -2,8 +2,10 @@ package com.epam.cargo.service;
 
 import com.epam.cargo.dto.DeliveryCostCalculatorRequest;
 import com.epam.cargo.dto.DeliveryCostCalculatorResponse;
+import com.epam.cargo.entity.Address;
 import com.epam.cargo.entity.City;
 import com.epam.cargo.exception.NoExistingCityException;
+import com.epam.cargo.exception.NoExistingDirectionException;
 import com.epam.cargo.exception.SameCityDirectionException;
 import com.epam.cargo.exception.WrongDataException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,35 @@ public class DeliveryCostCalculatorService {
         double totalCost = distanceCost + weightCost + dimensionsCost;
 
         return new DeliveryCostCalculatorResponse(totalCost, distance);
+    }
+
+    public Double calculateWeightCost(Double weight){
+        return weightFareService.getPrice(weight.intValue());
+    }
+
+    public Double calculateDimensionsCost(Double volume){
+        return dimensionsFareService.getPrice(volume.intValue());
+    }
+
+    /**
+     * calculate distance cost between two addresses
+     * @param sender address of sender
+     * @param receiver address of receiver
+     * @return cost according to fare, if direction is within one city, return 0.0
+     * @throws NoExistingDirectionException if direction between addresses doesn't exist in the database
+     * */
+    public Double calculateDistanceCost(Address sender, Address receiver) throws NoExistingDirectionException {
+        City from = sender.getCity();
+        City to = receiver.getCity();
+        if (!Objects.equals(to.getId(), from.getId())){
+            Double minDistance = directionDeliveryService.calculateMinDistance(from, to);
+            if (minDistance.equals(Double.POSITIVE_INFINITY)){
+                ResourceBundle bundle = ResourceBundle.getBundle(messages, Locale.UK);
+                throw new NoExistingDirectionException(from, to, bundle);
+            }
+            return distanceFareService.getPrice(minDistance.intValue());
+        }
+        return 0.0;
     }
 
     private void requireDifferentCities(Long cityFromId, Long cityToId, ResourceBundle bundle) throws SameCityDirectionException {
