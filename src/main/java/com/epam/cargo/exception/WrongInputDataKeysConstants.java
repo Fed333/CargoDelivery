@@ -19,4 +19,5 @@ public interface WrongInputDataKeysConstants {
     String INVALID_CITY_DIRECTION_SAME_CITIES_KEY_ERROR_MESSAGE = "wrong-input-data.invalid-city-direction.same-cities";
     String INVALID_CITY_DIRECTION_KEY_ERROR_MESSAGE = "wrong-input-data.invalid-city-direction";
     String UNKNOWN_ERROR_KEY_MESSAGE = "unknown-error";
+    String RECEIVING_DATE_MUST_BE_AFTER_SENDING_KEY_ERROR_MESSAGE = "wrong-input-data.date.receiving.required-being-after-sending";
 }
