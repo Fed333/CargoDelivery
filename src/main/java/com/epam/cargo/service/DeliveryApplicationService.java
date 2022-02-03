@@ -9,6 +9,8 @@ import com.epam.cargo.exception.NoExistingDirectionException;
 import com.epam.cargo.exception.WrongDataException;
 import com.epam.cargo.repos.DeliveryApplicationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -70,5 +72,13 @@ public class DeliveryApplicationService {
 
     public List<DeliveryApplication> findAll() {
         return deliveryApplicationRepo.findAll();
+    }
+
+    public Page<DeliveryApplication> findAllByUserId(Long id, Pageable pageable) {
+        return deliveryApplicationRepo.findAll(pageable);
+    }
+
+    public List<DeliveryApplication> findAllByUserId(Long id) {
+        return deliveryApplicationRepo.findAllByUserId(id);
     }
 }
