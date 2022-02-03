@@ -37,4 +37,13 @@ public class DeliveryApplication {
     @Column(name = "receiving_date")
     private LocalDate receivingDate;
 
+    @Enumerated(EnumType.ORDINAL)
+    private State state;
+
+    @Column(name = "price")
+    private Double price;
+
+    public enum State{
+        SUBMITTED, CONFIRMED, COMPLETED, CANCELED
+    }
 }
