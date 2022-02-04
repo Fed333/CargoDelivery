@@ -70,7 +70,7 @@
                                 </#if>
                                 <div class="row alert alert-primary mb-2">
                                     <div class="col-1">
-                                        #${application.id}
+                                        <a class="link" href="${refApplication}/${application.id}">#${application.id}</a>
                                     </div>
                                     <div class="col">
                                         ${application.senderAddress.city.name} - ${application.receiverAddress.city.name}
