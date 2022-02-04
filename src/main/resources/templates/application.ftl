@@ -6,21 +6,29 @@
 
 <@c.page "Application">
 
-    <#if application??>
-        <div class="row">
-            <div class="col d-flex justify-content-center">
-                <div class="card" style="min-width: 740px;">
-                    <div class="card-body">
-                        <@l.application application/>
-                        <div class="row">
-                            <div class="col d-flex justify-content-center">
-                                <a class="btn btn-primary" href="${refProfile}">Back to Profile</a>
-                            </div>
+<script src="/static/js/localization.js"></script>
+
+<#if application??>
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <div class="card" style="min-width: 740px;">
+                <div class="card-body">
+                    <@l.application application/>
+                    <div class="row">
+                        <div class="col d-flex justify-content-center">
+                            <a class="btn btn-primary" href="${refProfile}"><@spring.message "ref.back-to-profile"/></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </#if>
+    </div>
+</#if>
+
+<script>
+    let inputs = []
+    let url = '${refApplication}/${application.id}'
+    addSwitchLanguageWithUrlClickListeners(url, inputs)
+</script>
 
 </@c.page>

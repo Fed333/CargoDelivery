@@ -51,50 +51,50 @@
 </#if>
 
     <div class="row">
-        <h1 class="d-flex justify-content-center">Application #${app.id!""}</h1>
+        <h1 class="d-flex justify-content-center"><@spring.message "delivery-application.page.head"/> #${app.id!""}</h1>
     </div>
     <hr>
     <div class="row">
-        <h2 class="d-flex justify-content-center">Baggage</h2>
+        <h2 class="d-flex justify-content-center"><@spring.message "lang.baggage"/></h2>
     </div>
 
     <div class="ms-4 me-4">
 
         <div class="row mb-2">
             <div class="col">
-                <label class="fs-5 fw-bolder me-2">Type:</label> <label>${type!""}</label>
+                <label class="fs-5 fw-bolder me-2"><@spring.message "lang.type"/>:</label> <label><#if type??><@spring.message "baggage.type.${type}"/></#if></label>
             </div>
         </div>
 
         <div class="row mb-2">
             <div class="col">
-                <label class="fs-5 fw-bolder me-2">Volume:</label> <label>${volume!""} cm<sup><small>3</small></sup></label>
+                <label class="fs-5 fw-bolder me-2"><@spring.message "lang.volume"/>:</label> <label>${volume!""} <@spring.message "lang.cm"/><sup><small>3</small></sup></label>
             </div>
             <div class="col">
-                <label class="fs-5 fw-bolder me-2">Weight:</label> <label>${weight!""} kg</label>
+                <label class="fs-5 fw-bolder me-2"><@spring.message "lang.weight"/>:</label> <label>${weight!""} <@spring.message "lang.kg"/></label>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <label class="fs-5 fw-bolder me-2">Description:</label> <label>${description!""}</label>
+                <label class="fs-5 fw-bolder me-2"><@spring.message "lang.description"/>:</label> <label>${description!""}</label>
             </div>
         </div>
     </div>
 
     <hr>
     <div class="row">
-        <h2 class="d-flex justify-content-center">Address</h2>
+        <h2 class="d-flex justify-content-center"><@spring.message "lang.address"/></h2>
     </div>
 
     <div class="ms-4 me-4">
         <div class="row mb-2">
             <div class="col">
-                <label class="fs-5 fw-bolder me-2">Sender:</label> <label>${senderCityName!""}, street ${senderStreet!""}, house ${senderHouseNumber!""}</label>
+                <label class="fs-5 fw-bolder me-2"><@spring.message "lang.sender"/>:</label> <label><#if senderCityName??><@spring.message "city.${senderCityName}"/></#if>, <@spring.message "address.street"/> ${senderStreet!""}, <@spring.message "address.house"/> ${senderHouseNumber!""}</label>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <label class="fs-5 fw-bolder me-2">Receiver:</label> <label>${receiverCityName!""}, street ${receiverStreet!""}, house ${receiverHouseNumber!""}</label>
+                <label class="fs-5 fw-bolder me-2"><@spring.message "lang.receiver"/>:</label> <label><#if receiverCityName??><@spring.message "city.${receiverCityName}"/></#if>, <@spring.message "address.street"/> ${receiverStreet!""}, <@spring.message "address.house"/> ${receiverHouseNumber!""}</label>
             </div>
         </div>
     </div>
@@ -103,7 +103,7 @@
     <div class="ms-4 me-4">
         <div class="row mb-2">
             <div class="col-4">
-                <label class="fs-5 fw-bolder me-2">Sending Date:</label>
+                <label class="fs-5 fw-bolder me-2"><@spring.message "delivery-application.page.sending-date"/>:</label>
             </div>
             <div class="col-2">
                 <label>${sendingDate!""}</label>
@@ -111,7 +111,7 @@
         </div>
         <div class="row">
             <div class="col-4">
-                <label class="fs-5 fw-bolder me-2">Receiving Date:</label>
+                <label class="fs-5 fw-bolder me-2"><@spring.message "delivery-application.page.receiving-date"/>:</label>
             </div>
             <div class="col-2">
                 <label>${receivingDate!""}</label>
@@ -124,12 +124,12 @@
     <div class="ms-4 me-4">
         <div class="row mb-2">
             <div class="col">
-                <label class="fs-5 fw-bolder me-2">State:</label> <label>${app.state!""}</label>
+                <label class="fs-5 fw-bolder me-2"><@spring.message "delivery-application.state"/>:</label> <label><@spring.message "delivery-application.state.${app.state}"/></label>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <label class="fs-5 fw-bolder me-2">Price:</label> <label>${app.price!""} UAH</label>
+                <label class="fs-5 fw-bolder me-2"><@spring.message "lang.price"/>:</label> <label>${app.price!""} <@spring.message "lang.UAH"/></label>
             </div>
         </div>
     </div>
