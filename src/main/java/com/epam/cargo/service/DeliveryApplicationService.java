@@ -75,7 +75,7 @@ public class DeliveryApplicationService {
     }
 
     public Page<DeliveryApplication> findAllByUserId(Long id, Pageable pageable) {
-        return deliveryApplicationRepo.findAll(pageable);
+        return deliveryApplicationRepo.findAllByUserId(id, pageable);
     }
 
     public List<DeliveryApplication> findAllByUserId(Long id) {
