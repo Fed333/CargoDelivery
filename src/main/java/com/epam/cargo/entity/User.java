@@ -2,6 +2,8 @@ package com.epam.cargo.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,69 +11,58 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.*;
+import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_FILLED_LOGIN_KEY_ERROR_MESSAGE;
+import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_FILLED_PASSWORD_KEY_ERROR_MESSAGE;
 
 @Entity
 @Table(name="users")
+@Getter
+@Setter
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private Long id;
 
     @Column(name="name", length = 32)
-    @Getter
-    @Setter
     private String name;
 
     @Column(name="surname", length = 32)
-    @Getter
-    @Setter
     private String surname;
 
 
     @NotBlank(message = NO_FILLED_LOGIN_KEY_ERROR_MESSAGE)
     @Column(name="login", unique = true, nullable = false, length = 32)
-    @Getter
-    @Setter
     private String login;
 
     @NotBlank(message = NO_FILLED_PASSWORD_KEY_ERROR_MESSAGE)
     @Column(name="password", nullable = false, length = 256)
-    @Setter
     private String password;
 
     @Column(name="phone", length = 13)
-    @Getter
-    @Setter
     private String phone;
 
     @Column(name="email")
-    @Getter
-    @Setter
     private String email;
 
     @Column(name="cash")
-    @Getter
-    @Setter
     private BigDecimal cash;
 
     @OneToOne
     @JoinColumn(name="addressId")
-    @Getter
-    @Setter
     private Address address;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name="user_id"))
     @Enumerated(EnumType.STRING)
-    @Getter
-    @Setter
     private Set<Role> roles;
+
+    @OneToMany(mappedBy="customer", fetch=FetchType.LAZY)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<DeliveryApplication> applications;
 
     public User() { }
 

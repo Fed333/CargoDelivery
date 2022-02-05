@@ -74,3 +74,38 @@ orderDirection = order.getDirection().toString()
 
 </div>
 </#macro>
+
+<#macro address selectCityName inputStreetName inputHouseNumberName selectCityId inputStreetId inputHouseNumberId streetNameErrorMessage houseNumberErrorMessage selectedCityId enteredStreet enteredHouseNumber>
+
+<div class="row">
+    <div class="col-5">
+        <label class="col-form-label"><@spring.message "lang.city"/></label>
+    </div>
+    <div class="col">
+        <select class="form-select" name="${selectCityName}" id="${selectCityId}">
+            <#if cities??>
+            <#list cities as city>
+            <option value="${city.id}" <#if city.id == selectedCityId>selected</#if>>${city.name}</option>
+        </#list>
+    </#if>
+    </select>
+</div>
+</div>
+<div class="row mt-2">
+    <div class="col-5">
+        <label class="col-form-label"><@spring.message "lang.street"/></label>
+    </div>
+    <div class="col validation-container" <#if streetNameErrorMessage != "" >data-error=${streetNameErrorMessage}</#if>>
+        <input class="form-control" name="${inputStreetName}" id="${inputStreetId}" value="${enteredStreet!""}">
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col-5">
+        <label class="col-form-label"><@spring.message "lang.house-number"/></label>
+    </div>
+    <div class="col validation-container" <#if houseNumberErrorMessage != "">data-error=${houseNumberErrorMessage}</#if>>
+        <input class="form-control" name="${inputHouseNumberName}" id="${inputHouseNumberId}" value="${enteredHouseNumber!""}">
+    </div>
+</div>
+
+</#macro>

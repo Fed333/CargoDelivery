@@ -2,14 +2,14 @@ package com.epam.cargo.service;
 
 import com.epam.cargo.dto.AddressRequest;
 import com.epam.cargo.dto.UserRequest;
-import com.epam.cargo.entity.Address;
-import com.epam.cargo.entity.City;
-import com.epam.cargo.entity.Role;
-import com.epam.cargo.entity.User;
+import com.epam.cargo.entity.*;
 import com.epam.cargo.exception.*;
 import com.epam.cargo.repos.UserRepo;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,6 +38,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    private DeliveryApplicationService applicationService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -163,5 +166,16 @@ public class UserService implements UserDetailsService {
     public void deleteUser(User user){
         userRepo.delete(user);
         Optional.ofNullable(user.getAddress()).ifPresent(addressService::deleteAddress);
+    }
+
+    public List<DeliveryApplication> getApplications(User user){
+        if(!Hibernate.isInitialized(user.getApplications())){
+            user.setApplications(applicationService.findAllByUserId(user.getId()));
+        }
+        return user.getApplications();
+    }
+
+    public Page<DeliveryApplication> getApplications(User user, Pageable pageable) {
+        return applicationService.findAllByUserId(user.getId(), pageable);
     }
 }

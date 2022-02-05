@@ -2,9 +2,9 @@ package com.epam.cargo.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name="addresses")
@@ -32,4 +32,20 @@ public class Address {
 
     @Column(name="house_number")
     private String houseNumber;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Address)) return false;
+        Address address = (Address) o;
+        return Objects.equals(id, address.id) &&
+                Objects.equals(city, address.city) &&
+                Objects.equals(street, address.street) &&
+                Objects.equals(houseNumber, address.houseNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, city, street, houseNumber);
+    }
 }
