@@ -91,7 +91,6 @@ public class DeliveryApplicationService {
                         statePredicate(filter)
                                 .and(baggageTypePredicate(filter))
                                 .and(senderCityPredicate(filter))
-                                .and(senderCityPredicate(filter))
                                 .and(receiverCityPredicate(filter))
                                 .and(sendingDatePredicate(filter))
                                 .and(receivingDatePredicate(filter))
