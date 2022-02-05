@@ -18,7 +18,7 @@
 <form action="/applications/review" method="get">
 
     <div class="row">
-        <div class="col-3">
+        <div class="col" style="max-width: 380px;">
             <div class="row">
                 <h2 class="d-flex justify-content-center">Filter</h2>
             </div>
@@ -86,16 +86,16 @@
                 <div class="col-1">
                     #id
                 </div>
-                <div class="col">
+                <div class="col-5">
                     Direction
                 </div>
-                <div class="col-auto d-flex fustify-content-center">
+                <div class="col-3">
                     Dates
                 </div>
-                <div class="col-2 d-flex fustify-content-center">
+                <div class="col-1" style="min-width: 100px;">
                     Price
                 </div>
-                <div class="col-2">
+                <div class="col-1">
                     State
                 </div>
             </div>
@@ -105,16 +105,16 @@
                     <div class="col-1">
                         <a class="link" href="${refApplication}/${application.id}">#${application.id}</a>
                     </div>
-                    <div class="col">
-                        <@spring.message "city.${application.senderAddress.city.name}"/> - <@spring.message "city.${application.receiverAddress.city.name}"/>
+                    <div class="col-5">
+                        "<@spring.message "city.${application.senderAddress.city.name}"/>" - "<@spring.message "city.${application.receiverAddress.city.name}"/>"
                     </div>
-                    <div class="col-auto">
+                    <div class="col-3">
                         ${application.sendingDate} - ${application.receivingDate}
                     </div>
-                    <div class="col-2">
+                    <div class="col" style="max-width: 100px;">
                         ${application.price} <@spring.message "lang.UAH"/>
                     </div>
-                    <div class="col-2">
+                    <div class="col">
                         <@spring.message "delivery-application.state.${application.state}"/>
                     </div>
                 </div>
