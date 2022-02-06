@@ -59,7 +59,9 @@
                         <div class="row mt-4">
                             <div class="col d-flex justify-content-center">
                                 <div class="col-auto me-4">
-                                    <button class="btn btn-success"><@spring.message "lang.accept"/></button>
+                                    <form action="/application/${application.id}/accept" method="get">
+                                        <button class="btn btn-success"><@spring.message "lang.accept"/></button>
+                                    </form>
                                 </div>
                                 <div class="col-auto">
                                     <button class="btn btn-danger"><@spring.message "lang.reject"/></button>
@@ -67,8 +69,14 @@
                             </div>
 
                         </div>
-
+                            <#else>
+                            <div class="row mt-4">
+                                <div class="col d-flex justify-content-center">
+                                    <a class="btn btn-outline-success" href="/applications/review">OK</a>
+                                </div>
+                            </div>
                         </#if>
+
                     <#else>
                         <div class="row">
                             <div class="col d-flex justify-content-center">
