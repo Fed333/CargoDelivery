@@ -139,6 +139,11 @@ public class DeliveryApplicationService {
         return ServiceUtils.toPage(list, pageable, new DeliveryApplicationComparatorRecognizer());
     }
 
+    public void rejectApplication(DeliveryApplication application) {
+       application.setState(DeliveryApplication.State.REJECTED);
+       deliveryApplicationRepo.save(application);
+    }
+
     private static class DeliveryApplicationComparatorRecognizer implements ServiceUtils.ComparatorRecognizer<DeliveryApplication> {
 
         private final Map<String, Comparator<DeliveryApplication>> comparators;

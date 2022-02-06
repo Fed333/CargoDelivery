@@ -10,6 +10,7 @@ import com.epam.cargo.service.DeliveryApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,5 +101,16 @@ public class DeliveryApplicationController {
 
         model.addAttribute("application", application);
         return "application";
+    }
+
+    @PreAuthorize("hasAuthority('MANAGER')")
+    @PostMapping("/application/{application}/reject")
+    public String rejectApplication(
+            @PathVariable DeliveryApplication application,
+            @AuthenticationPrincipal User manager,
+            Model model
+    ){
+        applicationService.rejectApplication(application);
+        return "redirect:/applications/review";
     }
 }
