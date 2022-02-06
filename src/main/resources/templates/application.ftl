@@ -64,7 +64,10 @@
                                     </form>
                                 </div>
                                 <div class="col-auto">
-                                    <button class="btn btn-danger"><@spring.message "lang.reject"/></button>
+                                    <form action="/application/${application.id}/reject" method="post">
+                                        <input name="_csrf" value="${_csrf.token}" hidden>
+                                        <button class="btn btn-danger"><@spring.message "lang.reject"/></button>
+                                    </form>
                                 </div>
                             </div>
 
