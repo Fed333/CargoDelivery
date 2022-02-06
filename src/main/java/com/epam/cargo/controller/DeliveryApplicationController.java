@@ -94,13 +94,11 @@ public class DeliveryApplicationController {
     @GetMapping("/application/{application}")
     public String applicationPage(
             @PathVariable DeliveryApplication application,
-            @AuthenticationPrincipal User customer,
             Model model
 
     ){
 
         model.addAttribute("application", application);
-        model.addAttribute("user", customer);
         return "application";
     }
 }
