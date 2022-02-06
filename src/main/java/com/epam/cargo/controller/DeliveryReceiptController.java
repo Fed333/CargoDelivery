@@ -5,6 +5,7 @@ import com.epam.cargo.entity.DeliveryApplication;
 import com.epam.cargo.entity.DeliveryReceipt;
 import com.epam.cargo.entity.User;
 import com.epam.cargo.exception.WrongDataException;
+import com.epam.cargo.service.DeliveryApplicationService;
 import com.epam.cargo.service.DeliveryReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,9 @@ public class DeliveryReceiptController {
 
     @Autowired
     private DeliveryReceiptService receiptService;
+
+    @Autowired
+    private DeliveryApplicationService applicationService;
 
     @Value("${spring.messages.basename}")
     private String messages;
@@ -66,6 +70,7 @@ public class DeliveryReceiptController {
     ){
         if(!application.getState().equals(DeliveryApplication.State.SUBMITTED)){
             redirectAttributes.addFlashAttribute("application", application);
+            redirectAttributes.addFlashAttribute("applicationId", application.getId());
             return "redirect:/application/confirmation/failed";
         }
         String url = String.format("/application/%s/accept", application.getId());
@@ -97,8 +102,14 @@ public class DeliveryReceiptController {
     @PreAuthorize("hasAuthority('MANAGER')")
     @GetMapping("/application/confirmation/failed")
     public String failedApplicationConfirmation(
+            Long applicationId,
             Model model
     ){
+        model.addAttribute("url", "/application/confirmation/failed");
+        if (!Objects.isNull(applicationId)) {
+            model.addAttribute("applicationId", applicationId);
+            model.addAttribute("application", applicationService.findById(applicationId));
+        }
         return "deliveryApplicationConfirmationFailed";
     }
 }
