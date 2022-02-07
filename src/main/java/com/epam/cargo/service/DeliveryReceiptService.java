@@ -66,4 +66,8 @@ public class DeliveryReceiptService {
         Objects.requireNonNull(receipt.getManager(), "Manager cannot be null");
         Objects.requireNonNull(receipt.getFormationDate(), "FormationDate cannot be null");
     }
+
+    public List<DeliveryReceipt> findAllByUserId(Long id) {
+        return receiptRepo.findAllByCustomerId(id);
+    }
 }

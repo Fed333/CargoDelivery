@@ -43,6 +43,9 @@ public class UserService implements UserDetailsService {
     private DeliveryApplicationService applicationService;
 
     @Autowired
+    private DeliveryReceiptService receiptService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
 
@@ -173,6 +176,13 @@ public class UserService implements UserDetailsService {
             user.setApplications(applicationService.findAllByUserId(user.getId()));
         }
         return user.getApplications();
+    }
+
+    public List<DeliveryReceipt> getReceipt(User user){
+        if(!Hibernate.isInitialized(user.getReceipts())){
+            user.setReceipts(receiptService.findAllByUserId(user.getId()));
+        }
+        return user.getReceipts();
     }
 
     public Page<DeliveryApplication> getApplications(User user, Pageable pageable) {
