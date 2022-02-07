@@ -11,6 +11,7 @@
         activePill = activePill!""
         notificationsPill = "pills-notifications-tab"
         applicationsPill = "pills-applications-tab"
+        receiptsPill = "pills-receipts-tab"
     >
 
     <#if user??>
@@ -74,7 +75,7 @@
                             <button class="nav-link <#if activePill == applicationsPill>active</#if>" id="pills-applications-tab" data-bs-toggle="pill" data-bs-target="#pills-applications" type="button" role="tab" aria-controls="pills-applications" aria-selected="<#if activePill == applicationsPill>true<#else>false</#if>"><@spring.message "profile-menu-pills.applications"/></button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link" id="pills-receipts-tab"><@spring.message "profile-menu-pills.receipts"/></button>
+                            <button class="nav-link <#if activePill == receiptsPill>active</#if>" id="pills-receipts-tab" data-bs-toggle="pill" data-bs-target="#pills-receipts" type="button" role="tab" aria-controls="pills-receipts" aria-selected="<#if activePill == receiptsPill>true<#else>false</#if>"><@spring.message "profile-menu-pills.receipts"/></button>
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tab-content">
@@ -109,7 +110,52 @@
                             </#list>
                             <@p.pager url applications 'submitButton'/>
                         </div>
+                        <div class="tab-pane fade <#if activePill == receiptsPill>active show</#if>" id="pills-receipts" role="tabpanel" aria-labelledby="pills-receipts-tab">
+                            <div class="row alert alert-dark mb-2">
+                                <div class="col-1">
+                                    #id
+                                </div>
+                                <div class="col-2">
+                                    <@spring.message "delivery.application"/>
+                                </div>
+                                <div class="col-3">
+                                    <@spring.message "lang.manager"/>
+                                </div>
+                                <div class="col-2" style="min-width: 110px;">
+                                    Formed date
+                                </div>
+                                <div class="col-2">
+                                    Price
+                                </div>
+                            </div>
+                            <#list receipts as receipt>
+                            <div class="row alert alert-primary mb-2">
+                                <div class="col-1 d-flex align-self-center">
+                                    <a class="link" href="#">#${receipt.id!""}</a>
+                                </div>
+                                <div class="col-2 d-flex align-self-center">
+                                    <a class="link" href="${refApplication}/${receipt.application.id}">#${receipt.application.id}</a>
+                                </div>
+                                <div class="col-3 d-flex align-self-center">
+                                    ${receipt.manager.name} ${receipt.manager.surname}
+                                </div>
+                                <div class="col-2 d-flex align-self-center" style="min-width: 110px;">
+                                    ${receipt.formationDate}
+                                </div>
+                                <div class="col-2 d-flex align-self-center">
+                                    ${receipt.totalPrice} UAH
+                                </div>
+                                <div class="col d-flex justify-content-end me-4 align-self-center">
+                                    <#if receipt.paid>
+                                        <button class="btn btn-primary disabled">Paid</button>
+                                    <#else>
+                                        <button class="btn btn-success">Pay</button>
+                                    </#if>
+                                </div>
+                            </div>
 
+                            </#list>
+                        </div>
                     </div>
                 </div>
             </form>

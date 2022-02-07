@@ -1,6 +1,7 @@
 package com.epam.cargo.controller;
 
 import com.epam.cargo.entity.DeliveryApplication;
+import com.epam.cargo.entity.DeliveryReceipt;
 import com.epam.cargo.entity.User;
 import com.epam.cargo.service.DeliveryApplicationService;
 import com.epam.cargo.service.UserService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -39,14 +41,15 @@ public class ProfileController {
             Locale locale
     ){
 
-        model.addAttribute("greeting", String.format("Welcome %s", user.getLogin()));
-
         Page<DeliveryApplication> applications = userService.getApplications(user, pageable);
+        List<DeliveryReceipt> receipts = userService.getReceipt(user);
+        model.addAttribute("receipts", receipts);
         model.addAttribute("applications", applications);
         model.addAttribute("user", user);
         model.addAttribute("url", "/profile");
         model.addAttribute("activePill", activePill);
         model.addAttribute("lang", locale.getLanguage());
+
 
         return "profile";
     }
