@@ -131,7 +131,7 @@
                             <#list receipts as receipt>
                             <div class="row alert alert-primary mb-2">
                                 <div class="col-1 d-flex align-self-center">
-                                    <a class="link" href="#">#${receipt.id!""}</a>
+                                    <a class="link" href="/receipt/${receipt.id}">#${receipt.id!""}</a>
                                 </div>
                                 <div class="col-2 d-flex align-self-center">
                                     <a class="link" href="${refApplication}/${receipt.application.id}">#${receipt.application.id}</a>
@@ -145,11 +145,11 @@
                                 <div class="col-2 d-flex align-self-center">
                                     ${receipt.totalPrice} UAH
                                 </div>
-                                <div class="col d-flex justify-content-end me-4 align-self-center">
+                                <div class="col d-flex justify-content-end me-2 align-self-center">
                                     <#if receipt.paid>
-                                        <button class="btn btn-primary disabled">Paid</button>
+                                        <button class="btn btn-primary disabled"><@spring.message "lang.paid"/></button>
                                     <#else>
-                                        <button class="btn btn-success">Pay</button>
+                                        <a class="btn btn-success" href="/receipt/${receipt.id}/pay"><@spring.message "lang.pay"/></a>
                                     </#if>
                                 </div>
                             </div>
