@@ -122,10 +122,11 @@
                                     <@spring.message "lang.manager"/>
                                 </div>
                                 <div class="col-2" style="min-width: 110px;">
-                                    Formed date
+                                    <@spring.message "delivery.application.receipt.formation-date"/>
+
                                 </div>
                                 <div class="col-2">
-                                    Price
+                                    <@spring.message "lang.price"/>
                                 </div>
                             </div>
                             <#list receipts as receipt>
@@ -143,7 +144,7 @@
                                     ${receipt.formationDate}
                                 </div>
                                 <div class="col-2 d-flex align-self-center">
-                                    ${receipt.totalPrice} UAH
+                                    ${receipt.totalPrice} <@spring.message "lang.UAH"/>
                                 </div>
                                 <div class="col d-flex justify-content-end me-2 align-self-center">
                                     <#if receipt.paid>
