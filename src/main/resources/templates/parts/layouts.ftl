@@ -136,3 +136,58 @@
     <hr>
 
 </#macro>
+
+<#macro deliveryReceipt receipt>
+<#include "references.ftl">
+
+<div class="row mb-2">
+    <div class="col">
+        <label class="fw-bolder"><@spring.message "delivery.application"/>:</label>
+    </div>
+    <div class="col">
+        <label><a href="${refApplication}/${receipt.application.id}">#${receipt.application.id}</a></label>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col">
+        <label class="fw-bolder"><@spring.message "lang.customer"/>:</label>
+    </div>
+    <div class="col">
+        <label>${receipt.customer.name} ${receipt.customer.surname}</label>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col">
+        <label class="fw-bolder"><@spring.message "lang.manager"/>:</label>
+    </div>
+    <div class="col">
+        <label>${receipt.manager.name} ${receipt.manager.surname}</label>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col">
+        <label class="fw-bolder"><@spring.message "delivery.application.receipt.formation-date"/>:</label>
+    </div>
+    <div class="col">
+        <label>${receipt.formationDate}</label>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col">
+        <label class="fw-bolder"><@spring.message "lang.price"/>:</label>
+    </div>
+    <div class="col">
+        <label>${receipt.totalPrice} <@spring.message "lang.UAH"/></label>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col">
+        <label class="fw-bolder"><@spring.message "delivery.application.receipt.payment"/>:</label>
+    </div>
+    <div class="col">
+        <label><#if receipt.paid><@spring.message "lang.paid"/> <#else> <@spring.message "lang.unpaid"/></#if></label>
+    </div>
+</div>
+
+
+</#macro>
