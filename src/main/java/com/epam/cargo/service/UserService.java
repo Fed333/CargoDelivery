@@ -188,4 +188,12 @@ public class UserService implements UserDetailsService {
     public Page<DeliveryApplication> getApplications(User user, Pageable pageable) {
         return applicationService.findAllByUserId(user.getId(), pageable);
     }
+
+    public void saveUser(User user) {
+        userRepo.save(user);
+    }
+
+    public boolean credentialsEquals(User customer, User initiator) {
+        return ServiceUtils.credentialsEquals(customer, initiator);
+    }
 }

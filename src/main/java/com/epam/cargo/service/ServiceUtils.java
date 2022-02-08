@@ -152,6 +152,16 @@ public class ServiceUtils {
         return receipt;
     }
 
+    /**
+     * Checks authorized rights for personal actions
+     * @param user specified user for comparison
+     * @param initiator user from context who initiated the action
+     * @return equals of login and password
+     * */
+    static boolean credentialsEquals(User user, User initiator) {
+        return Objects.equals(user.getLogin(), initiator.getLogin()) && Objects.equals(user.getPassword(), initiator.getPassword());
+    }
+
     public interface ComparatorRecognizer<T> {
         Comparator<T> getComparator(Sort.Order order);
     }
