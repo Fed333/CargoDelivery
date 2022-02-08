@@ -4,9 +4,11 @@ import com.epam.cargo.dto.DeliveryReceiptRequest;
 import com.epam.cargo.entity.DeliveryApplication;
 import com.epam.cargo.entity.DeliveryReceipt;
 import com.epam.cargo.entity.User;
+import com.epam.cargo.exception.NotEnoughMoneyException;
 import com.epam.cargo.exception.WrongDataException;
 import com.epam.cargo.service.DeliveryApplicationService;
 import com.epam.cargo.service.DeliveryReceiptService;
+import com.epam.cargo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +33,9 @@ public class DeliveryReceiptController {
 
     @Autowired
     private DeliveryApplicationService applicationService;
+
+    @Autowired
+    private UserService userService;
 
     @Value("${spring.messages.basename}")
     private String messages;
@@ -111,5 +116,57 @@ public class DeliveryReceiptController {
             model.addAttribute("application", applicationService.findById(applicationId));
         }
         return "deliveryApplicationConfirmationFailed";
+    }
+
+    @GetMapping("/receipt/{receipt}")
+    public String receiptPage(
+        @PathVariable DeliveryReceipt receipt,
+        @AuthenticationPrincipal User initiator,
+        Model model
+    ){
+        if (!initiator.isManager() && !userService.credentialsEquals(receipt.getCustomer(), initiator)){
+            return "redirect:/forbidden";
+        }
+
+        model.addAttribute("receipt", receipt);
+        model.addAttribute("url", String.format("/receipt/%s", receipt.getId()));
+        return "receipt";
+    }
+
+    @GetMapping("/receipt/{receipt}/pay")
+    public String payReceiptPage(
+            @PathVariable DeliveryReceipt receipt,
+            @AuthenticationPrincipal User initiator,
+            Model model
+
+    ){
+
+        if (!userService.credentialsEquals(receipt.getCustomer(), initiator)){
+            return "redirect:/forbidden";
+        }
+
+        model.addAttribute("receipt", receipt);
+        model.addAttribute("url", String.format("/receipt/%s/pay", receipt.getId()));
+        return "payReceipt";
+    }
+
+
+    @PostMapping("/receipt/{receipt}/pay")
+    public String payReceipt(
+            @PathVariable DeliveryReceipt receipt,
+            @AuthenticationPrincipal User user,
+            RedirectAttributes redirectAttributes,
+            Model model
+    ){
+
+        try {
+            receiptService.payReceipt(receipt, user);
+        } catch (NotEnoughMoneyException e) {
+            redirectAttributes.addFlashAttribute(e.getAttribute(), e.getMessage());
+            redirectAttributes.addFlashAttribute("rejectedFunds", e.getRejectedFunds());
+            redirectAttributes.addFlashAttribute("price", e.getReceipt().getTotalPrice());
+            return "redirect:/paying/failed";
+        }
+        return "redirect:/profile";
     }
 }
