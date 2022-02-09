@@ -180,7 +180,7 @@ public class UserService implements UserDetailsService {
 
     public List<DeliveryReceipt> getReceipt(User user){
         if(!Hibernate.isInitialized(user.getReceipts())){
-            user.setReceipts(receiptService.findAllByUserId(user.getId()));
+            user.setReceipts(receiptService.findAllByCustomerId(user.getId()));
         }
         return user.getReceipts();
     }
@@ -195,5 +195,9 @@ public class UserService implements UserDetailsService {
 
     public boolean credentialsEquals(User customer, User initiator) {
         return ServiceUtils.credentialsEquals(customer, initiator);
+    }
+
+    public Page<DeliveryReceipt> getCustomerReceipts(User customer, Pageable pageable) {
+        return receiptService.findAllByCustomerId(customer.getId(), pageable);
     }
 }
