@@ -2,6 +2,8 @@ package com.epam.cargo.service;
 
 import com.epam.cargo.dto.DeliveryApplicationRequest;
 import com.epam.cargo.dto.DeliveryApplicationsReviewFilterRequest;
+import com.epam.cargo.dto.UpdateDeliveryApplicationRequest;
+import com.epam.cargo.entity.Address;
 import com.epam.cargo.entity.DeliveredBaggage;
 import com.epam.cargo.entity.DeliveryApplication;
 import com.epam.cargo.entity.User;
@@ -142,6 +144,45 @@ public class DeliveryApplicationService {
     public void rejectApplication(DeliveryApplication application) {
        application.setState(DeliveryApplication.State.REJECTED);
        deliveryApplicationRepo.save(application);
+    }
+
+    public DeliveryApplication update(DeliveryApplication application, UpdateDeliveryApplicationRequest updated) throws NoExistingCityException {
+        Objects.requireNonNull(application, "Application cannot be null");
+        Objects.requireNonNull(updated, "UpdatedRequest cannot be null");
+
+        if (!Objects.isNull(updated.getDeliveredBaggageRequest())){
+            application.setDeliveredBaggage(deliveredBaggageService.update(application.getDeliveredBaggage(), updated.getDeliveredBaggageRequest()));
+        }
+
+        if (!Objects.isNull(updated.getSenderAddress())){
+            Address updatedSenderAddress = ServiceUtils.createAddress(updated.getSenderAddress(), cityService);
+            addressService.addAddress(updatedSenderAddress);
+            application.setSenderAddress(updatedSenderAddress);
+        }
+
+        if (!Objects.isNull(updated.getReceiverAddress())){
+            Address updatedReceiverAddress = ServiceUtils.createAddress(updated.getReceiverAddress(), cityService);
+            addressService.addAddress(updatedReceiverAddress);
+            application.setReceiverAddress(updatedReceiverAddress);
+        }
+
+        if (!Objects.isNull(updated.getSendingDate())){
+            application.setSendingDate(updated.getSendingDate());
+        }
+
+        if (!Objects.isNull(updated.getReceivingDate())){
+            application.setReceivingDate(updated.getReceivingDate());
+        }
+
+        if (!Objects.isNull(updated.getState())){
+            application.setState(updated.getState());
+        }
+
+        if (!Objects.isNull(updated.getPrice())){
+            application.setPrice(updated.getPrice());
+        }
+        deliveryApplicationRepo.save(application);
+        return application;
     }
 
     private static class DeliveryApplicationComparatorRecognizer implements ServiceUtils.ComparatorRecognizer<DeliveryApplication> {
