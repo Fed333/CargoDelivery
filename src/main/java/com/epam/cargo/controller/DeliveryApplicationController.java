@@ -1,14 +1,17 @@
 package com.epam.cargo.controller;
 
 import com.epam.cargo.dto.DeliveryApplicationRequest;
+import com.epam.cargo.dto.UpdateDeliveryApplicationRequest;
 import com.epam.cargo.entity.BaggageType;
 import com.epam.cargo.entity.DeliveryApplication;
 import com.epam.cargo.entity.User;
+import com.epam.cargo.exception.NoExistingCityException;
 import com.epam.cargo.exception.WrongDataException;
 import com.epam.cargo.service.CityService;
 import com.epam.cargo.service.DeliveryApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -111,6 +114,42 @@ public class DeliveryApplicationController {
             Model model
     ){
         applicationService.rejectApplication(application);
+        return "redirect:/applications/review";
+    }
+
+    @PreAuthorize("hasAuthority('MANAGER')")
+    @GetMapping("/application/{application}/update")
+    public String updateApplicationPage(
+            @PathVariable DeliveryApplication application,
+            UpdateDeliveryApplicationRequest request,
+            Model model
+    ){
+        model.addAttribute("url", "/application/{application}/update");
+        System.out.println(request);
+        return "updateApplication";
+    }
+
+    @PreAuthorize("hasAuthority('MANAGER')")
+    @PostMapping("/application/{application}/update")
+    public String updateApplication(
+        @PathVariable DeliveryApplication application,
+        @Valid UpdateDeliveryApplicationRequest updated,
+        BindingResult result,
+        Model model
+     ){
+        if (!result.hasErrors()){
+            try {
+                applicationService.update(application, updated);
+            } catch (NoExistingCityException e) {
+                model.addAttribute(e.getModelAttribute(), e.getMessage());
+            }
+        }
+        else {
+            Locale locale = LocaleContextHolder.getLocale();
+            ResourceBundle bundle = ResourceBundle.getBundle(messages, locale);
+            model.mergeAttributes(ControllerUtils.getErrors(result, bundle));
+            return "redirect:/application/{application}/update";
+        }
         return "redirect:/applications/review";
     }
 }
