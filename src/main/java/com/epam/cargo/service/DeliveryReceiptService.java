@@ -124,4 +124,12 @@ public class DeliveryReceiptService {
     public Page<DeliveryReceipt> findAllByCustomerId(Long id, Pageable pageable) {
         return receiptRepo.findAllByCustomerId(id, pageable);
     }
+
+    public Optional<DeliveryReceipt> findByApplicationId(Long id) {
+        return receiptRepo.findByApplicationId(id);
+    }
+
+    public void deleteById(Long id) {
+        receiptRepo.deleteById(id);
+    }
 }

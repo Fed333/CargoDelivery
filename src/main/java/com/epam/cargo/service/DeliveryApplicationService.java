@@ -3,10 +3,7 @@ package com.epam.cargo.service;
 import com.epam.cargo.dto.DeliveryApplicationRequest;
 import com.epam.cargo.dto.DeliveryApplicationsReviewFilterRequest;
 import com.epam.cargo.dto.UpdateDeliveryApplicationRequest;
-import com.epam.cargo.entity.Address;
-import com.epam.cargo.entity.DeliveredBaggage;
-import com.epam.cargo.entity.DeliveryApplication;
-import com.epam.cargo.entity.User;
+import com.epam.cargo.entity.*;
 import com.epam.cargo.exception.NoExistingCityException;
 import com.epam.cargo.exception.NoExistingDirectionException;
 import com.epam.cargo.exception.WrongDataException;
@@ -17,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -41,6 +39,9 @@ public class DeliveryApplicationService {
 
     @Autowired
     private DeliveryCostCalculatorService costCalculatorService;
+
+    @Autowired
+    private DeliveryReceiptService receiptService;
 
     public boolean sendApplication(User customer, DeliveryApplicationRequest request, ResourceBundle bundle) throws WrongDataException {
         Objects.requireNonNull(customer, "Customer object cannot be null");
@@ -142,13 +143,27 @@ public class DeliveryApplicationService {
     }
 
     public void rejectApplication(DeliveryApplication application) {
+       Objects.requireNonNull(application, "Application cannot be null");
+       Optional<DeliveryReceipt> receiptOptional = receiptService.findByApplicationId(application.getId());
+       receiptOptional.ifPresent(r ->{
+           if (r.getPaid()){
+               throw new IllegalStateException("Cannot reject already paid application");
+           }
+           else{
+               receiptService.deleteById(r.getId());
+           }
+       });
        application.setState(DeliveryApplication.State.REJECTED);
        deliveryApplicationRepo.save(application);
     }
 
-    public DeliveryApplication update(DeliveryApplication application, UpdateDeliveryApplicationRequest updated) throws NoExistingCityException {
+    public DeliveryApplication edit(DeliveryApplication application, UpdateDeliveryApplicationRequest updated) throws NoExistingCityException, NoExistingDirectionException {
         Objects.requireNonNull(application, "Application cannot be null");
         Objects.requireNonNull(updated, "UpdatedRequest cannot be null");
+
+        if (!application.getState().equals(DeliveryApplication.State.SUBMITTED)){
+            throw new IllegalStateException("Forbidden edit approved applications");
+        }
 
         if (!Objects.isNull(updated.getDeliveredBaggageRequest())){
             application.setDeliveredBaggage(deliveredBaggageService.update(application.getDeliveredBaggage(), updated.getDeliveredBaggageRequest()));
@@ -174,15 +189,32 @@ public class DeliveryApplicationService {
             application.setReceivingDate(updated.getReceivingDate());
         }
 
-        if (!Objects.isNull(updated.getState())){
-            application.setState(updated.getState());
-        }
+        application.setPrice(calculatePrice(application));
 
-        if (!Objects.isNull(updated.getPrice())){
-            application.setPrice(updated.getPrice());
-        }
         deliveryApplicationRepo.save(application);
         return application;
+    }
+
+    /**
+     * change application state to completed
+     * @param application customer's delivery application
+     * @throws IllegalStateException if receipt is not paid or not found
+     * */
+    public void completeApplication(DeliveryApplication application) {
+        Objects.requireNonNull(application, "Application cannot be null");
+        Optional<DeliveryReceipt> receiptOptional = receiptService.findByApplicationId(application.getId());
+        DeliveryReceipt receipt = receiptOptional.orElseThrow(()->new IllegalStateException("Cannot complete application. No paid receipt found!"));
+
+        if (!receipt.getPaid()){
+            throw new IllegalStateException("Cannot complete application. No paid receipt found!");
+        }
+
+        if (application.getReceivingDate().isAfter(LocalDate.now())){
+            throw new IllegalStateException("Cannot complete application. Receiving date hasn't come yet.");
+        }
+
+        application.setState(DeliveryApplication.State.COMPLETED);
+        deliveryApplicationRepo.save(application);
     }
 
     private static class DeliveryApplicationComparatorRecognizer implements ServiceUtils.ComparatorRecognizer<DeliveryApplication> {
