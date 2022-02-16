@@ -78,7 +78,7 @@
                                 <div class="col-auto me-4">
                                     <form action="/application/${application.id}/complete" method="post">
                                         <input name="_csrf" value="${_csrf.token}" hidden>
-                                        <button class="btn btn-success">Complete</button>
+                                        <button class="btn btn-success"><@spring.message "lang.complete"/></button>
                                     </form>
                                 </div>
                                 <div class="col-auto">

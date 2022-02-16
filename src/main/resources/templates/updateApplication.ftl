@@ -13,7 +13,7 @@
 
 <div class="row mb-2">
     <div class="col">
-        <h1 class="d-flex justify-content-center">Update Application</h1>
+        <h1 class="d-flex justify-content-center"><@spring.message "lang.update"/></h1>
     </div>
 </div>
 
@@ -39,10 +39,10 @@
                     <div class="row mt-4">
                         <div class="col d-flex justify-content-center">
                             <div class="col-auto me-4">
-                                <button class="btn btn-outline-success" type="submit">Update</button>
+                                <button class="btn btn-outline-success" type="submit"><@spring.message "lang.update"/></button>
                             </div>
                             <div class="col-auto">
-                                <a class="btn btn-outline-primary" href="/application/${applicationId}" type="submit">Cancel</a>
+                                <a class="btn btn-outline-primary" href="/application/${applicationId}" type="submit"><@spring.message "lang.cancel"/></a>
                             </div>
                         </div>
                     </div>

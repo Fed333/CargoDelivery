@@ -181,12 +181,11 @@ orderDirection = order.getDirection().toString()
             <select class="form-select" name="deliveredBaggageRequest.type" id="baggageTypeSelect">
                 <#if baggageTypes??>
                     <#list baggageTypes as baggageType>
-                        <option value="${baggageType}">${baggageType}</option>
+                        <option value="${baggageType}"><@spring.message "baggage.type.${baggageType}"/></option>
                     </#list>
                 </#if>
             </select>
         </div>
-
     </div>
 
     <div class="row mb-2">
@@ -202,7 +201,6 @@ orderDirection = order.getDirection().toString()
                     <label><@spring.message "lang.cm"/><sup><small>3</small></sup></label>
                 </div>
             </div>
-
         </div>
         <div class="col">
             <div class="row">
@@ -217,7 +215,6 @@ orderDirection = order.getDirection().toString()
                 </div>
             </div>
         </div>
-
     </div>
     <div class="row">
         <div class="col-3">
@@ -240,7 +237,7 @@ orderDirection = order.getDirection().toString()
             <label class="fs-5 fw-bolder me-2"><@spring.message "lang.sender"/>:</label>
         </div>
 
-        <div class="col pseudo-element" pseudo-content="City">
+        <div class="col pseudo-element" pseudo-content="<@spring.message "lang.city"/>">
             <select name="senderAddress.cityId" id="senderCitySelect" class="form-select">
                 <#if cities??>
                     <#list cities as city>
@@ -249,32 +246,33 @@ orderDirection = order.getDirection().toString()
                 </#if>
             </select>
         </div>
-    <div class="col pseudo-element" pseudo-content="Street">
-        <input class="form-control" type="text" name="senderAddress.streetName" value="${senderStreet!""}">
+
+        <div class="col pseudo-element" pseudo-content="<@spring.message "lang.street"/>">
+            <input class="form-control" type="text" name="senderAddress.streetName" value="${senderStreet!""}">
+        </div>
+        <div class="col pseudo-element" pseudo-content="<@spring.message "lang.house-number"/>">
+            <input class="form-control" type="text" name="senderAddress.houseNumber" value="${senderHouseNumber!""}">
+        </div>
     </div>
-    <div class="col pseudo-element" pseudo-content="House number">
-        <input class="form-control" type="text" name="senderAddress.houseNumber" value="${senderHouseNumber!""}">
-    </div>
-</div>
-<div class="row">
-    <div class="col align-self-center">
-        <label class="fs-5 fw-bolder me-2"><@spring.message "lang.receiver"/>:</label>
-    </div>
-    <div class="col pseudo-element" pseudo-content="City">
-        <select name="receiverAddress.cityId" id="receiverCitySelect" class="form-select">
-            <#if cities??>
-                <#list cities as city>
-                    <option value="${city.id}" <#if receiverCityId?? && receiverCityId == city.id> selected </#if>>${city.name}</option>
-                </#list>
-            </#if>
+    <div class="row">
+        <div class="col align-self-center">
+            <label class="fs-5 fw-bolder me-2"><@spring.message "lang.receiver"/>:</label>
+        </div>
+        <div class="col pseudo-element" pseudo-content="<@spring.message "lang.city"/>">
+            <select name="receiverAddress.cityId" id="receiverCitySelect" class="form-select">
+                <#if cities??>
+                    <#list cities as city>
+                        <option value="${city.id}" <#if receiverCityId?? && receiverCityId == city.id> selected </#if>>${city.name}</option>
+                    </#list>
+                </#if>
             </select>
-    </div>
-    <div class="col pseudo-element" pseudo-content="Street">
-        <input class="form-control" type="text" name="receiverAddress.streetName" value="${receiverStreet!""}">
-    </div>
-    <div class="col pseudo-element" pseudo-content="House number">
-        <input class="form-control" type="text" name="receiverAddress.houseNumber"  value="${receiverHouseNumber!""}">
-    </div>
+        </div>
+        <div class="col pseudo-element" pseudo-content="<@spring.message "lang.street"/>">
+            <input class="form-control" type="text" name="receiverAddress.streetName" value="${receiverStreet!""}">
+        </div>
+        <div class="col pseudo-element" pseudo-content="<@spring.message "lang.house-number"/>">
+            <input class="form-control" type="text" name="receiverAddress.houseNumber"  value="${receiverHouseNumber!""}">
+        </div>
     </div>
 </div>
 
