@@ -40,6 +40,9 @@ class WeightFareServiceTest {
 
     private static Stream<Arguments> testGetPriceCases() {
         return Stream.of(
+                Arguments.of(0.0, 20.0),
+                Arguments.of(0.5, 20.0),
+                Arguments.of(0.99, 20.0),
                 Arguments.of(1.0, 20.0),
                 Arguments.of(2.0, 20.0),
                 Arguments.of(2.5, 20.0),

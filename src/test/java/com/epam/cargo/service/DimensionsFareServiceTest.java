@@ -41,6 +41,7 @@ class DimensionsFareServiceTest {
 
     private static Stream<Arguments> testGetPriceCases() {
         return Stream.of(
+                Arguments.of(0, 10.0),
                 Arguments.of(1000, 10.0),
                 Arguments.of(4000, 10.0),
                 Arguments.of(4999, 10.0),
