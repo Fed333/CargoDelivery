@@ -2,7 +2,7 @@ package com.epam.cargo.service;
 
 import com.epam.cargo.entity.City;
 import com.epam.cargo.entity.DirectionDelivery;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -106,7 +108,7 @@ class CityUtilsTest {
         City city2 = cityService.findCityByZipCode(zipcode2);
         List<DirectionDelivery> directions = directionDeliveryService.findAll(Locale.UK);
         Double distance = CityUtils.getDistance(city1, city2, directions).getDistance();
-        Assert.assertEquals(expectedDistance, distance);
+        Assertions.assertEquals(expectedDistance, distance);
     }
 
     @ParameterizedTest
@@ -117,6 +119,6 @@ class CityUtilsTest {
         List<DirectionDelivery> directions = directionDeliveryService.findAll(Locale.UK);
         List<City> route = CityUtils.getDistance(city1, city2, directions).getRoute();
         List<String> zipcodes = route.stream().map(City::getZipcode).collect(Collectors.toList());
-        Assert.assertEquals(expectedZipcodes, zipcodes);
+        Assertions.assertEquals(expectedZipcodes, zipcodes);
     }
 }

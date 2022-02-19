@@ -1,6 +1,7 @@
 package com.epam.cargo.dto;
 
 import com.epam.cargo.entity.BaggageType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import static com.epam.cargo.exception.WrongInputDataKeysConstants.REQUIRED_KEY_
 
 @Getter
 @Setter
+@Builder
 public class DeliveredBaggageRequest {
 
     @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
@@ -27,4 +29,13 @@ public class DeliveredBaggageRequest {
 
     private String description;
 
+    public DeliveredBaggageRequest() {
+    }
+
+    public DeliveredBaggageRequest(Double weight, Double volume, BaggageType type, String description) {
+        this.weight = weight;
+        this.volume = volume;
+        this.type = type;
+        this.description = description;
+    }
 }

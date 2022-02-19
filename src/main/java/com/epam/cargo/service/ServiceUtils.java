@@ -3,6 +3,7 @@ package com.epam.cargo.service;
 import com.epam.cargo.dto.AddressRequest;
 import com.epam.cargo.dto.DeliveredBaggageRequest;
 import com.epam.cargo.dto.DeliveryApplicationRequest;
+import com.epam.cargo.dto.DeliveryReceiptRequest;
 import com.epam.cargo.entity.*;
 import com.epam.cargo.exception.InvalidReceivingDateException;
 import com.epam.cargo.exception.NoExistingCityException;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -137,6 +139,27 @@ public class ServiceUtils {
         if (!Objects.isNull(comparator)) {
             list.sort(comparator);
         }
+    }
+
+    public static DeliveryReceipt createDeliveryReceipt(DeliveryApplication application, User manager, DeliveryReceiptRequest receiptRequest) {
+        DeliveryReceipt receipt = new DeliveryReceipt();
+        receipt.setApplication(application);
+        receipt.setCustomer(application.getCustomer());
+        receipt.setManager(manager);
+        receipt.setTotalPrice(Optional.ofNullable(receiptRequest.getPrice()).orElse(application.getPrice()));
+        receipt.setFormationDate(LocalDate.now());
+        receipt.setPaid(false);
+        return receipt;
+    }
+
+    /**
+     * Checks authorized rights for personal actions
+     * @param user specified user for comparison
+     * @param initiator user from context who initiated the action
+     * @return equals of login and password
+     * */
+    static boolean credentialsEquals(User user, User initiator) {
+        return Objects.equals(user.getLogin(), initiator.getLogin()) && Objects.equals(user.getPassword(), initiator.getPassword());
     }
 
     public interface ComparatorRecognizer<T> {
