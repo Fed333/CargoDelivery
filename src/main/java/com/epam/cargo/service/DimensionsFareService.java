@@ -37,10 +37,11 @@ public class DimensionsFareService {
         double price = 0.0;
         DimensionsFare fare = findFareByVolume(volume);
 
-        while(volume != 0 && volume >= fare.getDimensionsFrom()){
+        do {
             price += fare.getPrice();
             volume -= fare.getDimensionsTo();
-        }
+        } while(volume != 0 && volume >= fare.getDimensionsFrom());
+
         return price;
     }
 
