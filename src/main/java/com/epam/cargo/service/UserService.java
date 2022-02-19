@@ -8,6 +8,7 @@ import com.epam.cargo.repos.UserRepo;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -29,6 +31,9 @@ public class UserService implements UserDetailsService {
 
     @Value("${spring.messages.basename}")
     private String messages;
+
+    @Value("${registration.bonus}")
+    private BigDecimal bonus;
 
     @Autowired
     private UserRepo userRepo;
@@ -49,7 +54,8 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
 
-    public User registerUser(UserRequest userRequest, Locale locale) throws WrongDataException {
+    public User registerUser(UserRequest userRequest) throws WrongDataException {
+        Locale locale = LocaleContextHolder.getLocale();
         ResourceBundle bundle = ResourceBundle.getBundle(messages, locale);
         User user = new User();
         initializePersonalData(userRequest, user);
@@ -130,11 +136,18 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
-
+    /**
+     * Add user to database
+     * @param user given User
+     * @throws IllegalArgumentException if user has inappropriate fields or null mandatory ones
+     * @return true if new User has been just added, or false if User is null or already exists
+     * */
     public boolean addUser(User user) throws NoExistingCityException {
         if (Objects.isNull(user)){
             return false;
         }
+        requireValidUser(user);
+
         User foundUser;
         if (!Objects.isNull(foundUser = userRepo.findByLogin(user.getLogin()))){
             user.setId(foundUser.getId());
@@ -146,10 +159,14 @@ public class UserService implements UserDetailsService {
         if (!Objects.isNull(address)) {
             addressService.addAddress(address);
         }
-
+        user.setCash(bonus);
         userRepo.save(user);
 
         return true;
+    }
+
+    private void requireValidUser(User user) {
+        Optional.ofNullable(user.getLogin()).orElseThrow(()->new IllegalArgumentException("User login cannot be null!"));
     }
 
     public User findUserById(Long id){
@@ -168,7 +185,6 @@ public class UserService implements UserDetailsService {
 
     public void deleteUser(User user){
         userRepo.delete(user);
-        Optional.ofNullable(user.getAddress()).ifPresent(addressService::deleteAddress);
     }
 
     public List<DeliveryApplication> getApplications(User user){
