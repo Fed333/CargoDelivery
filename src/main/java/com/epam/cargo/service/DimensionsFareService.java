@@ -21,7 +21,7 @@ public class DimensionsFareService {
     public DimensionsFare findFareByVolume(Integer volume){
         requireOnlyPositive(volume);
 
-        DimensionsFare fare = dimensionsFareRepo.findFareByDistance(volume);
+        DimensionsFare fare = dimensionsFareRepo.findFareByVolume(volume);
         if (Objects.isNull(fare)){
             fare = dimensionsFareRepo.findMaxFare();
         }
