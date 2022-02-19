@@ -67,7 +67,7 @@ public class DeliveryApplicationService {
         }
         ServiceUtils.requireExistingUser(application.getCustomer(), userService);
 
-        deliveredBaggageService.addBaggage(application.getDeliveredBaggage());
+        deliveredBaggageService.save(application.getDeliveredBaggage());
         addressService.addAddress(application.getSenderAddress());
         addressService.addAddress(application.getReceiverAddress());
         deliveryApplicationRepo.save(application);
