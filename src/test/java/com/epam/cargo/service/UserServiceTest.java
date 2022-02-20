@@ -6,7 +6,7 @@ import com.epam.cargo.entity.User;
 import com.epam.cargo.exception.NoExistingCityException;
 import com.epam.cargo.exception.NoValidPasswordException;
 import com.epam.cargo.repos.UserRepo;
-import com.epam.cargo.util.UserMockEnvironment;
+import com.epam.cargo.mock.UserMockEnvironment;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
@@ -179,7 +179,7 @@ class UserServiceTest {
         String login = "divan0_0";
         String password = "123";
 
-        User user = new User(name, login, password);
+        User user = User.builder().name(name).login(login).password(password).build();
         user.setAddress(address);
 
         userService.addUser(user);
