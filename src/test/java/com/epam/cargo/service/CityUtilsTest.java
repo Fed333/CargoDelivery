@@ -33,7 +33,7 @@ class CityUtilsTest {
         return Stream.of(
                 Arguments.of(KYIV_ZIPCODE, CHERKASY_ZIPCODE, 192.3),
                 Arguments.of(KYIV_ZIPCODE, UMAN_ZIPCODE, 375.9),
-                Arguments.of(KYIV_ZIPCODE, VINNYTISA_ZIPCODE, 268.6),
+                Arguments.of(KYIV_ZIPCODE, VINNYTSIA_ZIPCODE, 268.6),
                 Arguments.of(KYIV_ZIPCODE, ZHYTOMYR_ZIPCODE, 139.9),
                 Arguments.of(UZHOROD_ZIPCODE, KHARKIV_ZIPCODE, 1355.5),
                 Arguments.of(LUTSK_ZIPCODE, SUMY_ZIPCODE, 855.0),
@@ -50,10 +50,10 @@ class CityUtilsTest {
         return Stream.of(
                 Arguments.of(KYIV_ZIPCODE, CHERKASY_ZIPCODE, Arrays.asList(KYIV_ZIPCODE, CHERKASY_ZIPCODE)),
                 Arguments.of(KYIV_ZIPCODE, UMAN_ZIPCODE,  Arrays.asList(KYIV_ZIPCODE, CHERKASY_ZIPCODE, UMAN_ZIPCODE)),
-                Arguments.of(KYIV_ZIPCODE, VINNYTISA_ZIPCODE, Arrays.asList(KYIV_ZIPCODE, ZHYTOMYR_ZIPCODE, VINNYTISA_ZIPCODE)),
+                Arguments.of(KYIV_ZIPCODE, VINNYTSIA_ZIPCODE, Arrays.asList(KYIV_ZIPCODE, ZHYTOMYR_ZIPCODE, VINNYTSIA_ZIPCODE)),
                 Arguments.of(KYIV_ZIPCODE, ZHYTOMYR_ZIPCODE,  Arrays.asList(KYIV_ZIPCODE, ZHYTOMYR_ZIPCODE)),
                 Arguments.of(UZHOROD_ZIPCODE, KHARKIV_ZIPCODE, Arrays.asList(
-                                UZHOROD_ZIPCODE, IVANOFRANKIVSK_ZIPCODE, TERNOPIL_ZIPCODE, KHMELNYTSKIY_ZIPCODE, VINNYTISA_ZIPCODE,
+                                UZHOROD_ZIPCODE, IVANOFRANKIVSK_ZIPCODE, TERNOPIL_ZIPCODE, KHMELNYTSKIY_ZIPCODE, VINNYTSIA_ZIPCODE,
                                 UMAN_ZIPCODE, CHERKASY_ZIPCODE, POLTAVA_ZIPCODE, KHARKIV_ZIPCODE
                         )
                 ),
@@ -71,13 +71,13 @@ class CityUtilsTest {
                 ),
                 Arguments.of(KHARKIV_ZIPCODE, CHERNIVTSI_ZIPCODE, Arrays.asList(
                                 KHARKIV_ZIPCODE, POLTAVA_ZIPCODE, CHERKASY_ZIPCODE, UMAN_ZIPCODE,
-                                VINNYTISA_ZIPCODE, KHMELNYTSKIY_ZIPCODE, KAMIANETS_ZIPCODE, CHERNIVTSI_ZIPCODE
+                        VINNYTSIA_ZIPCODE, KHMELNYTSKIY_ZIPCODE, KAMIANETS_ZIPCODE, CHERNIVTSI_ZIPCODE
                         )
 
                 ),
                 Arguments.of(ZAPORIZHZHIA_ZIPCODE, UZHOROD_ZIPCODE,  Arrays.asList(
                         ZAPORIZHZHIA_ZIPCODE, DNIPRO_ZIPCODE, KROPYVNYTSKYI_ZIPCODE, UMAN_ZIPCODE,
-                        VINNYTISA_ZIPCODE, KHMELNYTSKIY_ZIPCODE, TERNOPIL_ZIPCODE, IVANOFRANKIVSK_ZIPCODE,
+                        VINNYTSIA_ZIPCODE, KHMELNYTSKIY_ZIPCODE, TERNOPIL_ZIPCODE, IVANOFRANKIVSK_ZIPCODE,
                         UZHOROD_ZIPCODE
                         )
                 ),
@@ -92,7 +92,7 @@ class CityUtilsTest {
 
                 ),
                 Arguments.of(POLTAVA_ZIPCODE, KHMELNYTSKIY_ZIPCODE, Arrays.asList(
-                        POLTAVA_ZIPCODE, CHERKASY_ZIPCODE, UMAN_ZIPCODE, VINNYTISA_ZIPCODE, KHMELNYTSKIY_ZIPCODE
+                        POLTAVA_ZIPCODE, CHERKASY_ZIPCODE, UMAN_ZIPCODE, VINNYTSIA_ZIPCODE, KHMELNYTSKIY_ZIPCODE
                         )
 
                 )
