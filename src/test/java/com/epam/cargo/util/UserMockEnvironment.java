@@ -92,6 +92,9 @@ public class UserMockEnvironment {
         };
     }
 
+    /**
+     * Fully mocks UserRepo at once
+     * */
     public void mockUserRepoBean(UserRepo userRepo) {
         mockSave(userRepo);
         mockFindAll(userRepo);
