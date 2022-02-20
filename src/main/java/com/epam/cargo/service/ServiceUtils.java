@@ -33,7 +33,7 @@ public class ServiceUtils {
     }
 
     /**
-     * makes an object according to dto request object
+     * Makes an object according to dto request object
      * @param customer owner of application
      * @param request web dto request object
      * @param cityService service of City entity
@@ -91,7 +91,6 @@ public class ServiceUtils {
         return object;
     }
 
-
     private static City requireExistingCity(AddressRequest request, CityService cityService) throws NoExistingCityException {
         City city = cityService.findCityById(request.getCityId());
         if (Objects.isNull(city)){
@@ -101,6 +100,7 @@ public class ServiceUtils {
     }
 
     static void requireExistingUser(User user, UserService userService){
+        Optional.ofNullable(user).orElseThrow(()->new IllegalArgumentException("User cannot be null!"));
         if (Objects.isNull(userService.findUserByLogin(user.getLogin()))){
             throw new IllegalArgumentException("User " + user + " must be present in database");
         }
