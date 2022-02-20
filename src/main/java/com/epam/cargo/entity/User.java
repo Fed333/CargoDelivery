@@ -1,5 +1,7 @@
 package com.epam.cargo.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
@@ -21,6 +23,8 @@ import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_FILLED_PAS
 @Table(name="users")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class User implements UserDetails {
 
     @Id
