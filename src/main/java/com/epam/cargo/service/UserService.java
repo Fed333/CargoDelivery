@@ -5,6 +5,7 @@ import com.epam.cargo.dto.UserRequest;
 import com.epam.cargo.entity.*;
 import com.epam.cargo.exception.*;
 import com.epam.cargo.repos.UserRepo;
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,8 @@ import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    private static final Logger logger = Logger.getLogger(UserService.class);
 
     @Value("${validation.password.regexp}")
     private String passwordValidRegex;
@@ -144,8 +147,10 @@ public class UserService implements UserDetailsService {
      * */
     public boolean addUser(User user) throws NoExistingCityException {
         if (Objects.isNull(user)){
+            logger.warn("Attempt to add null User!");
             return false;
         }
+
         requireValidUser(user);
 
         User foundUser;
@@ -161,7 +166,7 @@ public class UserService implements UserDetailsService {
         }
         user.setCash(bonus);
         userRepo.save(user);
-
+        logger.info(String.format("User: [id=%d login=%s] has been registered successfully.", user.getId(), user.getLogin()));
         return true;
     }
 

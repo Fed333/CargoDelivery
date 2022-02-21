@@ -6,3 +6,4 @@ files
 *.iml
 .vscode
 *.log
+logs

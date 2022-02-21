@@ -81,13 +81,11 @@ public class DeliveryApplicationController {
         boolean successfullySent = false;
         if (!bindingResult.hasErrors()){
             try {
-                ResourceBundle bundle = ResourceBundle.getBundle(messages, locale);
-                successfullySent = applicationService.sendApplication(customer, applicationRequest, bundle);
+                successfullySent = applicationService.sendApplication(customer, applicationRequest);
                 model.addAttribute("result", "application was successfully sent");
             }
             catch (WrongDataException e){
                 model.addAttribute(e.getModelAttribute(), e.getMessage());
-
             }
         }
         else{
