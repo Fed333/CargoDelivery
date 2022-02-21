@@ -1,15 +1,17 @@
 package com.epam.cargo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import static com.epam.cargo.exception.WrongInputDataKeysConstants.REQUIRED_KEY_ERROR_MESSAGE;
 
+@NoArgsConstructor
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class AddressRequest {
 
     @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)

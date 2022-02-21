@@ -1,7 +1,6 @@
 package com.epam.cargo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Temporal;
@@ -12,8 +11,11 @@ import java.time.LocalDate;
 
 import static com.epam.cargo.exception.WrongInputDataKeysConstants.REQUIRED_KEY_ERROR_MESSAGE;
 
+@NoArgsConstructor
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class DeliveryApplicationRequest {
 
     @Valid
