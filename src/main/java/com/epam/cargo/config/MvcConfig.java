@@ -1,5 +1,7 @@
 package com.epam.cargo.config;
 
+import com.epam.cargo.config.interceptors.LogInterceptor;
+import com.epam.cargo.config.interceptors.impl.Log4jInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -44,8 +46,14 @@ public class MvcConfig implements WebMvcConfigurer {
         return lci;
     }
 
+    @Bean
+    public LogInterceptor logInterceptor(){
+        return new Log4jInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(localeChangeInterceptor());
+        registry.addInterceptor(logInterceptor());
     }
 }
