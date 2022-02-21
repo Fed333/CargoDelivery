@@ -5,3 +5,4 @@ files
 *.jar
 *.iml
 .vscode
+*.log
