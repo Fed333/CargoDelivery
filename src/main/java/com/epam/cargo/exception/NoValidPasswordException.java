@@ -22,6 +22,6 @@ public class NoValidPasswordException extends WrongDataException{
 
     @Override
     public String getModelAttribute() {
-        return "passwordErrorMessage";
+        return ModelErrorAttribute.PASSWORD.getAttr();
     }
 }

@@ -4,6 +4,7 @@ import com.epam.cargo.entity.City;
 
 import java.util.ResourceBundle;
 
+import static com.epam.cargo.exception.ModelErrorAttribute.ABSENT_CITY;
 import static com.epam.cargo.exception.WrongInput.NO_EXISTING_CITY;
 
 public class NoExistingCityException extends WrongDataException{
@@ -22,7 +23,7 @@ public class NoExistingCityException extends WrongDataException{
 
     @Override
     public String getModelAttribute() {
-        return "noExistingCityMessage";
+        return ABSENT_CITY.getAttr();
     }
 
 }

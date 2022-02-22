@@ -4,6 +4,7 @@ import com.epam.cargo.entity.City;
 
 import java.util.ResourceBundle;
 
+import static com.epam.cargo.exception.ModelErrorAttribute.CITY_DIRECTION;
 import static com.epam.cargo.exception.WrongInput.NO_EXISTING_DIRECTION;
 
 public class NoExistingDirectionException extends WrongDataException{
@@ -18,6 +19,6 @@ public class NoExistingDirectionException extends WrongDataException{
 
     @Override
     public String getModelAttribute() {
-        return "invalidDirectionErrorMessage";
+        return CITY_DIRECTION.getAttr();
     }
 }

@@ -21,6 +21,6 @@ public class NoValidLoginException extends WrongDataException{
 
     @Override
     public String getModelAttribute() {
-        return "loginErrorMessage";
+        return ModelErrorAttribute.LOGIN.getAttr();
     }
 }

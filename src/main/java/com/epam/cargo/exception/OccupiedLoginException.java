@@ -16,6 +16,6 @@ public class OccupiedLoginException extends WrongDataException{
 
     @Override
     public String getModelAttribute() {
-        return "loginErrorMessage";
+        return ModelErrorAttribute.LOGIN.getAttr();
     }
 }
