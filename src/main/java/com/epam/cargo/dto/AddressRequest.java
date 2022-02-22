@@ -5,7 +5,7 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.REQUIRED_KEY_ERROR_MESSAGE;
+import static com.epam.cargo.exception.WrongInput.*;
 
 @NoArgsConstructor
 @Getter
@@ -14,14 +14,14 @@ import static com.epam.cargo.exception.WrongInputDataKeysConstants.REQUIRED_KEY_
 @AllArgsConstructor
 public class AddressRequest {
 
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
     private Long cityId;
 
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
-    @NotBlank(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
+    @NotBlank(message = REQUIRED)
     private String streetName;
 
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
-    @NotBlank(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
+    @NotBlank(message = REQUIRED)
     private String houseNumber;
 }

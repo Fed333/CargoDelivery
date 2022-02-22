@@ -2,7 +2,7 @@ package com.epam.cargo.exception;
 
 import java.util.ResourceBundle;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.INVALID_CITY_DIRECTION_SAME_CITIES_KEY_ERROR_MESSAGE;
+import static com.epam.cargo.exception.WrongInput.INVALID_DIRECTION_SAME_CITIES;
 
 public class SameCityDirectionException extends WrongDataException{
 
@@ -11,9 +11,8 @@ public class SameCityDirectionException extends WrongDataException{
     }
 
     private static String buildErrorMessage(ResourceBundle bundle) {
-        return bundle.getString(INVALID_CITY_DIRECTION_SAME_CITIES_KEY_ERROR_MESSAGE);
+        return bundle.getString(INVALID_DIRECTION_SAME_CITIES);
     }
-
 
     @Override
     public String getModelAttribute() {

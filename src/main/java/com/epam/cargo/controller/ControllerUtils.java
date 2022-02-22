@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.*;
+import static com.epam.cargo.exception.WrongInput.*;
 
 public class ControllerUtils {
 
@@ -42,9 +42,9 @@ public class ControllerUtils {
             String rejected = (String)fieldError.getRejectedValue();
 
             if (isAnyFractionRecord(rejected) && rejected.contains(",")){
-                return USE_DOT_INSTEAD_OF_COMMA_KEY_ERROR_MESSAGE;
+                return USE_DOT_INSTEAD_OF_COMMA;
             }
-            return INCORRECT_NUMBER_FORMAT_KEY_ERROR_MESSAGE;
+            return INCORRECT_NUMBER_FORMAT;
         };
     }
 
@@ -71,7 +71,7 @@ public class ControllerUtils {
     }
 
     private static String getErrorMessageKey(FieldError fieldError) {
-        Function<FieldError, String> action = actionsByCode.getOrDefault(fieldError.getCode(), fieldErr -> UNKNOWN_ERROR_KEY_MESSAGE);
+        Function<FieldError, String> action = actionsByCode.getOrDefault(fieldError.getCode(), fieldErr -> UNKNOWN_ERROR);
         return action.apply(fieldError);
     }
 

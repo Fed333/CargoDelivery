@@ -2,7 +2,7 @@ package com.epam.cargo.exception;
 
 import java.util.ResourceBundle;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.OCCUPIED_LOGIN_KEY_ERROR_FORMAT_MESSAGE;
+import static com.epam.cargo.exception.WrongInput.OCCUPIED_LOGIN_FORMAT;
 
 public class OccupiedLoginException extends WrongDataException{
 
@@ -11,7 +11,7 @@ public class OccupiedLoginException extends WrongDataException{
     }
 
     private static String buildErrorMessage(ResourceBundle bundle, String login) {
-        return String.format(bundle.getString(OCCUPIED_LOGIN_KEY_ERROR_FORMAT_MESSAGE), login);
+        return String.format(bundle.getString(OCCUPIED_LOGIN_FORMAT), login);
     }
 
     @Override

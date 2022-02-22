@@ -1,5 +1,6 @@
 package com.epam.cargo.entity;
 
+import com.epam.cargo.exception.WrongInput;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,9 +16,6 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_FILLED_LOGIN_KEY_ERROR_MESSAGE;
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_FILLED_PASSWORD_KEY_ERROR_MESSAGE;
 
 @Entity
 @Table(name="users")
@@ -38,11 +36,11 @@ public class User implements UserDetails {
     private String surname;
 
 
-    @NotBlank(message = NO_FILLED_LOGIN_KEY_ERROR_MESSAGE)
+    @NotBlank(message = WrongInput.NO_FILLED_LOGIN)
     @Column(name="login", unique = true, nullable = false, length = 32)
     private String login;
 
-    @NotBlank(message = NO_FILLED_PASSWORD_KEY_ERROR_MESSAGE)
+    @NotBlank(message = WrongInput.NO_FILLED_PASSWORD)
     @Column(name="password", nullable = false, length = 256)
     private String password;
 

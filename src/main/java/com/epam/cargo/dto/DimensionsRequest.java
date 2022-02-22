@@ -8,23 +8,24 @@ import javax.validation.constraints.Positive;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_POSITIVE_NUMBER_KEY_ERROR_MESSAGE;
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.REQUIRED_KEY_ERROR_MESSAGE;
+import static com.epam.cargo.exception.WrongInput.NO_POSITIVE_NUMBER;
+import static com.epam.cargo.exception.WrongInput.REQUIRED;
 
 @Getter
 @Setter
 public class DimensionsRequest {
 
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
-    @Positive(message = NO_POSITIVE_NUMBER_KEY_ERROR_MESSAGE)
+
+    @NotNull(message = REQUIRED)
+    @Positive(message = NO_POSITIVE_NUMBER)
     private Double length;
 
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
-    @Positive(message = NO_POSITIVE_NUMBER_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
+    @Positive(message = NO_POSITIVE_NUMBER)
     private Double width;
 
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
-    @Positive(message = NO_POSITIVE_NUMBER_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
+    @Positive(message = NO_POSITIVE_NUMBER)
     private Double height;
 
     /**

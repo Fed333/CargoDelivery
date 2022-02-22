@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.*;
+import static com.epam.cargo.exception.WrongInput.*;
 
 @Getter
 @Setter
@@ -16,16 +16,16 @@ public class UserRequest {
     private String name;
     private String surname;
 
-    @NotNull(message = NO_FILLED_LOGIN_KEY_ERROR_MESSAGE)
-    @NotBlank(message = NO_FILLED_LOGIN_KEY_ERROR_MESSAGE)
+    @NotNull(message = NO_FILLED_LOGIN)
+    @NotBlank(message = NO_FILLED_LOGIN)
     private String login;
 
-    @NotNull(message = NO_FILLED_LOGIN_KEY_ERROR_MESSAGE)
-    @NotBlank(message = NO_FILLED_PASSWORD_KEY_ERROR_MESSAGE)
+    @NotNull(message = NO_FILLED_LOGIN)
+    @NotBlank(message = NO_FILLED_PASSWORD)
     private String password;
 
-    @NotNull(message = NO_FILLED_LOGIN_KEY_ERROR_MESSAGE)
-    @NotBlank(message = NO_FILLED_DUPLICATE_PASSWORD_KEY_ERROR_MESSAGE)
+    @NotNull(message = NO_FILLED_LOGIN)
+    @NotBlank(message = MISSING_DUPLICATE_PASSWORD)
     private String duplicatePassword;
 
     private String phone;
