@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.*;
 
+import static com.epam.cargo.exception.ModelErrorAttribute.DUPLICATE_PASSWORD;
+import static com.epam.cargo.exception.WrongInput.CONFIRMATION_PASSWORD_FAILED;
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -80,9 +83,9 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(password));
     }
 
-    private void requirePasswordDuplicationMatch(UserRequest userRequest, String password, ResourceBundle bundle) throws PasswordConfirmationException {
+    private void requirePasswordDuplicationMatch(UserRequest userRequest, String password, ResourceBundle bundle) throws WrongDataException {
         if (!password.equals(userRequest.getDuplicatePassword())){
-            throw new PasswordConfirmationException(bundle);
+            throw new WrongDataAttributeException(DUPLICATE_PASSWORD.getAttr(), bundle, CONFIRMATION_PASSWORD_FAILED);
         }
     }
 
