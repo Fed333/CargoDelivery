@@ -7,6 +7,8 @@ public interface WrongInput {
     String OCCUPIED_LOGIN_FORMAT = "wrong-input-data.occupied-login.format";
     String NO_FILLED_PASSWORD = "wrong-input-data.no-filled-password";
     String NO_VALID_PASSWORD = "wrong-input-data.no-valid-password";
+    String INCORRECT_NAME = "wrong-input.incorrect.name";
+    String INCORRECT_SURNAME = "wrong-input.incorrect.surname";
     String SMALL_PASSWORD = "wrong-input-data.small-password";
     String CONFIRMATION_PASSWORD_FAILED = "wrong-input-data.duplicate-password-confirmation-failed";
     String MISSING_DUPLICATE_PASSWORD = "wrong-input-data.no-filled-duplicate-password";
@@ -21,4 +23,5 @@ public interface WrongInput {
     String UNKNOWN_ERROR = "unknown-error";
     String REQUIRED_BEING_AFTER_SENDING = "wrong-input-data.date.receiving.required-being-after-sending";
 
+    String INCORRECT_PHONE = "wrong-input.incorrect.phone";
 }
