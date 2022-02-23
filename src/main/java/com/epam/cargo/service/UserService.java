@@ -220,7 +220,7 @@ public class UserService implements UserDetailsService {
 
     private String requireValidAttribute(String value, String regexp, ModelErrorAttribute attribute, String errorMessage) throws WrongDataAttributeException {
         if (!isValidRegexp(value, regexp)){
-            throw new WrongDataAttributeException(attribute.name(), ResourceBundle.getBundle(messages, LocaleContextHolder.getLocale()), errorMessage);
+            throw new WrongDataAttributeException(attribute.getAttr(), ResourceBundle.getBundle(messages, LocaleContextHolder.getLocale()), errorMessage);
         }
         return value;
     }
