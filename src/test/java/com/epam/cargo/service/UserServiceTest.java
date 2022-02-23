@@ -63,7 +63,7 @@ class UserServiceTest {
 
     public static Stream<Arguments> userRegistrationRequestsCases() {
         return Stream.of(
-                Arguments.of(UserRequest.builder().name("Ivan").surname("Sipalka").login("PIPAS").password("qwerty12345").duplicatePassword("qwerty12345").build())
+                Arguments.of(UserRequest.builder().name("Ivan").surname("Sipalka").login("PIPAS").password("qwerty12345").duplicatePassword("qwerty12345").phone("+380967634583").build())
         );
     }
 
