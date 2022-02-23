@@ -4,13 +4,15 @@ public enum ModelErrorAttribute {
     DUPLICATE_PASSWORD("duplicatePasswordErrorMessage"),
     LOGIN("loginErrorMessage"),
     PASSWORD("passwordErrorMessage"),
+    NAME("nameErrorMessage"),
+    PHONE("phoneErrorMessage"),
+    SURNAME("surnameErrorMessage"),
     RECEIVING("receivingDateErrorMessage"),
     CITY_DIRECTION("invalidCityDirectionErrorMessage"),
     PAYING("payingErrorMessage"),
     ABSENT_CITY("noExistingCityMessage");
 
-
-    private String attr;
+    private final String attr;
 
     ModelErrorAttribute(String attr) {
         this.attr = attr;

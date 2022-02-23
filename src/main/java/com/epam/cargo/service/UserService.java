@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.Supplier;
 
 import static com.epam.cargo.exception.ModelErrorAttribute.DUPLICATE_PASSWORD;
 import static com.epam.cargo.exception.WrongInput.CONFIRMATION_PASSWORD_FAILED;
@@ -34,6 +35,12 @@ public class UserService implements UserDetailsService {
 
     @Value("${validation.login.regexp}")
     private String loginValidRegex;
+
+    @Value("${validation.name.regexp}")
+    private String nameValidRegex;
+
+    @Value("${validation.phone.regexp}")
+    private String phoneValidRegex;
 
     @Value("${spring.messages.basename}")
     private String messages;
@@ -71,77 +78,6 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    private void initializeCredentials(UserRequest userRequest, User user, ResourceBundle bundle) throws WrongDataException {
-        String login = userRequest.getLogin();
-        requireValidLogin(login, bundle);
-        requireUniqueLogin(login, bundle);
-        user.setLogin(login);
-
-        String password = userRequest.getPassword();
-        requireValidPassword(password, bundle);
-        requirePasswordDuplicationMatch(userRequest, password, bundle);
-        user.setPassword(passwordEncoder.encode(password));
-    }
-
-    private void requirePasswordDuplicationMatch(UserRequest userRequest, String password, ResourceBundle bundle) throws WrongDataException {
-        if (!password.equals(userRequest.getDuplicatePassword())){
-            throw new WrongDataAttributeException(DUPLICATE_PASSWORD.getAttr(), bundle, CONFIRMATION_PASSWORD_FAILED);
-        }
-    }
-
-    private void requireValidPassword(String password, ResourceBundle bundle) throws NoValidPasswordException {
-        if (!isValidPassword(password)){
-            throw new NoValidPasswordException(bundle, password);
-        }
-    }
-
-    private boolean isValidPassword(String password) {
-        return password.matches(passwordValidRegex);
-    }
-
-    private boolean isValidLogin(String login){
-        return login.matches(loginValidRegex);
-    }
-
-    private void requireValidLogin(String login, ResourceBundle bundle) throws WrongDataException{
-        if (!isValidLogin(login)){
-            throw new NoValidLoginException(bundle, login);
-        }
-    }
-
-    private void requireUniqueLogin(String login, ResourceBundle bundle) throws OccupiedLoginException {
-        if (!Objects.isNull(userRepo.findByLogin(login))){
-            throw new OccupiedLoginException(bundle, login);
-        }
-    }
-
-    private void initializePersonalData(UserRequest userRequest, User user) throws WrongDataException{
-        user.setName(userRequest.getName());
-        user.setSurname(userRequest.getSurname());
-        user.setEmail(userRequest.getEmail());
-        user.setPhone(userRequest.getPhone());
-
-        assignAddressToUser(userRequest, user);
-    }
-
-    private boolean assignAddressToUser(UserRequest userRequest, User user) throws NoExistingCityException {
-        AddressRequest addressRequest = userRequest.getAddress();
-        if (!Objects.isNull(addressRequest)) {
-
-            City city = cityService.findCityById(addressRequest.getCityId());
-            if (!Objects.isNull(city)){
-                Address address = new Address();
-                address.setCity(city);
-                address.setStreet(addressRequest.getStreetName());
-                address.setHouseNumber(addressRequest.getHouseNumber());
-
-                addressService.addAddress(address);
-                user.setAddress(address);
-                return true;
-            }
-        }
-        return false;
-    }
     /**
      * Add user to database
      * @param user given User
@@ -224,4 +160,100 @@ public class UserService implements UserDetailsService {
     public Page<DeliveryReceipt> getCustomerReceipts(User customer, Pageable pageable) {
         return receiptService.findAllByCustomerId(customer.getId(), pageable);
     }
+
+    private void initializeCredentials(UserRequest userRequest, User user, ResourceBundle bundle) throws WrongDataException {
+        String login = userRequest.getLogin();
+        requireValidLogin(login, bundle);
+        requireUniqueLogin(login, bundle);
+        user.setLogin(login);
+
+        String password = userRequest.getPassword();
+        requireValidPassword(password, bundle);
+        requirePasswordDuplicationMatch(userRequest, password, bundle);
+        user.setPassword(passwordEncoder.encode(password));
+    }
+
+    private void requirePasswordDuplicationMatch(UserRequest userRequest, String password, ResourceBundle bundle) throws WrongDataException {
+        if (!password.equals(userRequest.getDuplicatePassword())){
+            throw new WrongDataAttributeException(DUPLICATE_PASSWORD.getAttr(), bundle, CONFIRMATION_PASSWORD_FAILED);
+        }
+    }
+
+    private void requireValidPassword(String password, ResourceBundle bundle) throws NoValidPasswordException {
+        if (!isValidPassword(password)){
+            throw new NoValidPasswordException(bundle, password);
+        }
+    }
+
+    private boolean isValidPassword(String password) {
+        return isValidRegexp(password, passwordValidRegex);
+    }
+
+    private boolean isValidLogin(String login){
+        return isValidRegexp(login, loginValidRegex);
+    }
+
+    private boolean isValidRegexp(String value, String regexp){
+        return value.matches(regexp);
+    }
+
+    private void requireValidLogin(String login, ResourceBundle bundle) throws WrongDataException{
+        if (!isValidLogin(login)){
+            throw new NoValidLoginException(bundle, login);
+        }
+    }
+
+    private void requireUniqueLogin(String login, ResourceBundle bundle) throws OccupiedLoginException {
+        if (!Objects.isNull(userRepo.findByLogin(login))){
+            throw new OccupiedLoginException(bundle, login);
+        }
+    }
+
+    private void initializePersonalData(UserRequest userRequest, User user) throws WrongDataException{
+        user.setName(requireValidName(userRequest));
+        user.setSurname(requireValidSurname(userRequest));
+        user.setEmail(user.getEmail());
+        user.setPhone(requireValidPhone(userRequest));
+
+        assignAddressToUser(userRequest, user);
+    }
+
+    private String requireValidAttribute(String value, String regexp, ModelErrorAttribute attribute, String errorMessage) throws WrongDataAttributeException {
+        if (!isValidRegexp(value, regexp)){
+            throw new WrongDataAttributeException(attribute.name(), ResourceBundle.getBundle(messages, LocaleContextHolder.getLocale()), errorMessage);
+        }
+        return value;
+    }
+
+    private String requireValidName(UserRequest userRequest) throws WrongDataAttributeException {
+        return requireValidAttribute(userRequest.getName(), nameValidRegex, ModelErrorAttribute.NAME, WrongInput.INCORRECT_NAME);
+    }
+
+    private String requireValidSurname(UserRequest userRequest) throws WrongDataAttributeException {
+        return requireValidAttribute(userRequest.getSurname(), nameValidRegex, ModelErrorAttribute.SURNAME, WrongInput.INCORRECT_SURNAME);
+    }
+
+    private String requireValidPhone(UserRequest userRequest) throws WrongDataAttributeException {
+        return requireValidAttribute(userRequest.getPhone(), phoneValidRegex, ModelErrorAttribute.PHONE, WrongInput.INCORRECT_PHONE);
+    }
+
+    private boolean assignAddressToUser(UserRequest userRequest, User user) throws NoExistingCityException {
+        AddressRequest addressRequest = userRequest.getAddress();
+        if (!Objects.isNull(addressRequest)) {
+
+            City city = cityService.findCityById(addressRequest.getCityId());
+            if (!Objects.isNull(city)){
+                Address address = new Address();
+                address.setCity(city);
+                address.setStreet(addressRequest.getStreetName());
+                address.setHouseNumber(addressRequest.getHouseNumber());
+
+                addressService.addAddress(address);
+                user.setAddress(address);
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
