@@ -13,7 +13,12 @@ import static com.epam.cargo.exception.WrongInput.*;
 @Setter
 @Builder
 public class UserRequest {
+    @NotNull(message = UNFILLED_NAME)
+    @NotBlank(message = UNFILLED_NAME)
     private String name;
+
+    @NotNull(message = UNFILLED_SURNAME)
+    @NotBlank(message = UNFILLED_SURNAME)
     private String surname;
 
     @NotNull(message = NO_FILLED_LOGIN)
@@ -28,6 +33,8 @@ public class UserRequest {
     @NotBlank(message = MISSING_DUPLICATE_PASSWORD)
     private String duplicatePassword;
 
+    @NotNull(message = UNFILLED_PHONE)
+    @NotBlank(message = UNFILLED_PHONE)
     private String phone;
     private String email;
 

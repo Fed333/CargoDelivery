@@ -24,4 +24,7 @@ public interface WrongInput {
     String REQUIRED_BEING_AFTER_SENDING = "wrong-input-data.date.receiving.required-being-after-sending";
 
     String INCORRECT_PHONE = "wrong-input.incorrect.phone";
+    String UNFILLED_NAME = "wrong.input.unfilled.name";
+    String UNFILLED_SURNAME = "wrong.input.unfilled.surname";
+    String UNFILLED_PHONE = "wrong.input.unfilled.phone";
 }
