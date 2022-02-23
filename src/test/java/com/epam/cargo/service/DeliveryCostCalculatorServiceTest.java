@@ -9,7 +9,7 @@ import com.epam.cargo.repos.*;
 import com.epam.cargo.util.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -25,11 +25,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.epam.cargo.service.CityZipcodesConstants.*;
+import static com.epam.cargo.service.CityZipcodesConstants.VINNYTSIA_ZIPCODE;
+import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class DeliveryCostCalculatorServiceTest {
+class DeliveryCostCalculatorServiceTest {
 
     private static final String PATH_TO_CSV_FILES = "src/test/resources/static/";
     private static final String CITIES_CSV = PATH_TO_CSV_FILES + "cities_table.csv";
@@ -131,7 +132,6 @@ public class DeliveryCostCalculatorServiceTest {
         Assertions.assertEquals(expectedResponse.getCost(), response.getCost());
         Assertions.assertEquals(expectedResponse.getDistance(), response.getDistance());
     }
-    
-    //TODO tests for incorrect input
 
+    //TODO tests for incorrect input
 }
