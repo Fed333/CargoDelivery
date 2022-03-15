@@ -1,5 +1,11 @@
 package com.epam.cargo.exception;
 
+/**
+ * Enum class with common constants of model attribute.<br>
+ * The values are model attributes used on markup web pages.<br>
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 public enum ModelErrorAttribute {
     DUPLICATE_PASSWORD("duplicatePasswordErrorMessage"),
     LOGIN("loginErrorMessage"),

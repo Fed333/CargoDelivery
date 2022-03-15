@@ -1,6 +1,7 @@
 package com.epam.cargo.service;
 
 import com.epam.cargo.dto.DeliveryReceiptRequest;
+import com.epam.cargo.entity.Address;
 import com.epam.cargo.entity.DeliveryApplication;
 import com.epam.cargo.entity.DeliveryReceipt;
 import com.epam.cargo.entity.User;
@@ -19,6 +20,12 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.*;
 
+/**
+ * Service class for managing DeliveryReceipt objects.<br>
+ * @author Roman Kovalchuk
+ * @see DeliveryReceipt
+ * @version 1.0
+ * */
 @Service
 public class DeliveryReceiptService {
 

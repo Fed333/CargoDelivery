@@ -2,6 +2,11 @@ package com.epam.cargo.exception;
 
 import java.util.ResourceBundle;
 
+/**
+ * Common Exception class of wrong user's input.<br>
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 abstract public class WrongDataException extends Exception{
 
     public abstract String getModelAttribute();

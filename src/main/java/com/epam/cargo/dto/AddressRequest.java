@@ -7,6 +7,11 @@ import javax.validation.constraints.NotNull;
 
 import static com.epam.cargo.exception.WrongInput.*;
 
+/**
+ * Data Transfer Object to assemble address.<br>
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 @NoArgsConstructor
 @Getter
 @Setter

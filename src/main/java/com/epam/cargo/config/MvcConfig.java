@@ -14,11 +14,15 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
+/**
+ * Configuration class with common Spring MVC settings.
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
     public void MvcConfig(){
-
     }
 
     @Override

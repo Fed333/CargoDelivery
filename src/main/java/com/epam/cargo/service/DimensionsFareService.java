@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Service class for obtaining DimensionsFare and calculating its price.<br>
+ * @author Roman Kovalchuk
+ * @see DimensionsFare
+ * @version 1.0
+ * */
 @Service
 public class DimensionsFareService {
 

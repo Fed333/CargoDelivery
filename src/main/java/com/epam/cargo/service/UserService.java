@@ -20,11 +20,16 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.Supplier;
 
 import static com.epam.cargo.exception.ModelErrorAttribute.DUPLICATE_PASSWORD;
 import static com.epam.cargo.exception.WrongInput.CONFIRMATION_PASSWORD_FAILED;
 
+/**
+ * Service class for managing User objects.<br>
+ * @author Roman Kovalchuk
+ * @see User
+ * @version 1.0
+ * */
 @Service
 public class UserService implements UserDetailsService {
 

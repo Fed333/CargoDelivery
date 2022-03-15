@@ -22,6 +22,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Takes requests associated with page of handling delivery cost calculator.
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 @Controller
 @RequestMapping("/delivery_cost_calculator")
 public class DeliveryCostCalculatorController {

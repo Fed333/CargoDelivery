@@ -7,8 +7,17 @@ import java.util.ResourceBundle;
 import static com.epam.cargo.exception.WrongInput.NO_FILLED_PASSWORD;
 import static com.epam.cargo.exception.WrongInput.NO_VALID_PASSWORD;
 
+/**
+ * Exception class in a case of no valid input password.
+ * @author Roman Kovalchuk
+ * @version  1.0
+ * */
 public class NoValidPasswordException extends WrongDataException{
 
+    /**
+     * Constructor for localized error message with rejected input password.
+     * @since 1.0
+     **/
     public NoValidPasswordException(ResourceBundle bundle, String password) {
         super(getErrorMessage(bundle, password));
     }

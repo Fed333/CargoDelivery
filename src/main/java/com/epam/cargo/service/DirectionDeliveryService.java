@@ -1,6 +1,7 @@
 package com.epam.cargo.service;
 
 import com.epam.cargo.dto.DirectionDeliveryFilterRequest;
+import com.epam.cargo.entity.Address;
 import com.epam.cargo.entity.City;
 import com.epam.cargo.entity.DirectionDelivery;
 import com.epam.cargo.repos.DirectionDeliveryRepo;
@@ -23,6 +24,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing DirectionDelivery objects.<br>
+ * @author Roman Kovalchuk
+ * @see DirectionDelivery
+ * @version 1.0
+ * */
 @Service
 public class DirectionDeliveryService {
 
