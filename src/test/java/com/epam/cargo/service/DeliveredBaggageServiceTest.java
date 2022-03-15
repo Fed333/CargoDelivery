@@ -3,6 +3,7 @@ package com.epam.cargo.service;
 import com.epam.cargo.dto.DeliveredBaggageRequest;
 import com.epam.cargo.entity.BaggageType;
 import com.epam.cargo.entity.DeliveredBaggage;
+import com.epam.cargo.mock.DeliveredBaggageMockEnvironment;
 import com.epam.cargo.repos.DeliveredBaggageRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,16 +12,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 @RunWith(SpringRunner.class)
@@ -32,8 +28,6 @@ class DeliveredBaggageServiceTest {
 
     @MockBean
     private DeliveredBaggageRepo deliveredBaggageRepo;
-
-    private Map<Long, DeliveredBaggage> baggageStorage = new HashMap<>();
 
     public static Stream<Arguments> baggageCases() {
         return Stream.of(
@@ -79,7 +73,8 @@ class DeliveredBaggageServiceTest {
 
     @BeforeEach
     public void setUp(){
-        mockDeliveredBaggageRepo(deliveredBaggageRepo);
+        DeliveredBaggageMockEnvironment deliveredBaggageMockEnvironment = new DeliveredBaggageMockEnvironment();
+        deliveredBaggageMockEnvironment.mockDeliveredBaggageRepoBean(deliveredBaggageRepo);
     }
 
     @ParameterizedTest
@@ -103,8 +98,7 @@ class DeliveredBaggageServiceTest {
     @ParameterizedTest
     @MethodSource("updateBaggageTestCases")
     void update(DeliveredBaggage baggage, DeliveredBaggageRequest updateBaggageRequest) {
-        baggageStorage.put(baggage.getId(), baggage);
-
+        baggageService.save(baggage);
         DeliveredBaggage updated = baggageService.update(baggage, updateBaggageRequest);
         Assertions.assertEquals(updated, baggageService.findById(updated.getId()).orElseThrow());
     }
@@ -120,29 +114,5 @@ class DeliveredBaggageServiceTest {
     void updateNull(DeliveredBaggage baggage, DeliveredBaggageRequest updateBaggageRequest){
         Assertions.assertThrows(NullPointerException.class, ()->baggageService.update(baggage, updateBaggageRequest));
 
-    }
-
-    private Answer<Optional<DeliveredBaggage>> findByIdMock() {
-        return invocationOnMock -> {
-            Long id = invocationOnMock.getArgument(0, Long.class);
-            return Optional.ofNullable(baggageStorage.get(id));
-        };
-    }
-
-    private Answer<DeliveredBaggage> saveMock() {
-        return invocationOnMock -> {
-            DeliveredBaggage baggage = invocationOnMock.getArgument(0, DeliveredBaggage.class);
-
-            baggageStorage.put(baggage.getId(), baggage);
-            return baggage;
-        };
-    }
-
-    private void mockDeliveredBaggageRepo(DeliveredBaggageRepo repo) {
-        Mockito.when(repo.save(Mockito.any()))
-                .thenAnswer(saveMock());
-
-        Mockito.when(repo.findById(Mockito.any()))
-                .thenAnswer(findByIdMock());
     }
 }

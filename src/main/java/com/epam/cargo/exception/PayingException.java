@@ -9,6 +9,6 @@ public class PayingException extends Exception{
     }
 
     public String getAttribute(){
-        return "payingErrorMessage";
+        return ModelErrorAttribute.PAYING.getAttr();
     }
 }

@@ -4,7 +4,8 @@ import com.epam.cargo.entity.City;
 
 import java.util.ResourceBundle;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_EXISTING_CITY_KEY_ERROR_MESSAGE;
+import static com.epam.cargo.exception.ModelErrorAttribute.ABSENT_CITY;
+import static com.epam.cargo.exception.WrongInput.NO_EXISTING_CITY;
 
 public class NoExistingCityException extends WrongDataException{
 
@@ -17,12 +18,12 @@ public class NoExistingCityException extends WrongDataException{
     }
 
     private static String buildErrorMessage(City city, ResourceBundle bundle) {
-        return String.format(bundle.getString(NO_EXISTING_CITY_KEY_ERROR_MESSAGE), city.getName());
+        return String.format(bundle.getString(NO_EXISTING_CITY), city.getName());
     }
 
     @Override
     public String getModelAttribute() {
-        return "noExistingCityMessage";
+        return ABSENT_CITY.getAttr();
     }
 
 }

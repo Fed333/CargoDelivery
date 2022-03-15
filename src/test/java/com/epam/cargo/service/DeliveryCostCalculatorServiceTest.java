@@ -9,6 +9,7 @@ import com.epam.cargo.repos.*;
 import com.epam.cargo.util.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -24,10 +25,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.epam.cargo.service.CityZipcodesConstants.*;
+import static com.epam.cargo.service.CityZipcodesConstants.VINNYTSIA_ZIPCODE;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class DeliveryCostCalculatorServiceTest {
+class DeliveryCostCalculatorServiceTest {
 
     private static final String PATH_TO_CSV_FILES = "src/test/resources/static/";
     private static final String CITIES_CSV = PATH_TO_CSV_FILES + "cities_table.csv";
@@ -78,7 +81,7 @@ public class DeliveryCostCalculatorServiceTest {
         return Stream.of(
                 Arguments.of(
                         DeliveryCostCalculatorRequest.of(3L, 1L, DimensionsRequest.of(30.0, 20.0, 4.0), 3.0),
-                        DeliveryCostCalculatorResponse.of(new City.Distance(getCity(UMAN_ZIPCODE), getCity(VINNYTISA_ZIPCODE), 160.1, getCitiesByZipcodes(UMAN_ZIPCODE, VINNYTISA_ZIPCODE)), 120.0
+                        DeliveryCostCalculatorResponse.of(new City.Distance(getCity(UMAN_ZIPCODE), getCity(VINNYTSIA_ZIPCODE), 160.1, getCitiesByZipcodes(UMAN_ZIPCODE, VINNYTSIA_ZIPCODE)), 120.0
                         )
                 ),
                 Arguments.of(
@@ -87,11 +90,11 @@ public class DeliveryCostCalculatorServiceTest {
                 ),
                 Arguments.of(
                         DeliveryCostCalculatorRequest.of(9L, 10L, DimensionsRequest.of(130.0, 155.0, 64.0), 200.0),
-                        DeliveryCostCalculatorResponse.of(new City.Distance(getCity(KHARKIV_ZIPCODE), getCity(CHERNIVTSI_ZIPCODE), 1027.7, getCitiesByZipcodes(KHARKIV_ZIPCODE, POLTAVA_ZIPCODE, CHERKASY_ZIPCODE, UMAN_ZIPCODE, VINNYTISA_ZIPCODE, KHMELNYTSKIY_ZIPCODE, KAMIANETS_ZIPCODE, CHERNIVTSI_ZIPCODE)), 580.0)
+                        DeliveryCostCalculatorResponse.of(new City.Distance(getCity(KHARKIV_ZIPCODE), getCity(CHERNIVTSI_ZIPCODE), 1027.7, getCitiesByZipcodes(KHARKIV_ZIPCODE, POLTAVA_ZIPCODE, CHERKASY_ZIPCODE, UMAN_ZIPCODE, VINNYTSIA_ZIPCODE, KHMELNYTSKIY_ZIPCODE, KAMIANETS_ZIPCODE, CHERNIVTSI_ZIPCODE)), 580.0)
                 ),
                 Arguments.of(
                         DeliveryCostCalculatorRequest.of(2L, 1L, DimensionsRequest.of(8.0, 3.0, 0.2), 0.01),
-                        DeliveryCostCalculatorResponse.of(new City.Distance(getCity(KYIV_ZIPCODE), getCity(VINNYTISA_ZIPCODE), 268.6, getCitiesByZipcodes(KYIV_ZIPCODE, ZHYTOMYR_ZIPCODE, VINNYTISA_ZIPCODE)), 180.0)
+                        DeliveryCostCalculatorResponse.of(new City.Distance(getCity(KYIV_ZIPCODE), getCity(VINNYTSIA_ZIPCODE), 268.6, getCitiesByZipcodes(KYIV_ZIPCODE, ZHYTOMYR_ZIPCODE, VINNYTSIA_ZIPCODE)), 180.0)
                 )
         );
     }
@@ -129,7 +132,6 @@ public class DeliveryCostCalculatorServiceTest {
         Assertions.assertEquals(expectedResponse.getCost(), response.getCost());
         Assertions.assertEquals(expectedResponse.getDistance(), response.getDistance());
     }
-    
-    //TODO tests for incorrect input
 
+    //TODO tests for incorrect input
 }

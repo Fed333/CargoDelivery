@@ -5,9 +5,7 @@ import com.epam.cargo.dto.DeliveredBaggageRequest;
 import com.epam.cargo.dto.DeliveryApplicationRequest;
 import com.epam.cargo.dto.DeliveryReceiptRequest;
 import com.epam.cargo.entity.*;
-import com.epam.cargo.exception.InvalidReceivingDateException;
-import com.epam.cargo.exception.NoExistingCityException;
-import com.epam.cargo.exception.WrongDataException;
+import com.epam.cargo.exception.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +31,7 @@ public class ServiceUtils {
     }
 
     /**
-     * makes an object according to dto request object
+     * Makes an object according to dto request object
      * @param customer owner of application
      * @param request web dto request object
      * @param cityService service of City entity
@@ -68,9 +66,9 @@ public class ServiceUtils {
         return object;
     }
 
-    private static void requireValidDates(DeliveryApplication object, ResourceBundle bundle) throws InvalidReceivingDateException {
+    private static void requireValidDates(DeliveryApplication object, ResourceBundle bundle) throws WrongDataAttributeException {
         if (object.getSendingDate().isAfter(object.getReceivingDate())){
-            throw new InvalidReceivingDateException(bundle);
+            throw new WrongDataAttributeException(ModelErrorAttribute.RECEIVING.getAttr(), bundle, WrongInput.REQUIRED_BEING_AFTER_SENDING);
         }
     }
 
@@ -91,7 +89,6 @@ public class ServiceUtils {
         return object;
     }
 
-
     private static City requireExistingCity(AddressRequest request, CityService cityService) throws NoExistingCityException {
         City city = cityService.findCityById(request.getCityId());
         if (Objects.isNull(city)){
@@ -101,6 +98,7 @@ public class ServiceUtils {
     }
 
     static void requireExistingUser(User user, UserService userService){
+        Optional.ofNullable(user).orElseThrow(()->new IllegalArgumentException("User cannot be null!"));
         if (Objects.isNull(userService.findUserByLogin(user.getLogin()))){
             throw new IllegalArgumentException("User " + user + " must be present in database");
         }

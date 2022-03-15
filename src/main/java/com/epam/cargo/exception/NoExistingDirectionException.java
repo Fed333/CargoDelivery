@@ -4,7 +4,8 @@ import com.epam.cargo.entity.City;
 
 import java.util.ResourceBundle;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_EXISTING_DIRECTION_KEY_ERROR_MESSAGE;
+import static com.epam.cargo.exception.ModelErrorAttribute.CITY_DIRECTION;
+import static com.epam.cargo.exception.WrongInput.NO_EXISTING_DIRECTION;
 
 public class NoExistingDirectionException extends WrongDataException{
 
@@ -13,11 +14,11 @@ public class NoExistingDirectionException extends WrongDataException{
     }
 
     private static String buildErrorMessage(City from, City to, ResourceBundle bundle){
-        return String.format(bundle.getString(NO_EXISTING_DIRECTION_KEY_ERROR_MESSAGE), from.getName(), to.getName());
+        return String.format(bundle.getString(NO_EXISTING_DIRECTION), from.getName(), to.getName());
     }
 
     @Override
     public String getModelAttribute() {
-        return "invalidDirectionErrorMessage";
+        return CITY_DIRECTION.getAttr();
     }
 }

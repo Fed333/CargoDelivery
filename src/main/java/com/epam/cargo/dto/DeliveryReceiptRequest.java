@@ -6,15 +6,15 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.NO_POSITIVE_NUMBER_KEY_ERROR_MESSAGE;
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.REQUIRED_KEY_ERROR_MESSAGE;
+import static com.epam.cargo.exception.WrongInput.NO_POSITIVE_NUMBER;
+import static com.epam.cargo.exception.WrongInput.REQUIRED;
 
 @Getter
 @Setter
 public class DeliveryReceiptRequest {
 
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
-    @Positive(message = NO_POSITIVE_NUMBER_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
+    @Positive(message = NO_POSITIVE_NUMBER)
     private Double price;
 
 }

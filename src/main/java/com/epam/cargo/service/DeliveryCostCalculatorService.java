@@ -7,7 +7,7 @@ import com.epam.cargo.entity.City;
 import com.epam.cargo.entity.DeliveredBaggage;
 import com.epam.cargo.exception.NoExistingCityException;
 import com.epam.cargo.exception.NoExistingDirectionException;
-import com.epam.cargo.exception.SameCityDirectionException;
+import com.epam.cargo.exception.WrongDataAttributeException;
 import com.epam.cargo.exception.WrongDataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
+import static com.epam.cargo.exception.ModelErrorAttribute.CITY_DIRECTION;
+import static com.epam.cargo.exception.WrongInput.INVALID_DIRECTION_SAME_CITIES;
 
 @Service
 public class DeliveryCostCalculatorService {
@@ -93,9 +96,9 @@ public class DeliveryCostCalculatorService {
         return 0.0;
     }
     
-    private void requireDifferentCities(Long cityFromId, Long cityToId, ResourceBundle bundle) throws SameCityDirectionException {
+    private void requireDifferentCities(Long cityFromId, Long cityToId, ResourceBundle bundle) throws WrongDataException {
         if (Objects.equals(cityFromId, cityToId)){
-            throw new SameCityDirectionException(bundle);
+            throw new WrongDataAttributeException(CITY_DIRECTION.getAttr(), bundle, INVALID_DIRECTION_SAME_CITIES);
         }
     }
 

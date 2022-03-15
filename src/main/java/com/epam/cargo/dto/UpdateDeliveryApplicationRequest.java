@@ -10,30 +10,30 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.REQUIRED_KEY_ERROR_MESSAGE;
+import static com.epam.cargo.exception.WrongInput.REQUIRED;
 
 @Getter
 @Setter
 public class UpdateDeliveryApplicationRequest {
 
     @Valid
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
     private AddressRequest senderAddress;
 
     @Valid
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
     private AddressRequest receiverAddress;
 
     @Valid
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
     private DeliveredBaggageRequest deliveredBaggageRequest;
 
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private LocalDate sendingDate;
 
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private LocalDate receivingDate;

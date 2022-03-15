@@ -1,4 +1,4 @@
-package com.epam.cargo.util;
+package com.epam.cargo.mock;
 
 import com.epam.cargo.entity.User;
 import com.epam.cargo.repos.UserRepo;
@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.anyString;
  * So far mocks only User itself, doesn't mock mapped db relationship
  * Doesn't regard given User id, assigns current value of id's counter along saving
  * @author Roman Kovalchuk
- * @since 19.02.2021
+ * @since 19.02.2022
  * */
 public class UserMockEnvironment {
 
@@ -92,6 +92,9 @@ public class UserMockEnvironment {
         };
     }
 
+    /**
+     * Fully mocks UserRepo at once
+     * */
     public void mockUserRepoBean(UserRepo userRepo) {
         mockSave(userRepo);
         mockFindAll(userRepo);

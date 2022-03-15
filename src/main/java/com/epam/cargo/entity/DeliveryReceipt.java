@@ -20,7 +20,7 @@ public class DeliveryReceipt implements Receipt {
     @JoinColumn(name = "application_id")
     private DeliveryApplication application;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "customer_user_id")
     private User customer;
 

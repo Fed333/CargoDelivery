@@ -7,6 +7,7 @@ import com.epam.cargo.entity.User;
 import com.epam.cargo.exception.NotEnoughMoneyException;
 import com.epam.cargo.exception.WrongDataException;
 import com.epam.cargo.repos.DeliveryReceiptRepo;
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +21,9 @@ import java.util.*;
 
 @Service
 public class DeliveryReceiptService {
+
+    private static final Logger logger = Logger.getLogger(DeliveryReceiptService.class);
+
     @Autowired
     private DeliveryReceiptRepo receiptRepo;
 
@@ -49,6 +53,8 @@ public class DeliveryReceiptService {
         DeliveryApplication application = receipt.getApplication();
         application.setState(DeliveryApplication.State.CONFIRMED);
         applicationService.saveApplication(application);
+
+        printMadeReceiptSuccessfullyLog(receipt, application);
         return true;
     }
 
@@ -132,4 +138,17 @@ public class DeliveryReceiptService {
     public void deleteById(Long id) {
         receiptRepo.deleteById(id);
     }
+
+    private void printMadeReceiptSuccessfullyLog(DeliveryReceipt receipt, DeliveryApplication application) {
+        User customer = application.getCustomer();
+        String customerFullName = String.format("%s %s", customer.getName(), customer.getSurname());
+        User manager = receipt.getManager();
+        String managerFullName = String.format("%s %s", manager.getName(), manager.getSurname());
+        logger.info(
+                String.format("Receipt: [id=%1$d, application_id=%2$d, customer: [id=%3$d, name=%4$s], manager: [id=%5$d, name=%6$s], price=%7$f] has been made successfully.",
+                        receipt.getId(), application.getId(), customer.getId(), customerFullName, manager.getId(), managerFullName, receipt.getTotalPrice()
+                )
+        );
+    }
+
 }

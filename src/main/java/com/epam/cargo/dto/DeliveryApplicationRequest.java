@@ -1,7 +1,6 @@
 package com.epam.cargo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Temporal;
@@ -10,30 +9,33 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-import static com.epam.cargo.exception.WrongInputDataKeysConstants.REQUIRED_KEY_ERROR_MESSAGE;
+import static com.epam.cargo.exception.WrongInput.REQUIRED;
 
+@NoArgsConstructor
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class DeliveryApplicationRequest {
 
     @Valid
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
     private AddressRequest senderAddress;
 
     @Valid
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
     private AddressRequest receiverAddress;
 
     @Valid
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
     private DeliveredBaggageRequest deliveredBaggageRequest;
 
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private LocalDate sendingDate;
 
-    @NotNull(message = REQUIRED_KEY_ERROR_MESSAGE)
+    @NotNull(message = REQUIRED)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private LocalDate receivingDate;
