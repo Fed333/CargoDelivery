@@ -7,6 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+/**
+ * Repository of fetching DeliveredApplication objects from database.
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 public interface DeliveryApplicationRepo extends JpaRepository<DeliveryApplication, Long> {
 
     List<DeliveryApplication> findAllByUserId(Long userId);

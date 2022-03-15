@@ -17,6 +17,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Represents an end user.
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 @Entity
 @Table(name="users")
 @Getter

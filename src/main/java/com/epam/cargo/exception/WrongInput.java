@@ -1,5 +1,11 @@
 package com.epam.cargo.exception;
 
+/**
+ * Interface with common constants of wrong input.<br>
+ * The values are key of message ResourceBundle.<br>
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 public interface WrongInput {
 
     String NO_FILLED_LOGIN = "wrong-input.required.login";

@@ -10,6 +10,11 @@ import javax.validation.constraints.Positive;
 import static com.epam.cargo.exception.WrongInput.NO_POSITIVE_NUMBER;
 import static com.epam.cargo.exception.WrongInput.REQUIRED;
 
+/**
+ * Data Transfer Object to assemble data for delivering cost calculating.<br>
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 @Getter
 @Setter
 public class DeliveryCostCalculatorRequest {

@@ -15,6 +15,12 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Utils service class.<br>
+ * Has common useful for services static methods.
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 public class ServiceUtils {
 
     static DeliveredBaggage createDeliveredBaggage(DeliveredBaggageRequest request){
@@ -66,12 +72,26 @@ public class ServiceUtils {
         return object;
     }
 
+    /**
+     * Checks whether delivery application's sending and receiving data are valid.<br>
+     * Declares that receiving date cannot precede a sending one.<br>
+     * @throws WrongDataAttributeException if receiving date precedes sending
+     * @since 1.0
+     * @author Roman Kovalchuk
+     * */
     private static void requireValidDates(DeliveryApplication object, ResourceBundle bundle) throws WrongDataAttributeException {
         if (object.getSendingDate().isAfter(object.getReceivingDate())){
             throw new WrongDataAttributeException(ModelErrorAttribute.RECEIVING.getAttr(), bundle, WrongInput.REQUIRED_BEING_AFTER_SENDING);
         }
     }
 
+    /**
+     * Checks whether addresses are different.<br>
+     * Declares that sender and receiver address cannot be equal.<br>
+     * @throws IllegalArgumentException if sender and receiver addresses are the same
+     * @since 1.0
+     * @author Roman Kovalchuk
+     * */
     private static void requireDifferentAddresses(Address senderAddress, Address receiverAddress) {
         if (senderAddress.equals(receiverAddress)){
             throw new IllegalArgumentException("Sender and Receiver address mustn't be equal!");
@@ -119,6 +139,16 @@ public class ServiceUtils {
         return new PageImpl<>(list.subList(start, end), pageable, list.size());
     }
 
+    /**
+     * Common list sorting with SortRequest and ComparatorRecognizer.<br>
+     * @param list List to sort
+     * @param sort data of sorting by
+     * @param recognizer mean of recognizing according to the SortRequest comparators
+     * @since 1.0
+     * @see Sort
+     * @see ComparatorRecognizer
+     * @author Roman Kovalhchuk
+     * */
     static <T> void sortList(List<T> list, Sort sort, ComparatorRecognizer<T> recognizer) {
 
         List<Sort.Order> orders = sort.get().collect(Collectors.toList());
@@ -151,15 +181,22 @@ public class ServiceUtils {
     }
 
     /**
-     * Checks authorized rights for personal actions
+     * Checks authorized rights for personal actions.
      * @param user specified user for comparison
      * @param initiator user from context who initiated the action
      * @return equals of login and password
+     * @since 1.0
+     * @author Roman Kovalchuk
      * */
     static boolean credentialsEquals(User user, User initiator) {
         return Objects.equals(user.getLogin(), initiator.getLogin()) && Objects.equals(user.getPassword(), initiator.getPassword());
     }
 
+    /**
+     * Interface of further generic implementation for each entity class to be sorted.
+     * @author Roman Kovalchuk
+     * @version 1.0
+     * */
     public interface ComparatorRecognizer<T> {
         Comparator<T> getComparator(Sort.Order order);
     }

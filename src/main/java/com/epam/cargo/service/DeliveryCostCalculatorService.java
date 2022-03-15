@@ -20,6 +20,16 @@ import java.util.ResourceBundle;
 import static com.epam.cargo.exception.ModelErrorAttribute.CITY_DIRECTION;
 import static com.epam.cargo.exception.WrongInput.INVALID_DIRECTION_SAME_CITIES;
 
+/**
+ * Service class for calculating cost of delivery.<br>
+ * @author Roman Kovalchuk
+ * @see DistanceFareService
+ * @see WeightFareService
+ * @see DimensionsFareService
+ * @see DirectionDeliveryService
+ * @see CityService
+ * @version 1.0
+ * */
 @Service
 public class DeliveryCostCalculatorService {
     @Autowired

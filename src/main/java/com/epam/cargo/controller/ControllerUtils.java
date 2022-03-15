@@ -13,6 +13,12 @@ import java.util.stream.Collectors;
 
 import static com.epam.cargo.exception.WrongInput.*;
 
+/**
+ * Utils controller class.<br>
+ * Has common useful for controllers static methods.
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 public class ControllerUtils {
 
     private static final Map<String, Function<FieldError, String>> actionsByCode = new HashMap<>();
@@ -53,7 +59,7 @@ public class ControllerUtils {
     }
 
     /**
-     * gives an localized error key message
+     * Gives a localized error key message.
      * @param bindingResult caught spring validation errors
      * @param bundle localization tool
      * @return localized error message, if error successfully recognized
@@ -74,5 +80,4 @@ public class ControllerUtils {
         Function<FieldError, String> action = actionsByCode.getOrDefault(fieldError.getCode(), fieldErr -> UNKNOWN_ERROR);
         return action.apply(fieldError);
     }
-
 }

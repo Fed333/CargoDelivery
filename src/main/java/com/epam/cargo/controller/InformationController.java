@@ -25,6 +25,7 @@ public class InformationController {
     public String information(
             Model model,
             @PageableDefault(size = 9, sort = {"senderCity.name"}, direction = Sort.Direction.ASC) Pageable pageable,
+            Sort sort,
             Locale locale,
             DirectionDeliveryFilterRequest filter
     ){

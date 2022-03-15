@@ -32,6 +32,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Takes requests associated with page of handling delivery application.
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 @Controller
 public class DeliveryApplicationController {
 
@@ -181,5 +186,4 @@ public class DeliveryApplicationController {
         }
         return String.format("redirect:/application/%s", application.getId().toString());
     }
-
 }

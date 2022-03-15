@@ -22,6 +22,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Takes requests associated with registration user page.
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
@@ -75,8 +80,5 @@ public class RegistrationController {
             redirectAttributes.addFlashAttribute("userRequest", userRequest);
             return "redirect:/registration";
         }
-
     }
-
-
 }

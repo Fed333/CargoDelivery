@@ -9,6 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import java.time.LocalTime;
 
+/**
+ * LogInterceptor implementation based on Log4j logger.<br>
+ * @author Roman Kovalchuk
+ * @see LogInterceptor
+ * @version 1.0
+ * */
 public class Log4jInterceptor implements LogInterceptor {
 
     private final Logger logger = Logger.getLogger(Log4jInterceptor.class);

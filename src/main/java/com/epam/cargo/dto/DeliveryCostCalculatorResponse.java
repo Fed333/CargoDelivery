@@ -4,6 +4,11 @@ import com.epam.cargo.entity.City;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Data Transfer Object to transfer response of cost calculation.<br>
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 @Getter
 @Setter
 public class DeliveryCostCalculatorResponse {

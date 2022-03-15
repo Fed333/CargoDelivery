@@ -10,6 +10,11 @@ import javax.validation.constraints.Positive;
 
 import static com.epam.cargo.exception.WrongInput.*;
 
+/**
+ * Data Transfer Object to assemble baggage on making delivery application page.<br>
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 @Getter
 @Setter
 @Builder

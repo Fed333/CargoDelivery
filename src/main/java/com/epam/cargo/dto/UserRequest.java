@@ -9,6 +9,11 @@ import javax.validation.constraints.NotNull;
 
 import static com.epam.cargo.exception.WrongInput.*;
 
+/**
+ * Data Transfer Object to assemble data of User.<br>
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 @Getter
 @Setter
 @Builder

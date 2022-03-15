@@ -12,6 +12,11 @@ import java.time.LocalDate;
 
 import static com.epam.cargo.exception.WrongInput.REQUIRED;
 
+/**
+ * Data Transfer Object to assemble updated data of DeliveryApplication.<br>
+ * @author Roman Kovalchuk
+ * @version 1.0
+ * */
 @Getter
 @Setter
 public class UpdateDeliveryApplicationRequest {
