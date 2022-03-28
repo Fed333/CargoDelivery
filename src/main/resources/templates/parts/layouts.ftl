@@ -57,7 +57,7 @@
     <#if app.state == "SUBMITTED">
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <a href="/application/${app.id}/update" class="btn btn-primary" href="#"><@spring.message "lang.edit"/></a>
+                <a href="/application/${app.id}/update" class="btn btn-primary"><@spring.message "lang.edit"/></a>
             </div>
         </div>
     </#if>
