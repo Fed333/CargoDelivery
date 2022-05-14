@@ -3,6 +3,7 @@
 
 <#import "parts/common.ftl" as c>
 <#import "parts/authorization.ftl" as auth>
+<#import "/spring.ftl" as spring/>
 
 <#setting number_format="computer">
 
@@ -30,13 +31,16 @@
             data.addColumn('number', 'Slices');
             data.addRows([
                 <#list amountBaggagePerTypeReport as baggagePerType>
-                    ['${baggagePerType.type}', ${baggagePerType.amount}]<#sep>,</#sep>
+                    ['<@spring.message "baggage.type.${baggagePerType.type}"/>', ${baggagePerType.amount}]<#sep>,</#sep>
                 </#list>
             ]);
             // Set chart options
-            var options = {'title':'Amount of shipped baggage per type',
+            var options = {
+                'title':'<@spring.message "report.baggage.pie.chart.head"/>',
                 'width':500,
-                'height':300};
+                'height':300,
+                'chartArea':{'width':'90%'}
+            };
 
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
@@ -49,11 +53,11 @@
         google.charts.setOnLoadCallback(drawChart);
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
-                ["Baggage type", "Profit", { role: "style" } ],
-                ["${profitBaggagePerTypeReport[0].type}", ${profitBaggagePerTypeReport[0].profit}, "#b87333"],
-                ["${profitBaggagePerTypeReport[1].type}", ${profitBaggagePerTypeReport[1].profit}, "silver"],
-                ["${profitBaggagePerTypeReport[2].type}", ${profitBaggagePerTypeReport[2].profit}, "#be0000"],
-                ["${profitBaggagePerTypeReport[3].type}", ${profitBaggagePerTypeReport[3].profit}, "#e5e4e2"]
+                ["Baggage type", "<@spring.message "lang.profit"/>", { role: "style" } ],
+                ["<@spring.message "baggage.type.${profitBaggagePerTypeReport[0].type}"/>", ${profitBaggagePerTypeReport[0].profit}, "#b87333"],
+                ["<@spring.message "baggage.type.${profitBaggagePerTypeReport[1].type}"/>", ${profitBaggagePerTypeReport[1].profit}, "silver"],
+                ["<@spring.message "baggage.type.${profitBaggagePerTypeReport[2].type}"/>", ${profitBaggagePerTypeReport[2].profit}, "#be0000"],
+                ["<@spring.message "baggage.type.${profitBaggagePerTypeReport[3].type}"/>", ${profitBaggagePerTypeReport[3].profit}, "#e5e4e2"]
             ]);
 
             var view = new google.visualization.DataView(data);
@@ -65,11 +69,12 @@
                 2]);
 
             var options = {
-                title: "Profit of transportation per each baggage category",
+                title: "<@spring.message "report.baggage.bar.chart.head"/>",
                 width: 600,
                 height: 400,
                 bar: {groupWidth: "95%"},
                 legend: { position: "none" },
+                chartArea:{ left:175 }
             };
             var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
             chart.draw(view, options);
@@ -77,7 +82,7 @@
     </script>
 
     <div class="row mb-4">
-        <h1 class="d-flex justify-content-center">Baggage Category Review</h1>
+        <h1 class="d-flex justify-content-center"><@spring.message "report.baggage.head"/></h1>
     </div>
 
     <div class="row">
