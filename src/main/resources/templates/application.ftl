@@ -15,6 +15,31 @@
             <div class="card" style="min-width: 740px;">
                 <div class="card-body">
                     <@l.application application/>
+                    <#if receipt??>
+                        <div class="ms-4 me-4">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <label class="fs-5 fw-bolder me-2">Номер квитанції </label>
+                                </div>
+                                <div class="col">
+                                    <a href="/receipt/${receipt.id}">#${receipt.id}</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="fs-5 fw-bolder me-2"><@spring.message "delivery.application.receipt.payment"/></label>
+                                </div>
+                                <div class="col">
+                                    <#if receipt.paid>
+                                        <button class="btn btn-success disabled"><@spring.message "lang.paid"/></button>
+                                    <#else>
+                                        <button class="btn btn-danger disabled"><@spring.message "lang.unpaid"/></button>
+                                    </#if>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </#if>
                     <#if isManager?? && isManager>
                         <#if application.customer??>
                             <#assign
@@ -75,12 +100,14 @@
                         <#elseif application.state = "CONFIRMED">
                         <div class="row mt-4">
                             <div class="col d-flex justify-content-center">
-                                <div class="col-auto me-4">
-                                    <form action="/application/${application.id}/complete" method="post">
-                                        <input name="_csrf" value="${_csrf.token}" hidden>
-                                        <button class="btn btn-success"><@spring.message "lang.complete"/></button>
-                                    </form>
-                                </div>
+                                <#if receipt.paid>
+                                    <div class="col-auto me-4">
+                                        <form action="/application/${application.id}/complete" method="post">
+                                            <input name="_csrf" value="${_csrf.token}" hidden>
+                                            <button class="btn btn-success"><@spring.message "lang.complete"/></button>
+                                        </form>
+                                    </div>
+                                </#if>
                                 <div class="col-auto">
                                     <form action="/application/${application.id}/reject" method="post">
                                         <input name="_csrf" value="${_csrf.token}" hidden>

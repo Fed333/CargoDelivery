@@ -11,6 +11,7 @@ import com.epam.cargo.exception.NoExistingDirectionException;
 import com.epam.cargo.exception.WrongDataException;
 import com.epam.cargo.service.CityService;
 import com.epam.cargo.service.DeliveryApplicationService;
+import com.epam.cargo.service.DeliveryReceiptService;
 import com.epam.cargo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +49,9 @@ public class DeliveryApplicationController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private DeliveryReceiptService receiptService;
 
     @Value("${spring.messages.basename}")
     private String messages;
@@ -112,6 +116,8 @@ public class DeliveryApplicationController {
     ){
 
         model.addAttribute("application", application);
+        receiptService.findByApplicationId(application.getId()).ifPresent(r -> model.addAttribute("receipt", r));
+
         return "application";
     }
 
