@@ -25,6 +25,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="${refApplicationsReview}"><@spring.message "menu.delivery-applications-review"/></a>
                 </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Reports
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="reportsDropdown">
+                            <li><a class="dropdown-item" href="/baggage/review">Baggage</a></li>
+                        </ul>
+                    </li>
                 </#if>
                 <li class="nav-item">
                     <a class="nav-link" href="${refProfile}"><@spring.message "menu.profile"/></a>
