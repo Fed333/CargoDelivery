@@ -2,10 +2,7 @@ package com.epam.cargo.controller;
 
 import com.epam.cargo.dto.DeliveryApplicationRequest;
 import com.epam.cargo.dto.UpdateDeliveryApplicationRequest;
-import com.epam.cargo.entity.BaggageType;
-import com.epam.cargo.entity.City;
-import com.epam.cargo.entity.DeliveryApplication;
-import com.epam.cargo.entity.User;
+import com.epam.cargo.entity.*;
 import com.epam.cargo.exception.NoExistingCityException;
 import com.epam.cargo.exception.NoExistingDirectionException;
 import com.epam.cargo.exception.WrongDataException;
@@ -28,10 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Takes requests associated with page of handling delivery application.
@@ -126,8 +120,14 @@ public class DeliveryApplicationController {
     public String rejectApplication(
             @PathVariable DeliveryApplication application,
             @AuthenticationPrincipal User manager,
+            RedirectAttributes redirectAttributes,
             Model model
     ){
+        Optional<DeliveryReceipt> receiptOptional = receiptService.findByApplicationId(application.getId());
+        if (receiptOptional.map(DeliveryReceipt::getPaid).orElse(Boolean.FALSE)){
+            redirectAttributes.addAttribute(ErrorController.ERROR_MESSAGE, "Can not reject already paid application!");
+            return "redirect:/error_page";
+        }
         applicationService.rejectApplication(application);
         return "redirect:/applications/review";
     }
