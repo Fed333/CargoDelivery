@@ -3,12 +3,14 @@ package com.epam.cargo.controller;
 import com.epam.cargo.service.AmountBaggagePerTypeService;
 import com.epam.cargo.service.DeliveredBaggageService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @AllArgsConstructor
+@PreAuthorize("hasAuthority('MANAGER')")
 public class BaggageReviewController {
 
     private final AmountBaggagePerTypeService baggagePerTypeService;
