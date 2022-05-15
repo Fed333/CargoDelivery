@@ -11,16 +11,16 @@
         function drawChart() {
 
             var data = google.visualization.arrayToDataTable([
-                ['Month', 'Profit'],
+                ['<@spring.message "lang.month"/>', '<@spring.message "lang.profit"/>'],
                 <#list profit as p>
-                    ['${p.month}', ${p.profit}]<#sep>,</#sep>
+                    ['<@spring.message "month.${p.month}"/>', ${p.profit}]<#sep>,</#sep>
                 </#list>
             ]);
 
             var options = {
                 chart: {
-                    title: 'Profit of CargoDelivery monthly operations',
-                    subtitle: 'in UAH'
+                    title: '<@spring.message "report.profit.head"/>',
+                    subtitle: '<@spring.message "report.profit.head.subtitle"/>'
                 },
 
                 width: 1000,
@@ -39,7 +39,7 @@
     </script>
 
     <div class="row mb-4">
-        <h1 class="col d-flex justify-content-center">Profit</h1>
+        <h1 class="col d-flex justify-content-center"><@spring.message "lang.profit"/></h1>
     </div>
 
     <div class="row">
