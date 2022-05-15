@@ -27,11 +27,11 @@
                 </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Reports
+                            <@spring.message "menu.reports"/>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="reportsDropdown">
-                            <li><a class="dropdown-item" href="/baggage/review">Baggage</a></li>
-                            <li><a class="dropdown-item" href="/report/profit">Profit</a></li>
+                            <li><a class="dropdown-item" href="/baggage/review"><@spring.message "menu.reports.baggage"/></a></li>
+                            <li><a class="dropdown-item" href="/report/profit"><@spring.message "menu.reports.profit"/></a></li>
                         </ul>
                     </li>
                 </#if>
