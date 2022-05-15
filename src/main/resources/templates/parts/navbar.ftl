@@ -38,6 +38,7 @@
                     <a class="nav-link" href="${refProfile}"><@spring.message "menu.profile"/></a>
                 </li>
             </ul>
+            <div id="timer" class="nav-item me-2 " style="color: white;"></div>
             <div class="dropdown navbar-nav me-2" id="switchLanguageDropdown">
                 <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="selectLanguageDropdown">
                    <img src="/static/images/i18n/language_icon.png" width="24" height="24" class="d-inline-block align-text-top">
@@ -65,4 +66,11 @@
             </#if>
         </div>
     </div>
+    <script src="/static/js/date_time.js"></script>
+    <script>
+        setInterval(function() {
+            document.getElementById('timer').innerHTML = date_time(),
+                1000
+        })
+    </script>
 </nav>
