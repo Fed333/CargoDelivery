@@ -4,6 +4,7 @@
 <#setting number_format="computer">
 
 <@c.page "Profit">
+    <script src="/static/js/localization.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <script>
@@ -35,7 +36,6 @@
         google.charts.load('current', {'packages':['line']});
         google.charts.setOnLoadCallback(drawChart);
 
-
     </script>
 
     <div class="row mb-4">
@@ -47,5 +47,10 @@
             <div id="profit_linechart"></div>
         </div>
     </div>
+
+    <script>
+        addSwitchLanguageWithUrlClickListeners('/report/profit', [])
+    </script>
+
 
 </@c.page>
