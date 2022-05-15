@@ -31,6 +31,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="reportsDropdown">
                             <li><a class="dropdown-item" href="/baggage/review">Baggage</a></li>
+                            <li><a class="dropdown-item" href="/report/profit">Profit</a></li>
                         </ul>
                     </li>
                 </#if>
