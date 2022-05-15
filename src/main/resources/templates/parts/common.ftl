@@ -1,4 +1,5 @@
 <#import "/spring.ftl" as spring/>
+<#import "footer.ftl" as f/>
 <#macro page title>
 
 <!DOCTYPE>
@@ -33,6 +34,8 @@
         <#nested>
     </div>
 </div>
+
+<@f.footer/>
 
 </body>
 </html>

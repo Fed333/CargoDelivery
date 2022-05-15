@@ -1,11 +1,13 @@
 package com.epam.cargo.service;
 
+import com.epam.cargo.custom.IProfitBaggagePerType;
 import com.epam.cargo.dto.DeliveredBaggageRequest;
+import com.epam.cargo.entity.BaggageType;
 import com.epam.cargo.entity.DeliveredBaggage;
 import com.epam.cargo.repos.DeliveredBaggageRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,8 +20,11 @@ import java.util.Optional;
 @Service
 public class DeliveredBaggageService {
 
-    @Autowired
-    private DeliveredBaggageRepo deliveredBaggageRepo;
+    private final DeliveredBaggageRepo deliveredBaggageRepo;
+
+    public DeliveredBaggageService(DeliveredBaggageRepo deliveredBaggageRepo) {
+        this.deliveredBaggageRepo = deliveredBaggageRepo;
+    }
 
     public Optional<DeliveredBaggage> findById(Long id){
         return deliveredBaggageRepo.findById(id);
@@ -62,4 +67,13 @@ public class DeliveredBaggageService {
         updated.setId(deliveredBaggage.getId());
         return deliveredBaggageRepo.save(updated);
     }
+
+    /**
+     * Gives report of profit {@link DeliveredBaggage} per each {@link BaggageType}.
+     * @return {@link List} of {@link IProfitBaggagePerType} objects
+     * */
+    public List<IProfitBaggagePerType> profitBaggageReport(){
+        return deliveredBaggageRepo.profitBaggagePerType();
+    }
+
 }
