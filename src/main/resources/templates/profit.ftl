@@ -39,7 +39,7 @@
     </script>
 
     <div class="row mb-4">
-        <h1 class="col d-flex justify-content-center"><@spring.message "lang.profit"/></h1>
+        <h1 class="col d-flex justify-content-center"><@spring.message "menu.reports.profit"/></h1>
     </div>
 
     <div class="row">
